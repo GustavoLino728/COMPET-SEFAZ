@@ -14,4 +14,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY app/ .
 
 # Comando para iniciar o chatbot quando o container for executado
-CMD ["python", "chatbot_sefaz.py"]
+CMD ["python", "main.py"]
