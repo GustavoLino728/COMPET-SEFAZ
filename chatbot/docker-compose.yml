@@ -1,0 +1,11 @@
+services:
+  chatbot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: chatbot-openai
+    # volumes:
+    #   - ./app:/app # Descomente para desenvolvimento, para refletir mudanças de código sem reconstruir
+    env_file:         # Carrega variáveis de ambiente do arquivo .env
+      - .env
+    restart: always   # Reinicia o container automaticamente se ele parar

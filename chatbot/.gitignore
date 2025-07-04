@@ -1,0 +1,27 @@
+# Environment variables
+.env
+.env.*
+
+# Python bytecode
+__pycache__/
+*.pyc
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Log files
+*.log
+openai_response_log.txt
+
+# Editor/IDE specific files
+.vscode/        # Visual Studio Code
+.idea/          # IntelliJ IDEA / PyCharm
+*.swp           # Vim swap files
+*~              # Backup files (often created by text editors)
+.DS_Store       # macOS specific files
+Thumbs.db       # Windows specific files
+
+# Docker specific (less common for simple setups, but good to include)
+.dockerignore   # Although it's part of the project, it's sometimes ignored by default templates. Keep it if you want it versioned.
