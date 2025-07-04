@@ -1,7 +1,7 @@
 from openai import OpenAI
 import os
 from dotenv import load_dotenv
-from utils.log_utils import log_api_response_to_file
+from utils.log_functions import log_AI_api_response_to_file
 
 # Load variables from .env 
 load_dotenv()
@@ -9,21 +9,30 @@ load_dotenv()
 # Gets API key from .env
 api_key = os.getenv("OPENAI_API_KEY")
 
+# Global OpenAI client instance (for reuse)
+client = OpenAI(api_key=api_key)
+
 def chat_with_gpt(prompt):
     # Sends a prompt to gpt-4o-mini model
     # Log the response into openai_response_log.txt
     try: 
-        client = OpenAI(api_key=api_key)
-
         response = client.chat.completions.create(
             model="gpt-4o-mini",
-            store=True,
             messages=[
                 {"role": "user", "content": prompt}
             ]
         )
 
-        print(response.choices[0].message)
+        # Log the full API response to the specified file
+        log_AI_api_response_to_file(response, filename=os.path.join("logs", "openai_response_log.txt"))
+
+        # Check if message and content exist before attempting to access
+        if response.choices and response.choices[0].message and response.choices[0].message.content:
+            return response.choices[0].message.content.strip()
+        else:
+            print("DEBUG: API response content empty or missing.")
+            return "Sorry, I couldn't get a clear response from the AI."
+
 
     except OpenAI.APIError as e: # OpenAI.APIError - Error handling changed 
         print(f"OpenIA error - APIError): {e}")
