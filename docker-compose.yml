@@ -1,11 +1,11 @@
 services:
   chatbot:
     build:
-      context: .
+      context: ./chatbot
       dockerfile: Dockerfile
     container_name: chatbot-openai
     volumes:
-      - ./app:/app
+      - ./chatbot/app:/app
     env_file:
-      - .env
+      - ./chatbot/.env
     restart: always
