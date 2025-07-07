@@ -51,12 +51,41 @@ def chat_with_gpt(prompt):
         return "Desculpe, algo deu errado."
 
 if __name__ == "__main__":
-    print("Olá! Eu sou o Sefaz Inteligente! Digite 'sair' ou 'tchau' para encerrar.")
+    menu_options = """
+Olá! Eu sou o Sefaz Inteligente! Por favor, escolha uma opção:
+
+1 - Aprender sobre ICMS
+2 - Trilhas de aprendizado disponíveis
+3 - Outra funcionalidade (conversar livremente)
+4 - Sair
+"""
+    print(menu_options)
+
     while True:
-        user_input = input("Você: ")
-        if user_input.lower() in ["sair", "tchau"]:
+        user_choice = input("Digite o número da opção: ").strip()
+        response_content = ""
+
+        if user_choice == '1':
+            prompt = "Explique o que é ICMS de forma clara e concisa, como se estivesse ensinando a alguém que não conhece o assunto."
+            response_content = chat_with_gpt(prompt)
+            print("Chatbot:", response_content)
+        elif user_choice == '2':
+            prompt = "Quais trilhas de aprendizado sobre legislação tributária ou finanças públicas estão disponíveis no Sefaz?"
+            response_content = chat_with_gpt(prompt)
+            print("Chatbot:", response_content)
+        elif user_choice == '3': # 
+            free_input = input("Você: ")
+            if free_input.lower() in ["sair", "tchau"]:
+                print("Chatbot: Até mais!")
+                break
+            response_content = chat_with_gpt(free_input)
+            print("Chatbot: ", response_content)
+        elif user_choice == '4':
             print("Chatbot: Até mais!")
             break
+        else:
+            print("Opção inválida. Por favor, digite um número de 1 a 4.")
 
-        response = chat_with_gpt(user_input)
-        print("Chatbot:", response)
+        # After handling the choice, display the menu again for the next interaction
+        print(menu_options)
+
