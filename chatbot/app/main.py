@@ -2,6 +2,7 @@ from openai import OpenAI
 import os
 from dotenv import load_dotenv
 from utils.log_functions import log_AI_api_response_to_file
+from utils.string_functions import get_most_relevant_knowledge_paths
 
 # Load variables from .env 
 load_dotenv()
@@ -12,9 +13,9 @@ api_key = os.getenv("OPENAI_API_KEY")
 # Global OpenAI client instance (for reuse)
 client = OpenAI(api_key=api_key)
 
-def chat_with_gpt(prompt):
-    # Sends a prompt to gpt-4o-mini model
-    # Log the response into openai_response_log.txt
+# Sends a prompt to gpt-4o-mini model
+# Log the response into openai_response_log.txt
+def chat_with_gpt(prompt: str):
     try: 
         response = client.chat.completions.create(
             model="gpt-4o-mini",
@@ -75,11 +76,18 @@ Olá! Eu sou o Sefaz Inteligente! Por favor, escolha uma opção:
             print("Chatbot:", response_content)
         elif user_choice == '3': # 
             free_input = input("Você: ")
+            
             if free_input.lower() in ["sair", "tchau"]:
                 print("Chatbot: Até mais!")
                 break
             response_content = chat_with_gpt(free_input)
             print("Chatbot: ", response_content)
+            
+            relevant_paths = get_most_relevant_knowledge_paths(free_input)
+            print("\nChatbot: Em nossa plataforma, estas trilhas de aprendizado tem relação com o conteúdo que estamos conversando:")
+            
+            for path_obj in relevant_paths:
+                print(path_obj.value)
         elif user_choice == '4':
             print("Chatbot: Até mais!")
             break
