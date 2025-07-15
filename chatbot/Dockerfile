@@ -1,5 +1,5 @@
 # Usa uma imagem base Python. Escolha a versão que você precisa.
-FROM python:3.9-slim-buster
+FROM python:3.13-slim-bookworm
 
 # Define o diretório de trabalho dentro do container
 WORKDIR /app
