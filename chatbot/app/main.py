@@ -84,10 +84,14 @@ Olá! Eu sou o Sefaz Inteligente! Por favor, escolha uma opção:
             print("Chatbot: ", response_content)
             
             relevant_paths = get_most_relevant_knowledge_paths(free_input)
-            print("\nChatbot: Em nossa plataforma, estas trilhas de aprendizado tem relação com o conteúdo que estamos conversando:")
             
-            for path_obj in relevant_paths:
-                print(path_obj.value)
+            if not relevant_paths:
+                continue
+            else:
+                print("\nChatbot: Em nossa plataforma, estas trilhas de aprendizado tem relação com o conteúdo que estamos conversando:")
+                
+                for path_obj in relevant_paths:
+                    print(path_obj.value)                
         elif user_choice == '4':
             print("Chatbot: Até mais!")
             break
