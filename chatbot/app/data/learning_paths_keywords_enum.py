@@ -12,4 +12,3 @@ LEARNING_PATHS_KEYWORDS = {
     LearningPath.LANCAMENTOS_INCENTIVO.value: ["lancamento", "deducao", "codigo proprio", "taxa de administracao", "taxa de adm", "taxa do feef", "feef"],
     LearningPath.CONTROLES_SUPLEMENTARES.value: ["icms", "imposto sobre operacoes relativas a circulacao de mercadorias", "identificacao e correcao", "calculo", "diferenca", "recolhimento"],
 }
-
