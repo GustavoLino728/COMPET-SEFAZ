@@ -25,3 +25,7 @@ Thumbs.db       # Windows specific files
 
 # Docker specific (less common for simple setups, but good to include)
 .dockerignore   # Although it's part of the project, it's sometimes ignored by default templates. Keep it if you want it versioned.
+
+# ChromaDB
+
+data/chroma_db/

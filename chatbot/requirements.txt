@@ -6,3 +6,5 @@ langchain
 langchain-community
 tiktoken
 chromadb
+langchain-openai
+langchain-chroma
