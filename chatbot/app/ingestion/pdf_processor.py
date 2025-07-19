@@ -1,13 +1,16 @@
+# chatbot/ingestion/pdf_processor.py
+
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 import os
 
 class PDFProcessor:
-    def __init__(self, base_pdf_directory="data/sefaz_documents"):
+    def __init__(self, base_pdf_directory): # Removed default, will be passed explicitly
         """
+        Initializes the PDF processor.
         Args:
             base_pdf_directory (str): The base directory where theme/subject folders containing PDFs are located.
-                                      Example: "data/sefaz_documents"
+                                      This path should be relative to the Python script's current working directory.
         """
         self.base_pdf_directory = base_pdf_directory
 
@@ -41,7 +44,7 @@ class PDFProcessor:
                         # chunk_size and chunk_overlap parameters can be adjusted
                         # to optimize chunk quality for your content.
                         text_splitter = RecursiveCharacterTextSplitter(
-                            chunk_size=1000,
+                            chunk_size=850,
                             chunk_overlap=200,
                             length_function=len,
                             is_separator_regex=False,
@@ -57,10 +60,20 @@ class PDFProcessor:
         print(f"Total of {len(documents)} chunks generated from all found PDFs.")
         return documents
 
+# Example usage (for module testing only)
 if __name__ == "__main__":
-    test_base_dir = "data_test/sefaz_documents_test"
+    # --- Test Setup ---
+    # When running pdf_processor.py directly, its CWD is chatbot/ingestion/
+    # So, the path for test data needs to be relative to chatbot/ingestion/
+    # The test data is in chatbot/ingestion/data_test/sefaz_documents_test/
+    
+    test_base_dir_for_direct_run = "data_test/sefaz_documents_test" 
+    
+    # Ensure this path matches your test PDFs actual location relative to this script
+    os.makedirs(os.path.join(test_base_dir_for_direct_run, "feef"), exist_ok=True)
+    os.makedirs(os.path.join(test_base_dir_for_direct_run, "general_content"), exist_ok=True)
 
-    processor = PDFProcessor(base_pdf_directory=test_base_dir)
+    processor = PDFProcessor(base_pdf_directory=test_base_dir_for_direct_run)
     chunks = processor.load_and_split_pdfs()
 
     if chunks:
