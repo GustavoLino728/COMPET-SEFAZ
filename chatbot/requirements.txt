@@ -8,3 +8,5 @@ tiktoken
 chromadb
 langchain-openai
 langchain-chroma
+langchain-core
+PyPDF2
