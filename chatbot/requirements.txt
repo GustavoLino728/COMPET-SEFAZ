@@ -10,3 +10,6 @@ langchain-openai
 langchain-chroma
 langchain-core
 PyPDF2
+sentence-transformers
+torch
+langchain-huggingface
