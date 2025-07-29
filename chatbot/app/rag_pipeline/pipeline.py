@@ -21,7 +21,7 @@ class RAGPipeline:
                  documents_path: str = "chatbot/app/data/sefaz_documents",
                  collection_name: str = "sefaz_docs",
                  persist_directory: str = "data/chroma_db",
-                 chunk_size: int = 2000,
+                 chunk_size: int = 1500,
                  chunk_overlap: int = 200):
         """
         Initializes the RAG pipeline
