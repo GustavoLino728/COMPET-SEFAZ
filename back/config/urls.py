@@ -19,6 +19,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),  # Inclui URLs de autenticação do DRF
-    path('usuarios/', include('users.urls')),  # Inclui as URLs do app '
+    path('api-auth/', include('rest_framework.urls')),
+    path('usuarios/', include('users.urls')),
+    path('', include('questions.urls')),
 ]
