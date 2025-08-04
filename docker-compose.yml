@@ -1,11 +1,61 @@
+version: '3.8'
+
 services:
-  chatbot:
-    build:
-      context: ./chatbot
-      dockerfile: Dockerfile
-    container_name: chatbot-openai
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: compet_sefaz
+      POSTGRES_USER: compet_user
+      POSTGRES_PASSWORD: compet_password
+    ports:
+      - "5432:5432"
     volumes:
-      - ./chatbot/app:/app
-    env_file:
-      - ./chatbot/.env
-    restart: always
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U compet_user -d compet_sefaz"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Django Backend
+  django:
+    build:
+      context: ./back
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - POSTGRES_DB=compet_sefaz
+      - POSTGRES_USER=compet_user
+      - POSTGRES_PASSWORD=compet_password
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - DJANGO_SETTINGS_MODULE=config.settings
+    volumes:
+      - ./back:/app
+      - ./chatbot:/chatbot
+      - huggingface_cache:/root/.cache/huggingface
+      - ./chatbot/app/data:/app/chatbot/app/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: >
+      sh -c "python manage.py migrate &&
+               python manage.py runserver 0.0.0.0:8000"
+
+  # Chatbot Service (optional, for separate processing)
+  # chatbot:
+  #   build:
+  #     context: ./chatbot
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - ./chatbot:/app
+  #     - ./data:/data
+  #   environment:
+  #     - PYTHONPATH=/app
+  #   command: python app/main_rag.py
+
+volumes:
+  postgres_data:
+  huggingface_cache:
