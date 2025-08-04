@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'users',
     'questions',
+    'chatbot_api',
 ]
 
 MIDDLEWARE = [
@@ -141,7 +142,8 @@ CORS_ALLOW_CREDENTIALS = True
 # REST Framework settings
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
+        # 'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',  # Allow access without authentication for development
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
