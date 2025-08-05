@@ -5,15 +5,15 @@ services:
   postgres:
     image: postgres:15
     environment:
-      POSTGRES_DB: compet_sefaz
-      POSTGRES_USER: compet_user
-      POSTGRES_PASSWORD: compet_password
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U compet_user -d compet_sefaz"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -24,14 +24,16 @@ services:
       context: ./back
       dockerfile: Dockerfile
     ports:
-      - "8000:8000"
+      - "${API_PORT}:8000"
     environment:
-      - POSTGRES_DB=compet_sefaz
-      - POSTGRES_USER=compet_user
-      - POSTGRES_PASSWORD=compet_password
-      - POSTGRES_HOST=postgres
-      - POSTGRES_PORT=5432
-      - DJANGO_SETTINGS_MODULE=config.settings
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}
+      - DJANGO_DEBUG=${DJANGO_DEBUG}
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
     volumes:
       - ./back:/app
       - ./chatbot:/chatbot
