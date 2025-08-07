@@ -1,19 +1,12 @@
 from django.db import models
-from django.contrib.auth.models import User 
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    cpf = models.CharField(max_length=20, primary_key=True)
-    linkedin_url = models.URLField(blank=True)
-    areas_of_interest = models.CharField(blank=True)
-    is_audictor = models.BooleanField(default=False)
+class CustomUser(AbstractUser):
+    cpf = models.CharField(max_length=14, unique=True)
+    linkedin_url = models.URLField(blank=True, null=True)
+    interest_area = models.CharField(max_length=100, blank=True, null=True)
+    field_of_work = models.CharField(max_length=100, blank=True, null=True)
+    is_auditor = models.BooleanField(default=False)
+
     def __str__(self):
-        return f'Perfil de {self.user.username}'
-
-@receiver(post_save, sender=User)
-def create_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
+        return self.username

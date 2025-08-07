@@ -1,10 +1,9 @@
 from rest_framework import viewsets
-from django.contrib.auth.models import User
-from .serializers import UserSerializer
+from .models import CustomUser
+from .serializers import CustomUserSerializer
+from rest_framework.permissions import IsAdminUser
 
 class UserViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint que permite aos usuários serem vistos ou editados.
-    """
-    queryset = User.objects.all().order_by('-date_joined')
-    serializer_class = UserSerializer
+    queryset = CustomUser.objects.all()
+    serializer_class = CustomUserSerializer
+    permission_classes = [IsAdminUser]
