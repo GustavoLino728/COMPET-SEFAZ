@@ -13,7 +13,7 @@ class DocumentChunker:
     """Class to divide documents into smaller chunks"""
     
     def __init__(self, 
-                 chunk_size: int = 2000,
+                 chunk_size: int = 1500,
                  chunk_overlap: int = 200,
                  separators: List[str] = None):
         """

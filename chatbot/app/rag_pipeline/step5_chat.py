@@ -576,9 +576,9 @@ if __name__ == "__main__":
         quiz_set = chatbot.generate_quiz_set(quiz_topics)
         
         print(f"Quiz Set Results:")
-        print(f"Total questions: {quiz_set['total_questions']}")
-        print(f"Successful: {quiz_set['successful_questions']}")
-        print(f"Failed: {quiz_set['failed_questions']}")
+        print(f"Total questions generated: {quiz_set['total_questions']}")
+        print(f"Successful questions generated: {quiz_set['successful_questions']}")
+        print(f"Failed questions generated: {quiz_set['failed_questions']}")
         
         for i, question in enumerate(quiz_set['questions']):
             print(f"\nQuestion {i+1}:")

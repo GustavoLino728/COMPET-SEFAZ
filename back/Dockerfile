@@ -1,20 +1,41 @@
-# Imagem base
 FROM python:3.11-slim
 
-# Diretório de trabalho
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# Set work directory
 WORKDIR /app
 
-# Copia os arquivos do projeto
-COPY requirements.txt .
+# Install system dependencies
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        postgresql-client \
+        build-essential \
+        libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# Instala dependências
+# Install Python dependencies
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copia o restante do código
+# Pre-download the sentence transformer model during build
+RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('neuralmind/bert-base-portuguese-cased')"
+
+# Copy project
 COPY . .
 
-# Expõe a porta padrão do Django
+# Create a script to wait for postgres
+RUN echo '#!/bin/bash\n\
+until pg_isready -h postgres -p 5432 -U compet_user; do\n\
+  echo "Waiting for postgres..."\n\
+  sleep 2\n\
+done\n\
+echo "PostgreSQL started"\n\
+exec "$@"' > /wait-for-postgres.sh && chmod +x /wait-for-postgres.sh
+
+# Expose port
 EXPOSE 8000
 
-# Comando default
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Run the application
+CMD ["/wait-for-postgres.sh", "python", "manage.py", "runserver", "0.0.0.0:8000"]

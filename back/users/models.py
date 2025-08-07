@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     cpf = models.CharField(max_length=20, primary_key=True)
-    linkedin_url = models.URLField(blank=True)  
+    linkedin_url = models.URLField(blank=True)
     areas_of_interest = models.CharField(blank=True)
     is_audictor = models.BooleanField(default=False)
     def __str__(self):
