@@ -12,19 +12,8 @@ from .serializers import (
     QuestionResponseSerializer
 )
 
-# Add the chatbot module to the Python path
-chatbot_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'chatbot', 'app')
-sys.path.append(chatbot_path)
-
-# Set the working directory to the project root for RAGPipeline
-project_root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-os.chdir(project_root)
-
-try:
-    from rag_pipeline.pipeline import RAGPipeline
-except ImportError as e:
-    print(f"Error importing RAGPipeline: {e}")
-    RAGPipeline = None
+# Import the loader of the RAGPipeline
+from .rag_loader import get_rag_pipeline, is_initialized
 
 
 class ChatbotChatView(APIView):
@@ -48,44 +37,15 @@ class ChatbotChatView(APIView):
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-        if RAGPipeline is None:
-            # Return a mock response for testing
-            user_message = serializer.validated_data['message']
-            mock_response = f"Mock response: You said '{user_message}'. RAGPipeline is not available in this environment."
-            
-            response_data = {
-                'response': str(mock_response),
-                'confidence': 0.5
-                
-            }
-
-            return Response(response_data, status=status.HTTP_200_OK)
-        
         try:
-            # Test with RAGPipeline using only a small subset of documents
             user_message = serializer.validated_data['message']
             
-            # Initialize the RAG pipeline with a smaller document set
-            test_docs_path = "/app/chatbot/app/data/sefaz_documents/general_content"
+            # Use the loader to get the unique instance of the RAGPipeline
+            pipeline = get_rag_pipeline()
             
-            # Check if test folder exists and has PDFs
-            if os.path.exists(test_docs_path):
-                print(f"Using documents from: {test_docs_path}")
-                pipeline = RAGPipeline(documents_path=test_docs_path)
-            else:
-                print(f"Test path not found: {test_docs_path}")
-                # Fallback to simple response
-                response = f"Erro ao processar. Mensagem automática para teste."
-                return Response({'response': response, 'confidence': 0.8}, status=status.HTTP_200_OK)
-            
-            # Initialize knowledge base with the smaller document set
-            try:
-                pipeline.build_knowledge_base(True)
-                print("Knowledge base built successfully with test documents")
-            except Exception as e:
-                print(f"Warning: Could not build knowledge base: {e}")
-                # Fallback response
-                response = f"Teste com documentos limitados. Você disse: '{user_message}'"
+            if pipeline is None:
+                # Fallback response if it can't initialize
+                response = f"Error processing. Automatic message for test."
                 return Response({'response': response, 'confidence': 0.8}, status=status.HTTP_200_OK)
             
             # Get response from chatbot
@@ -130,42 +90,18 @@ class QuestionGenerationView(APIView):
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-        if RAGPipeline is None:
-            # Return a mock question for testing
+
+        
+        try:
+            # Get topic and difficulty
             topic = serializer.validated_data['topic']
             difficulty = serializer.validated_data.get('difficulty', 'medium')
             
-            mock_question_data = {
-                'question': f"Mock question about {topic}",
-                'topic': topic,
-                'options': [
-                    "A) First option",
-                    "B) Second option", 
-                    "C) Third option",
-                    "D) Fourth option",
-                    "E) Fifth option"
-                ],
-                'answer': "A) First option",
-                'explanation': f"This is a mock explanation for {topic}",
-                'difficulty': difficulty
-            }
+            # Use the loader to get the unique instance of the RAGPipeline
+            pipeline = get_rag_pipeline()
             
-            return Response(mock_question_data, status=status.HTTP_200_OK)
-        
-        try:
-            # Initialize the RAG pipeline with a smaller document set
-            test_docs_path = "/app/chatbot/app/data/sefaz_documents/general_content"
-            
-            # Check if test folder exists and has PDFs
-            if os.path.exists(test_docs_path):
-                print(f"Using documents from: {test_docs_path}")
-                pipeline = RAGPipeline(documents_path=test_docs_path)
-            else:
-                print(f"Test path not found: {test_docs_path}")
+            if pipeline is None:
                 # Fallback to mock response
-                topic = serializer.validated_data['topic']
-                difficulty = serializer.validated_data.get('difficulty', 'medium')
-                
                 mock_question_data = {
                     'question': f"Mock question about {topic}",
                     'topic': topic,
@@ -176,7 +112,7 @@ class QuestionGenerationView(APIView):
                         "D) Fourth option",
                         "E) Fifth option"
                     ],
-                    'question': "A) First option",
+                    'answer': "A) First option",
                     'explanation': f"This is a mock explanation for {topic}",
                     'difficulty': difficulty,
                     'sources': [],
@@ -186,16 +122,6 @@ class QuestionGenerationView(APIView):
                 }
                 
                 return Response(mock_question_data, status=status.HTTP_200_OK)
-            
-            # Initialize knowledge base if needed
-            try:
-                pipeline.build_knowledge_base(True)
-            except Exception as e:
-                print(f"Warning: Could not build knowledge base: {e}")
-            
-            # Get topic and difficulty
-            topic = serializer.validated_data['topic']
-            difficulty = serializer.validated_data.get('difficulty', 'medium')
             
             # Generate question
             question_data = pipeline.generate_multiple_choice_question(topic)
@@ -236,4 +162,9 @@ class QuestionGenerationView(APIView):
 @api_view(['GET'])
 def health_check(request):
     """Health check endpoint"""
-    return Response({"status": "healthy", "service": "chatbot-api"}, status=status.HTTP_200_OK)
+    rag_status = "initialized" if is_initialized() else "not_initialized"
+    return Response({
+        "status": "healthy", 
+        "service": "chatbot-api",
+        "rag_pipeline": rag_status
+    }, status=status.HTTP_200_OK)
