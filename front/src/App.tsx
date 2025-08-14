@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Routes, Route, Link } from 'react-router-dom'; 
 import './App.css';
+import RegisterPage from './pages/RegisterPage';
 
 import HomePage from './components/HomePage';
 import FloatingButton from './components/FloatingButton';
@@ -18,8 +19,9 @@ function App() {
   return (
     <div className="App">
       <nav style={{ padding: '10px', backgroundColor: '#282c34' }}>
-        <Link to="/" style={{ color: 'white', marginRight: '15px', textDecoration: 'none' }}>Home</Link>
-        <Link to="/users" style={{ color: 'white', textDecoration: 'none' }}>User List</Link>
+        <Link to="/">Home</Link>
+        <Link to="/users">User List</Link>
+        <Link to="cadrastro">Cadrastro</Link>
       </nav>
       <hr />
 
@@ -27,6 +29,7 @@ function App() {
         <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/users" element={<UserList />} />
+        <Route path="/cadrastro" element={<RegisterPage />} />
         </Routes>
       </main>
       

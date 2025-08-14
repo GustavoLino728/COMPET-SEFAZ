@@ -1,0 +1,64 @@
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh; 
+  background-color:#ffffff;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+  width: 100%;
+  max-width: 400px;
+}
+
+.formIcon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 20px;
+}
+
+.formContainer h2 {
+  margin: 0;
+  font-size: 24px;  
+}
+
+.inputField {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.sumitButton {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.sumitButton:hover {
+  background-color: #0056b3;
+}
+
+.usersListLink {
+  margin-top: 20px;
+  text-decoration: none;
+  color: #007bff;
+  font-size: 16px;
+}
