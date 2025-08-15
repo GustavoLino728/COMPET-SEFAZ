@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { Routes, Route, Link } from 'react-router-dom'; 
-import './App.css';
-import RegisterPage from './pages/RegisterPage';
-
+import { Routes, Route, Link } from 'react-router-dom';
+import Header from './components/common/Header';
 import HomePage from './components/HomePage';
+import UserList from './components/user/UserList';
+import RegisterPage from './pages/RegisterPage';
+import './App.css';
+
 import FloatingButton from './components/FloatingButton';
 import ChatWindow from './components/ChatWindow';
-
-import UserList from './components/user/UserList';
 
 function App() {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -17,21 +17,17 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <nav style={{ padding: '10px', backgroundColor: '#282c34' }}>
-        <Link to="/">Home</Link>
-        <Link to="/users">User List</Link>
-        <Link to="cadrastro">Cadrastro</Link>
-      </nav>
-      <hr />
+   <div>
+      <Header />
 
       <main>
         <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/users" element={<UserList />} />
-        <Route path="/cadrastro" element={<RegisterPage />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/usuarios" element={<UserList />} />
+          <Route path="/cadastro" element={<RegisterPage />} />
         </Routes>
       </main>
+      
       
       <FloatingButton onClick={handleChatToggle} />
       <ChatWindow isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
