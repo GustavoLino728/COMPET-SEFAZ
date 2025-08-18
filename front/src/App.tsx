@@ -4,6 +4,7 @@ import Header from './components/common/Header';
 import HomePage from './components/HomePage';
 import UserList from './components/user/UserList';
 import RegisterPage from './pages/RegisterPage';
+import LoginPage from './pages/LoginPage';
 import './App.css';
 
 import FloatingButton from './components/FloatingButton';
@@ -25,6 +26,8 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/usuarios" element={<UserList />} />
           <Route path="/cadastro" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          {/* Add other routes as needed */}
         </Routes>
       </main>
       

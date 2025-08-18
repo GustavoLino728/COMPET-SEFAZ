@@ -18,7 +18,7 @@ const Header = () => {
             <Link to="/sobre">Sobre Nós</Link>
           </nav>
           <div className={styles.loginButton}>
-            <Link to="/login">Log In</Link>
+            <Link to="/login">Login</Link>
           </div>
         </div>
 
