@@ -73,6 +73,11 @@ class DocumentChunker:
                         'chunk_size': len(chunk.page_content)
                     })
                 
+                if len(chunks) == 0:
+                    logger.warning(
+                        f"Document {i+1} produced 0 chunks | file_name={doc.metadata.get('file_name')} | source={doc.metadata.get('source')}"
+                    )
+                
                 all_chunks.extend(chunks)
                 logger.info(f"  - Document {i+1}: {len(chunks)} chunks created")
                 
