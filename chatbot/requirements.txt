@@ -13,3 +13,8 @@ PyPDF2
 sentence-transformers
 torch
 langchain-huggingface
+
+# OCR and PDF image conversion
+pytesseract
+pdf2image
+Pillow

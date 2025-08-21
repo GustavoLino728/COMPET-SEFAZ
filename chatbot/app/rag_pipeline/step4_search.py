@@ -23,14 +23,14 @@ class SearchEngine:
     def similarity_search(self, 
                         query: str, 
                         k: int = 4, 
-                        score_threshold: float = 0.7) -> List[Document]:
+                        score_threshold: Optional[float] = None) -> List[Document]:
         """
         Perform similarity search
         
         Args:
             query (str): Query to be searched
             k (int): Maximum number of results
-            score_threshold (float): Minimum similarity score
+            score_threshold (Optional[float]): Optional maximum distance threshold (lower is better)
             
         Returns:
             List[Document]: List of relevant documents
@@ -42,17 +42,23 @@ class SearchEngine:
         try:
             logger.info(f"Performing search for: '{query}'")
             
-            # Perform similarity search
+            # Perform similarity search;
             results = self.vector_store.similarity_search_with_score(
                 query, 
                 k=k
             )
             
-            # Filter by score threshold
+            # Sort by ascending distance
+            results = sorted(results, key=lambda pair: pair[1])
+            
+            # Filter by optional maximum distance threshold
             filtered_results = []
-            for doc, score in results:
-                if score >= score_threshold:
-                    doc.metadata['similarity_score'] = score
+            for doc, distance in results:
+                # Store both raw distance and a derived similarity for downstream usage
+                doc.metadata['distance'] = distance
+                doc.metadata['similarity'] = 1.0 / (1.0 + float(distance))
+                
+                if score_threshold is None or distance <= score_threshold:
                     filtered_results.append(doc)
             
             logger.info(f"Found {len(filtered_results)} relevant documents")
@@ -100,7 +106,7 @@ class SearchEngine:
                      query: str, 
                      metadata_filter: Optional[Dict[str, Any]] = None,
                      k: int = 4, 
-                     score_threshold: float = 0.7) -> List[Document]:
+                     score_threshold: Optional[float] = None) -> List[Document]:
         """
         Perform hybrid search (similarity + metadata)
         
@@ -108,7 +114,7 @@ class SearchEngine:
             query (str): Query to be searched
             metadata_filter (Optional[Dict[str, Any]]): Metadata filters
             k (int): Maximum number of results
-            score_threshold (float): Minimum similarity score
+            score_threshold (Optional[float]): Optional maximum distance threshold (lower is better)
             
         Returns:
             List[Document]: List of relevant documents
@@ -120,7 +126,6 @@ class SearchEngine:
         try:
             logger.info(f"Performing hybrid search for: '{query}'")
             
-            # Hybrid search
             if metadata_filter:
                 results = self.vector_store.similarity_search_with_score(
                     query, 
@@ -133,11 +138,15 @@ class SearchEngine:
                     k=k
                 )
             
-            # Filter by score threshold
+            # Sort by ascending distance
+            results = sorted(results, key=lambda pair: pair[1])
+            
+            # Filter by optional maximum distance threshold
             filtered_results = []
-            for doc, score in results:
-                if score >= score_threshold:
-                    doc.metadata['similarity_score'] = score
+            for doc, distance in results:
+                doc.metadata['distance'] = distance
+                doc.metadata['similarity'] = 1.0 / (1.0 + float(distance))
+                if score_threshold is None or distance <= score_threshold:
                     filtered_results.append(doc)
             
             logger.info(f"Found {len(filtered_results)} relevant documents")
@@ -146,6 +155,114 @@ class SearchEngine:
         except Exception as e:
             logger.error(f"Error in hybrid search: {e}")
             return []
+    
+    def hybrid_search_with_keywords(self, 
+                                  query: str, 
+                                  keywords: List[str] = None,
+                                  k: int = 16, 
+                                  score_threshold: Optional[float] = None) -> List[Document]:
+        """
+        Perform hybrid search combining semantic and keyword search
+        
+        Args:
+            query (str): Query to be searched
+            keywords (List[str]): Additional keywords to search for
+            k (int): Maximum number of results
+            score_threshold (Optional[float]): Optional maximum distance threshold (ignored for hybrid search)
+            
+        Returns:
+            List[Document]: List of relevant documents
+        """
+        if not self.vector_store:
+            logger.error("Vector store not available for search")
+            return []
+        
+        try:
+            logger.info(f"Performing hybrid search for: '{query}' with keywords: {keywords}")
+            
+            # First, do semantic search without threshold filtering
+            semantic_results = self.similarity_search(query, k=k//2, score_threshold=None)
+            
+            # Then, do keyword search if keywords provided (also without threshold filtering)
+            keyword_results = []
+            if keywords:
+                for keyword in keywords:
+                    keyword_docs = self.similarity_search(keyword, k=k//4, score_threshold=None)
+                    keyword_results.extend(keyword_docs)
+            
+            # Combine all results
+            all_results = semantic_results + keyword_results
+            
+            # Less aggressive deduplication - only remove exact duplicates
+            seen_contents = set()
+            unique_results = []
+            for doc in all_results:
+                # Use a more lenient hash to avoid removing similar but different chunks
+                content_hash = hash(doc.page_content[:50])  # Use first 50 chars as hash
+                if content_hash not in seen_contents:
+                    seen_contents.add(content_hash)
+                    unique_results.append(doc)
+            
+            # Score chunks based on relevance to user query
+            scored_results = []
+            for doc in unique_results:
+                score = self._calculate_chunk_relevance_score(doc, query, keywords)
+                scored_results.append((doc, score))
+            
+            # Sort by relevance score (higher is better)
+            scored_results.sort(key=lambda x: x[1], reverse=True)
+            
+            # Take top k results
+            final_results = [doc for doc, score in scored_results[:k]]
+            
+            logger.info(f"Found {len(final_results)} unique documents (semantic: {len(semantic_results)}, keyword: {len(keyword_results)})")
+            return final_results
+            
+        except Exception as e:
+            logger.error(f"Error in hybrid search: {e}")
+            return []
+    
+    def _calculate_chunk_relevance_score(self, doc: Document, query: str, keywords: List[str] = None) -> float:
+        """
+        Calculate a relevance score for a chunk based on multiple factors
+        
+        Args:
+            doc (Document): The document chunk to score
+            query (str): Original user query
+            keywords (List[str]): Keywords extracted from the query
+            
+        Returns:
+            float: Relevance score (higher is better)
+        """
+        content_lower = doc.page_content.lower()
+        query_lower = query.lower()
+        
+        # Base score from similarity (normalize to 0-1 range)
+        similarity = doc.metadata.get('similarity', 0)
+        base_score = float(similarity) if similarity else 0.0
+        
+        # Keyword presence bonus
+        keyword_bonus = 0.0
+        if keywords:
+            # Count how many keywords are present in this chunk
+            keyword_matches = sum(1 for keyword in keywords if keyword.lower() in content_lower)
+            # Bonus increases with more keyword matches
+            keyword_bonus = min(0.5, keyword_matches * 0.1)  # Max 0.5 bonus
+        
+        # Query term density bonus
+        query_terms = query_lower.split()
+        query_term_matches = sum(1 for term in query_terms if len(term) > 2 and term in content_lower)
+        query_density_bonus = min(0.3, query_term_matches * 0.05)  # Max 0.3 bonus
+        
+        # Exact phrase match bonus
+        exact_phrase_bonus = 0.0
+        if query_lower in content_lower:
+            exact_phrase_bonus = 0.4  # High bonus for exact phrase matches
+        
+        # Combine all scores
+        total_score = base_score + keyword_bonus + query_density_bonus + exact_phrase_bonus
+        
+        return total_score
     
     def get_search_statistics(self, query: str) -> Dict[str, Any]:
         """
