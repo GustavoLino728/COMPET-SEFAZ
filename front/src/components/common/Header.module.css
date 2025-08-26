@@ -1,0 +1,61 @@
+.header {
+  width: 100%;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e9ecef;
+  padding: 0 2rem;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1200px; 
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px; 
+}
+
+.logo a {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #212529;
+  text-decoration: none;
+}
+
+.navLinks {
+  display: flex;
+  gap: 2rem; 
+}
+
+.navLinks a {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #495057;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+.navLinks a:hover {
+  color: #007bff; 
+}
+
+.loginButton a {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #212529;
+  background-color: #f1f3f5;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.loginButton a:hover {
+  background-color: #e9ecef;
+}
+
+.rightGroup {
+  display: flex;
+  align-items: center; 
+  gap: 2rem; 
+}

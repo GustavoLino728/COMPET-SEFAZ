@@ -9,6 +9,7 @@ import os
 import logging
 import unicodedata
 from dotenv import load_dotenv
+import re
 
 # Load environment variables
 load_dotenv()
@@ -59,17 +60,41 @@ class RAGChatbot:
             return ""
         
         context_parts = []
+        agreste_chunks = []
+        
         for i, doc in enumerate(documents):
             # Add document information
             source = doc.metadata.get('source', 'Unknown source')
-            score = doc.metadata.get('similarity_score', 'N/A')
-            
-            context_parts.append(f"Document {i+1} (Score: {score}):")
+            distance = doc.metadata.get('distance', 'N/A')
+            similarity = doc.metadata.get('similarity', 'N/A')
+            context_parts.append(f"Document {i+1} (Distance: {distance}, Similarity: {similarity}):")
             context_parts.append(f"Source: {source}")
             context_parts.append(f"Content: {doc.page_content}")
             context_parts.append("-" * 50)
+            
+            # Check if this chunk contains "agreste"
+            if "agreste" in doc.page_content.lower():
+                agreste_chunks.append({
+                    "index": i+1,
+                    "source": source,
+                    "content": doc.page_content[:200] + "..." if len(doc.page_content) > 200 else doc.page_content,
+                    "similarity": similarity
+                })
         
-        return "\n".join(context_parts)
+        context = "\n".join(context_parts)
+        
+        # Log agreste chunks if found
+        if agreste_chunks:
+            logger.info(f"Found {len(agreste_chunks)} chunks containing 'agreste':")
+            for chunk in agreste_chunks:
+                logger.info(f"  Chunk {chunk['index']} (similarity: {chunk['similarity']}): {chunk['content']}")
+        else:
+            logger.warning("No chunks containing 'agreste' found in the retrieved documents")
+        
+        # Temporary logging for debugging (increased to 2000 chars)
+        logger.info(f"Context being sent to GPT (first 2000 chars): {context[:2000]}...")
+        
+        return context
     
     def _create_system_prompt(self) -> str:
         """
@@ -78,20 +103,27 @@ class RAGChatbot:
         Returns:
             str: System prompt
         """
-        return """Você é um assistente especializado em legislação tributária e assuntos da SEFAZ-PE (Secretaria da Fazenda do Estado de Pernambuco).  
-        
-Suas responsabilidades incluem:
-1. Responder perguntas sobre ICMS, incentivos fiscais e legislação tributária
-2. Fornecer informações precisas baseadas na documentação oficial
-3. Explicar conceitos complexos de forma clara e acessível
-4. Sempre citar as fontes quando possível
+        return """Você é o "Agente Compet - ICMS", um assistente de IA ultra especializado e rigoroso em legislação tributária da SEFAZ-PE.
 
-IMPORTANTE:
-- Baseie suas respostas APENAS no contexto fornecido
-- Se a informação não estiver no contexto, diga que não tem a informação
-- Mantenha um tom profissional mas acessível
-- Use linguagem clara e evite jargões desnecessários
-- Sempre mencione as fontes dos documentos quando relevante"""
+# REGRAS DE CONDUTA INVIOLÁVEIS
+
+1. **Regra de Ouro: Fidelidade Absoluta às Fontes.** Suas respostas devem ser 100% derivadas dos documentos fornecidos no contexto. Você NUNCA deve usar seu conhecimento prévio ou informações externas.
+
+2. **Busca Ativa e Interpretação Correta:** Analise cuidadosamente todo o contexto fornecido para encontrar a informação solicitada. Considere que:
+   - Informações negativas (como "não se aplica", "não é permitido", "não há") SÃO respostas válidas
+   - Se o documento diz que algo "não se aplica" ou "não é permitido", isso é uma resposta direta à pergunta
+   - Não confunda "não encontrei a informação" com "a informação diz que não é permitido"
+
+3. **Resposta Direta:** Se encontrar informação que responde diretamente à pergunta (mesmo que seja uma resposta negativa), forneça a resposta completa e precisa.
+
+4. **Recusa Apenas Quando Realmente Não Encontrou:** Só responda "A informação solicitada não foi encontrada na documentação fornecida" quando realmente não houver nenhuma informação relevante nos documentos.
+
+5. **Citação de Fontes:** Ao formular uma resposta, você deve, sempre que possível, indicar qual documento forneceu a informação. Exemplo: "De acordo com o documento 'Decreto 44.650.2017 - Anexo 33.pdf'..."
+
+6. **Clareza e Acessibilidade:** Mantenha um tom profissional, claro e direto. Explique conceitos tributários complexos de forma acessível, mas evite simplificar excessivamente.
+
+# OBJETIVO FINAL
+Seu propósito é atuar como uma ferramenta de consulta precisa sobre a legislação da SEFAZ-PE. A exatidão e a aderência estrita aos documentos fornecidos são mais importantes do que fornecer uma resposta a qualquer custo."""
     
     def _create_user_prompt(self, query: str, context: str) -> str:
         """
@@ -109,8 +141,9 @@ IMPORTANTE:
 Contexto dos documentos:
 {context}
 
-Por favor, responda à pergunta do usuário baseando-se APENAS no contexto fornecido acima. 
-Se a informação não estiver no contexto, informe que a informação não está disponível."""
+Analise cuidadosamente o contexto fornecido e responda à pergunta do usuário baseando-se APENAS nas informações contidas nos documentos acima. 
+Se encontrar a informação, forneça uma resposta completa e precisa, citando a fonte.
+Se a informação não estiver presente nos documentos, responda: 'A informação solicitada não foi encontrada na documentação fornecida.'"""
     
 
     def _create_system_prompt_for_quiz(self) -> str:
@@ -166,17 +199,63 @@ Contexto dos Documentos:
 
 Por favor, com base APENAS no contexto acima, crie uma questão de múltipla escolha que avalie o entendimento sobre o tópico sugerido. Siga estritamente as regras e o formato JSON definidos nas suas instruções de sistema."""
 
+    def _extract_keywords(self, query: str) -> List[str]:
+        """
+        Extract relevant keywords from the query for hybrid search
+        
+        Args:
+            query (str): User's question
+            
+        Returns:
+            List[str]: List of relevant keywords with case variations
+        """
+        
+        # Remove punctuation and split into words
+        words = re.findall(r'\b\w+\b', query.lower())
+        
+        # Filter out common stop words and very short words
+        stop_words = {
+            'a', 'o', 'e', 'de', 'da', 'do', 'em', 'um', 'uma', 'com', 'para', 'por', 'se', 'que', 
+            'não', 'na', 'no', 'meu', 'minha', 'me', 'eu', 'você', 'seu', 'sua', 'está', 'estou',
+            'qual', 'quem', 'onde', 'quando', 'como', 'porque', 'qual', 'meu', 'minha',
+            'se', 'está', 'localizado', 'na', 'no', 'em', 'do', 'da', 'de', 'com', 'para', 'por'
+        }
+        
+        # Keep meaningful words (longer than 2 characters and not stop words)
+        meaningful_words = [word for word in words if len(word) > 2 and word not in stop_words]
+        
+        # Generate case variations for each meaningful word
+        keywords = []
+        for word in meaningful_words:
+            # Add original word and common case variations
+            variations = [
+                word,  # original lowercase
+                word.capitalize(),  # first letter uppercase
+                word.upper(),  # all uppercase
+            ]
+            keywords.extend(variations)
+        
+        # Remove duplicates while preserving order
+        unique_keywords = []
+        seen = set()
+        for keyword in keywords:
+            if keyword not in seen:
+                seen.add(keyword)
+                unique_keywords.append(keyword)
+        
+        return unique_keywords
+
     def chat(self, 
              query: str, 
-             k: int = 4, 
-             score_threshold: float = 0.7) -> Dict[str, Any]:
+             k: int = 24, 
+             score_threshold: Optional[float] = None) -> Dict[str, Any]:
         """
         Process a user's question and return a response
         
         Args:
             query (str): User's question
             k (int): Number of documents to search
-            score_threshold (float): Minimum similarity score
+            score_threshold (Optional[float]): Optional maximum distance threshold for filtering (lower is better)
             
         Returns:
             Dict[str, Any]: Response with detailed information
@@ -187,12 +266,32 @@ Por favor, com base APENAS no contexto acima, crie uma questão de múltipla esc
             
             logger.info(f"Processing question: '{normalized_query}'")
             
-            # Search relevant documents
-            relevant_docs = self.search_engine.similarity_search(
-                normalized_query, 
-                k=k, 
-                score_threshold=score_threshold
-            )
+            # Search relevant documents using regular similarity search
+            # relevant_docs = self.search_engine.similarity_search(
+            #     normalized_query, 
+            #     k=k, 
+            #     score_threshold=score_threshold
+            # )
+
+            # Extract keywords for hybrid search
+            keywords = self._extract_keywords(normalized_query)
+            logger.info(f"Extracted keywords: {keywords}")
+            
+            # Search relevant documents using hybrid search
+            if hasattr(self.search_engine, 'hybrid_search_with_keywords'):
+                relevant_docs = self.search_engine.hybrid_search_with_keywords(
+                    normalized_query, 
+                    keywords=keywords,
+                    k=k, 
+                    score_threshold=score_threshold
+                )
+            else:
+                # Fallback to regular search
+                relevant_docs = self.search_engine.similarity_search(
+                    normalized_query, 
+                    k=k, 
+                    score_threshold=score_threshold
+                )
             
             if not relevant_docs:
                 logger.warning("No relevant documents found")
@@ -224,7 +323,7 @@ Por favor, com base APENAS no contexto acima, crie uma questão de múltipla esc
             if response.choices and response.choices[0].message:
                 ai_response = response.choices[0].message.content.strip()
             else:
-                ai_response = "Sorry, I couldn't generate an appropriate response."
+                ai_response = "Desculpe, não consegui gerar uma resposta apropriada."
             
             # Prepare source information
             sources = []
@@ -232,19 +331,28 @@ Por favor, com base APENAS no contexto acima, crie uma questão de múltipla esc
                 source_info = {
                     "source": doc.metadata.get('source', 'Unknown source'),
                     "file_name": doc.metadata.get('file_name', 'N/A'),
-                    "score": doc.metadata.get('similarity_score', 'N/A')
+                    "distance": doc.metadata.get('distance', 'N/A'),
+                    "similarity": doc.metadata.get('similarity', 'N/A')
                 }
                 sources.append(source_info)
             
-            # Determine confidence level
-            avg_score = sum([doc.metadata.get('similarity_score', 0) for doc in relevant_docs]) / len(relevant_docs)
-            confidence = "high" if avg_score > 0.8 else "medium" if avg_score > 0.6 else "low"
+            # Determine confidence level using derived similarity if available
+            similarities = [doc.metadata.get('similarity') for doc in relevant_docs if isinstance(doc.metadata.get('similarity'), (int, float))]
+            if similarities:
+                avg_similarity = sum(similarities) / len(similarities)
+            else:
+                # Fallback: try previous key or default
+                scores = [doc.metadata.get('similarity_score', 0) for doc in relevant_docs]
+                # If "similarity_score" was actually a distance, transform it
+                avg_similarity = sum([1.0 / (1.0 + float(s)) if isinstance(s, (int, float)) else 0 for s in scores]) / len(scores) if scores else 0
+            
+            confidence = "high" if avg_similarity > 0.8 else "medium" if avg_similarity > 0.6 else "low"
             
             result = {
                 "response": ai_response,
                 "sources": sources,
                 "confidence": confidence,
-                "avg_score": avg_score,
+                "avg_score": avg_similarity,  # keep key name for compatibility; now represents similarity in [0,1]
                 "documents_used": len(relevant_docs)
             }
             
@@ -254,7 +362,7 @@ Por favor, com base APENAS no contexto acima, crie uma questão de múltipla esc
         except Exception as e:
             logger.error(f"Error processing chat: {e}")
             return {
-                "response": "Sorry, an error occurred while processing your question. Please try again.",
+                "response": "Desculpe, ocorreu um erro ao processar sua pergunta. Tente novamente.",
                 "sources": [],
                 "confidence": "error",
                 "error": str(e)

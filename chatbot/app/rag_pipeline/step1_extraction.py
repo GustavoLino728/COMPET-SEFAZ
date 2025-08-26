@@ -8,6 +8,10 @@ import os
 from typing import List, Dict, Any
 import logging
 
+# OCR imports
+from pdf2image import convert_from_path
+import pytesseract
+
 logger = logging.getLogger(__name__)
 
 class DocumentExtractor:
@@ -21,6 +25,35 @@ class DocumentExtractor:
             base_directory (str): Directory where the documents are located
         """
         self.base_directory = base_directory
+    
+    def _ocr_pdf(self, file_path: str) -> List[Document]:
+        """
+        Perform OCR on a PDF file and return a list of page Documents.
+        Uses Tesseract with Portuguese language if available.
+        """
+        try:
+            logger.info(f"Running OCR fallback for: {file_path}")
+            images = convert_from_path(file_path, dpi=300)
+            ocr_docs: List[Document] = []
+            for page_index, image in enumerate(images):
+                text = pytesseract.image_to_string(image, lang="por")
+                page_doc = Document(
+                    page_content=text or "",
+                    metadata={
+                        'source': file_path,
+                        'file_name': os.path.basename(file_path),
+                        'directory': os.path.dirname(file_path),
+                        'document_type': 'pdf',
+                        'extraction': 'ocr',
+                        'page_index': page_index
+                    }
+                )
+                ocr_docs.append(page_doc)
+            logger.info(f"OCR produced {len(ocr_docs)} pages for {file_path}")
+            return ocr_docs
+        except Exception as e:
+            logger.error(f"OCR fallback failed for {file_path}: {e}")
+            return []
         
     def extract_pdfs(self) -> List[Document]:
         """
@@ -55,17 +88,26 @@ class DocumentExtractor:
                                 'source': file_path,
                                 'file_name': file_name,
                                 'directory': root,
-                                'document_type': 'pdf'
+                                'document_type': 'pdf',
+                                'extraction': 'text'
                             })
                         
+                        # If text extraction produced too little content, try OCR fallback
+                        total_chars = sum(len(d.page_content.strip()) for d in pdf_documents)
+                        if total_chars < 50:  # heuristic threshold
+                            logger.warning(f"Low text content detected ({total_chars} chars). Attempting OCR for: {file_name}")
+                            ocr_docs = self._ocr_pdf(file_path)
+                            if ocr_docs:
+                                pdf_documents = ocr_docs
+                        
                         documents.extend(pdf_documents)
-                        logger.info(f"  - {len(pdf_documents)} páginas extraídas de {file_name}")
+                        logger.info(f"  - {len(pdf_documents)} pages extracted from {file_name}")
                         
                     except Exception as e:
-                        logger.error(f"Erro ao processar arquivo {file_path}: {e}")
+                        logger.error(f"Error while processing file: {file_path}: {e}")
                         continue
         
-        logger.info(f"Total de {len(documents)} documentos extraídos")
+        logger.info(f"Total of {len(documents)} documents extracted")
         return documents
     
     def extract_documents(self) -> List[Document]:
@@ -94,7 +136,7 @@ if __name__ == "__main__":
     extractor = DocumentExtractor(test_dir)
     documents = extractor.extract_documents()
     
-    print(f"Documentos extraídos: {len(documents)}")
+    print(f"Documents extracted: {len(documents)}")
     if documents:
-        print(f"Primeiro documento: {documents[0].page_content[:200]}...")
-        print(f"Metadados: {documents[0].metadata}") 
+        print(f"First document: {documents[0].page_content[:200]}...")
+        print(f"Metadata: {documents[0].metadata}") 
