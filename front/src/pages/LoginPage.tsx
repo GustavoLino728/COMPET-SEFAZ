@@ -6,7 +6,8 @@ const LoginPage = () => {
   return (
     <div className={styles.pageContainer}>
       <form className={styles.formContainer}>
-        <h2>Bem Vindo de volta</h2>
+        <h1>Seu caminho começa agora.</h1>
+        <p>Simples, prático e do seu jeito.</p>
 
         <div className={styles.inputGroup}>
           <label htmlFor="email">Email</label>
@@ -19,7 +20,7 @@ const LoginPage = () => {
         </div>
 
         <div className={styles.inputGroup}>
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">Senha</label>
           <input 
             type="password" 
             id="password" 
@@ -29,10 +30,18 @@ const LoginPage = () => {
         </div>
 
          <Link to="/esqueci-senha" className={styles.forgotPasswordLink}>
-          Esqueceu sua senha?
+          Esqueceu a senha?
         </Link>
 
-        <button type="submit" className={styles.submitButton}>Log In</button>
+        <button type="submit" className={styles.submitButton}>Entrar</button>
+
+        <div className={styles.registerContainer}>
+
+          <Link to="/cadastro" className={styles.registerButton}>
+            Cadastre-se
+          </Link> 
+
+        </div>
       </form>
     </div>
   );
