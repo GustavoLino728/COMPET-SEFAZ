@@ -31,12 +31,20 @@
 
 .formContainer h2 {
   margin: 0;
-  font-size: 24px;  
+  font-size: 24px; 
+  font-weight: 700; 
+}
+
+.formContainer p {
+  margin: 0;
+  align-self: flex-start;
+  font-size: 16px;  
+  color: #6c757d;
 }
 
 .inputField {
   width: 100%;
-  padding: 14xp 16px;
+  padding: 16px;
   border: 1px solid #dee2e6;
   border-radius: 8px;
   background-color: #f1f3f5;
@@ -50,7 +58,7 @@
 .submitButton {
   width: 100%;
   padding: 14px;
-  background-color: #007bff;
+  background-color: #36366B;
   color: white;
   border: none;
   border-radius: 8px;
