@@ -36,9 +36,9 @@ services:
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
     volumes:
       - ./back:/app
-      - ./chatbot:/chatbot
-      - huggingface_cache:/root/.cache/huggingface
-      - ./chatbot/app/data:/app/chatbot/app/data
+      # - ./chatbot:/chatbot
+      # - huggingface_cache:/root/.cache/huggingface
+      # - ./chatbot/app/data:/app/chatbot/app/data
     depends_on:
       postgres:
         condition: service_healthy
@@ -60,4 +60,4 @@ services:
 
 volumes:
   postgres_data:
-  huggingface_cache:
+  # huggingface_cache:
