@@ -1,0 +1,113 @@
+/* Container principal da página agora com fundo branco */
+.pageContainer {
+  width: 100%;
+  min-height: 100vh;
+  background: #FFF; /* Fundo branco, como no Figma */
+  display: flex;
+  justify-content: center; /* Centraliza o formulário horizontalmente */
+  padding: 3rem 1rem; /* Um respiro nas laterais e no topo/fundo */
+}
+
+/* O 'formContainer' agora não é mais um card, mas um limitador de largura */
+.formContainer {
+  width: 100%;
+  max-width: 650px; /* Aumentamos a largura máxima para se parecer mais com o Figma */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centraliza o conteúdo do formulário (título, botão) */
+}
+
+/* --- TÍTULO --- */
+.title {
+  color: #020F59;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 35px;
+  margin-bottom: 1rem; /* Espaçamento ajustado */
+}
+
+/* Div para o texto "Etapa 2 de 3" e o indicador visual */
+.stepIndicator {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  color: #555;
+  font-size: 16px;
+}
+
+/* --- GRUPO DE INPUTS --- */
+.inputGroup {
+  width: 100%; /* Faz o grupo ocupar toda a largura do formContainer */
+  margin-bottom: 1.5rem;
+}
+
+.label {
+  display: block;
+  color: #555;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  background-color: #f9f9f9; /* Fundo cinza claro do input */
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+}
+
+/* --- BOTÕES DE INTERESSE --- */
+.interestContainer {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.interestButton {
+  flex: 1; /* Faz os botões terem larguras iguais */
+  min-width: 150px; /* Largura mínima para cada botão */
+  padding: 12px;
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  background-color: #ffffff;
+  cursor: pointer;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  display: flex; /* Para alinhar ícone e texto */
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem; /* Espaço entre ícone e texto */
+}
+
+.interestButton.selected {
+  background-color: #020F59;
+  color: #ffffff;
+  border-color: #020F59;
+}
+
+/* --- BOTÃO PRINCIPAL --- */
+.submitButton {
+  width: 100%;
+  max-width: 300px; /* Largura fixa para o botão principal, como no design */
+  padding: 15px;
+  margin-top: 2rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #020F59;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.submitButton:hover {
+  background-color: #1a2a8a;
+}
