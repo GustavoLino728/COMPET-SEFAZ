@@ -6,7 +6,7 @@ function UserSetup() {
   const navigate = useNavigate();
   const [ramo, setRamo] = useState('');
   const [area, setArea] = useState('');
-  const [interesses, setInteresses] = useState<string[]>(['Comércio']); // 'Comércio' começa selecionado como no figma
+  const [interesses, setInteresses] = useState<string[]>(['Comércio']);
 
   const handleInterestClick = (interesse: string) => {
     if (interesses.includes(interesse)) {
@@ -30,7 +30,7 @@ function UserSetup() {
 
         {/* Usando a nova classe para o indicador de etapas */}
         <div className={styles.stepIndicator}>
-          Etapa 2 de 3
+          Etapa 2 de 2
         </div>
 
         <form onSubmit={handleSubmit} style={{ width: '100%' }}>
@@ -59,7 +59,7 @@ function UserSetup() {
           <div className={styles.inputGroup}>
             <label className={styles.label}>Áreas de Interesse (Opcional)</label>
             <div className={styles.interestContainer}>
-              {/* Para os ícones, você precisaria importá-los como SVGs */}
+              {/* Para os ícones, preciso importá-los como SVGs */}
               <button
                 type="button"
                 className={`${styles.interestButton} ${interesses.includes('Agronegócio') ? styles.selected : ''}`}

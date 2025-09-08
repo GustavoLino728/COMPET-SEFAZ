@@ -1,9 +1,6 @@
 import React from 'react';
 import styles from './HomePage.module.css';
 
-// ==================================================================
-// SEU CÓDIGO ANTIGO (NÃO MEXA)
-// ==================================================================
 type DashboardCardProps = {
   title: string;
   description: string;
@@ -26,15 +23,6 @@ const DashboardCard = ({ title, description, buttonText, buttonLink, isLarge = f
   );
 };
 
-// ==================================================================
-// 👇👇👇 COMECE A ADICIONAR O NOVO CÓDIGO AQUI 👇👇👇
-// ==================================================================
-
-// --- NOVO Componente Reutilizável para os Cards das Trilhas ---
-
-// A parte do "type" que você mencionou. É uma definição TypeScript.
-// Funciona como um "contrato" para o nosso componente, dizendo que ele PRECISA receber
-// uma imagem, um título e uma descrição para funcionar.
 type TrailCardProps = {
   imageSrc: string;
   title: string;
@@ -58,10 +46,6 @@ const TrailCard = ({ imageSrc, title, description }: TrailCardProps) => {
   );
 };
 
-
-// ==================================================================
-// O Componente da Página Principal (Vamos adicionar a nova seção a ele)
-// ==================================================================
 function HomePage() {
   return (
     <div className={styles.pageContainer}>
@@ -102,7 +86,7 @@ function HomePage() {
         </section>
 
         {/* ================================================================== */}
-        {/* 👇👇👇 COLE A NOVA SEÇÃO DE "TRILHAS SUGERIDAS" AQUI 👇👇👇      */}
+        {/* lembrar de colocar as outras seções de trilhas sugeridas aqui      */}
         {/* ================================================================== */}
         <section className={styles.trailsSection}>
           <h2 className={styles.sectionTitle}>Trilhas Sugeridas</h2>
