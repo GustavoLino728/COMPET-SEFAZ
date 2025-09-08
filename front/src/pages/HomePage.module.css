@@ -1,0 +1,159 @@
+/* --- Layout Principal --- */
+.pageContainer {
+  width: 100%;
+  padding: 40px;
+  background-color: #f7f9fc; /* Um fundo levemente azulado/acinzentado */
+  font-family: 'Inter', sans-serif;
+}
+
+.contentWrapper {
+  max-width: 1100px; /* Limita a largura do conteúdo central */
+  margin: 0 auto; /* Centraliza o conteúdo na página */
+}
+
+/* --- Seções --- */
+.welcomeSection {
+  margin-bottom: 50px;
+}
+
+.quickAccessSection {
+  margin-bottom: 50px;
+}
+
+.cardGrid {
+  display: grid; /* Usando grid para os cards */
+  grid-template-columns: 2fr 1fr; /* A primeira coluna é 2x maior que a segunda */
+  gap: 24px;
+}
+
+/* --- Tipografia --- */
+.welcomeTitle {
+  color: #020f59;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  color: rgba(2, 15, 89, 0.7);
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.sectionTitle {
+  color: #111416;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+/* --- Componentes Reutilizáveis --- */
+
+/* Card Genérico */
+.card {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Card Grande (ocupa duas colunas) */
+.largeCard {
+  grid-column: span 2; /* Faz este card ocupar as 2 colunas do grid */
+}
+
+.cardTitle {
+  color: #3e3e3e;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.cardDescription {
+  color: rgba(38, 38, 38, 0.7);
+  font-size: 16px;
+  line-height: 1.5;
+  flex-grow: 1; /* Empurra o botão para baixo */
+  margin-bottom: 24px;
+}
+
+/* Botão Genérico */
+.button {
+  padding: 12px 24px;
+  background: #020f59;
+  color: #efeffc;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  text-decoration: none;
+  text-align: center;
+  align-self: flex-start; /* Alinha o botão à esquerda dentro do card */
+}
+
+.button:hover {
+  background-color: #1a2a8a;
+}
+
+/* --- Seção Trilhas Sugeridas --- */
+.trailsSection {
+  margin-bottom: 50px;
+}
+
+.trailsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Cria 3 colunas de tamanho igual */
+  gap: 24px;
+}
+
+/* --- Card da Trilha (Componente Reutilizável) --- */
+.trailCard {
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden; /* Garante que a imagem com cantos retos se ajuste aos cantos arredondados do card */
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.trailCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.trailImage {
+  width: 100%;
+  height: 220px; /* Altura fixa para a imagem */
+  object-fit: cover; /* Garante que a imagem cubra o espaço sem distorcer */
+  background-color: #eaf2f8; /* Cor de fundo para o placeholder da imagem */
+}
+
+.trailContent {
+  padding: 24px;
+}
+
+.trailTitle {
+  /* Estilos que você passou para "PRODEPE" */
+  color: #14145B;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 29px;
+  margin-bottom: 8px;
+}
+
+.trailDescription {
+  /* Estilos que você passou para o texto de descrição */
+  color: #61758A;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+}
