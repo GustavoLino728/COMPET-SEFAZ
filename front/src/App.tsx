@@ -8,6 +8,7 @@ import LoginPage from './pages/LoginPage';
 import UserSetup from './pages/UserSetup';
 import ResetPassword from './pages/ForgotPasswordPage';
 import ResetPasswordConfirm from './pages/ResetPasswordConfirmPage';
+import UserProfile from './pages/userProfile/UserProfilePage'
 import './App.css';
 import './styles/global.css';
 
@@ -35,6 +36,7 @@ function App() {
           <Route path="/setup" element={<UserSetup />} />
           <Route path="/esqueci-senha" element={<ResetPassword/>}/>
           <Route path="/nova-senha" element={<ResetPasswordConfirm/>}/>
+          <Route path="/perfil" element={<UserProfile/>}/>
           {/* Add other routes as needed */}
         </Routes>
       </main>

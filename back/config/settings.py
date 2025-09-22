@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'djoser',
     'corsheaders',
     'users',
+    'gamification',
     'questions',
     'chatbot_api',
 ]
