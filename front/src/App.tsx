@@ -12,6 +12,7 @@ import './styles/global.css';
 
 import FloatingButton from './components/FloatingButton';
 import ChatWindow from './components/ChatWindow';
+import TrailsPanel from './pages/TrailsPanel';
 
 function App() {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -31,7 +32,7 @@ function App() {
           <Route path="/cadastro" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/setup" element={<UserSetup />} />
-          {/* Add other routes as needed */}
+          <Route path="/trilhas" element={<TrailsPanel />} />
         </Routes>
       </main>
       

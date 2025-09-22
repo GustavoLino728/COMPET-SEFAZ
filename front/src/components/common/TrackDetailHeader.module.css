@@ -1,0 +1,103 @@
+.headerContainer {
+  background: linear-gradient(135deg, #4ade80 0%, #70D6A2 100%);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.backButton {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 8px 12px;
+  margin-bottom: 16px;
+  transition: background 0.2s;
+}
+
+.backButton:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+
+.textContent {
+  flex: 1;
+}
+
+.title {
+  color: #061A84;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  line-height: 1.2;
+}
+
+.description {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0;
+  max-width: 600px;
+}
+
+.iconContainer {
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+}
+
+.icon {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+@media (max-width: 968px) {
+  .headerContainer {
+    width: 100%;
+    max-width: 920px;
+    height: auto;
+    min-height: 200px;
+    padding: 20px;
+  }
+  
+  .content {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+  }
+  
+  .title {
+    font-size: 24px;
+  }
+  
+  .description {
+    font-size: 14px;
+  }
+  
+  .iconContainer {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .icon {
+    width: 36px;
+    height: 36px;
+  }
+}
