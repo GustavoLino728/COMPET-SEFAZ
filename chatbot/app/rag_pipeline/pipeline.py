@@ -1,5 +1,5 @@
 """
-RAG Pipeline - Módulo principal que integra todas as etapas da pipeline RAG
+RAG Pipeline - Main module to integrate all RAG pipelines steps
 """
 
 from .step1_extraction import DocumentExtractor
@@ -250,6 +250,33 @@ class RAGPipeline:
             logger.error(f"Error updating knowledge base: {e}")
             return False
 
+    def generate_challenges_and_questions(self, 
+                                        topic: str, 
+                                        difficulty: str,
+                                        type: str,
+                                        k: int = 10, 
+                                        score_threshold: float = 0.7) -> Dict[str, Any]:
+        """
+        Generates a set of challenges and questions based on the topic, difficulty and type.
+        
+        Args:
+            topic (str): Topic to generate the question.
+            difficulty (str): Difficulty level (Easy, Medium, Hard).
+            type (str): Type of challenge (Calculation, Discursive).
+            k (int): Number of documents to search.
+            score_threshold (float): Minimum similarity score.
+            
+        Returns:
+            Dict[str, Any]: Challenges and questions generated.
+        """
+
+        if not self.chatbot:
+            return {
+                "error": "Knowledge base not loaded. Execute build_knowledge_base() or load_knowledge_base() first."
+            }
+        
+        return self.chatbot.generate_challenges_and_questions(topic, difficulty, type, k, score_threshold)
+
     def generate_multiple_choice_question(self, 
                                         topic: str, 
                                         k: int = 4, 
@@ -303,140 +330,3 @@ class RAGPipeline:
             }
         
         return self.chatbot.generate_quiz_set(topics, k, score_threshold)
-
-# Example usage
-if __name__ == "__main__":
-    import logging
-    logging.basicConfig(level=logging.INFO)
-    
-    # Initializes pipeline
-    pipeline = RAGPipeline()
-    
-    # Builds knowledge base
-    success = pipeline.build_knowledge_base()
-    
-    if success:
-        print("Knowledge base built successfully!")
-        
-        # Tests chat
-        # test_queries = [
-        #     "O que é ICMS?",
-        #     "Explique sobre não cumulatividade",
-        #     "Quais são os incentivos fiscais?"
-        # ]
-        
-        # for query in test_queries:
-        #     print(f"\n{'='*60}")
-        #     print(f"Question: {query}")
-        #     print(f"{'='*60}")
-            
-        #     result = pipeline.chat(query)
-        #     print(f"Response: {result['response']}")
-        #     print(f"Confidence: {result['confidence']}")
-            
-        #     if result['sources']:
-        #         print("\nSources:")
-        #         for source in result['sources']:
-        #             print(f"  - {source['file_name']}")
-
-        # Test multiple choice question generation
-        print("\n" + "=" * 80)
-        print("TESTING MULTIPLE CHOICE QUESTION GENERATION")
-        print("=" * 80)
-        
-        # Test individual question generation
-        print("\n--- TESTING INDIVIDUAL QUESTION GENERATION ---")
-        test_topics = [
-            "ICMS",
-            "Incentivos fiscais",
-            "Não cumulatividade"
-        ]
-        
-        for topic in test_topics:
-            print(f"\n{'='*60}")
-            print(f"Generating question for topic: {topic}")
-            print(f"{'='*60}")
-            
-            question_result = pipeline.generate_multiple_choice_question(topic)
-            
-            if "error" in question_result:
-                print(f"❌ Error: {question_result['error']}")
-            else:
-                print(f"✅ Question generated successfully!")
-                print(f"\n📝 Question: {question_result['question']}")
-                print(f"\n📋 Options:")
-                for option, text in question_result['options'].items():
-                    print(f"   {option}) {text}")
-                print(f"\n✅ Correct Answer: {question_result['answer']}")
-                if question_result.get('explanation'):
-                    print(f"\n💡 Explanation: {question_result['explanation']}")
-                print(f"\n📊 Confidence: {question_result['confidence']}")
-                print(f"📈 Average score: {question_result['avg_score']:.3f}")
-                
-                if question_result['sources']:
-                    print(f"\n📚 Sources:")
-                    for i, source in enumerate(question_result['sources']):
-                        print(f"   {i+1}. {source['file_name']} (Score: {source['score']})")
-            
-            print("-" * 60)
-        
-        # Test quiz set generation
-    #     print("\n--- TESTING QUIZ SET GENERATION ---")
-    #     quiz_topics = [
-    #         "ICMS",
-    #         "Incentivos fiscais", 
-    #         "Não cumulatividade",
-    #         "PRODEAUTO",
-    #         "PRODEPE"
-    #     ]
-        
-    #     print(f"\nGenerating quiz set for {len(quiz_topics)} topics...")
-    #     quiz_set = pipeline.generate_quiz_set(quiz_topics)
-        
-    #     if "error" in quiz_set:
-    #         print(f"❌ Error: {quiz_set['error']}")
-    #     else:
-    #         print(f"\n📊 Quiz Set Results:")
-    #         print(f"   Total questions: {quiz_set['total_questions']}")
-    #         print(f"   ✅ Successful: {quiz_set['successful_questions']}")
-    #         print(f"   ❌ Failed: {quiz_set['failed_questions']}")
-            
-    #         if quiz_set['questions']:
-    #             print(f"\n📝 Generated Questions:")
-    #             for i, question in enumerate(quiz_set['questions']):
-    #                 print(f"\n--- Question {i+1} ---")
-    #                 print(f"Topic: {question['topic']}")
-    #                 print(f"Question: {question['question']}")
-    #                 print(f"Correct Answer: {question['answer']}")
-    #                 print(f"Confidence: {question['confidence']}")
-    #                 if question.get('explanation'):
-    #                     print(f"Explanation: {question['explanation']}")
-        
-    #     # Test interactive quiz generation
-    #     print("\n--- TESTING INTERACTIVE QUIZ GENERATION ---")
-    #     print("This demonstrates how to use the pipeline for quiz generation in an application")
-        
-    #     # Simulate user input
-    #     user_topics = ["ICMS", "PRODEAUTO"]
-    #     print(f"\nUser requested questions for topics: {user_topics}")
-        
-    #     for topic in user_topics:
-    #         print(f"\n🎯 Generating question for: {topic}")
-    #         result = pipeline.generate_multiple_choice_question(topic)
-            
-    #         if "error" not in result:
-    #             print(f"📝 {result['question']}")
-    #             print(f"✅ Answer: {result['answer']}")
-    #             print(f"📊 Quality: {result['confidence']} confidence")
-    #         else:
-    #             print(f"❌ Could not generate question: {result['error']}")
-        
-    #     print("\n" + "=" * 80)
-    #     print("MULTIPLE CHOICE QUESTION GENERATION TESTS COMPLETED")
-    #     print("=" * 80)
-        
-    #     # Shows statistics
-    #     stats = pipeline.get_statistics()
-    #     print(f"\nStatistics: {stats}")
-    # else:
-    #     print("Error building knowledge base") 

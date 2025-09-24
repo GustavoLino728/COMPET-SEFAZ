@@ -28,9 +28,10 @@ class QuestionGenerationSerializer(serializers.Serializer):
     """Serializer for question generation requests"""
     topic = serializers.CharField(max_length=200, help_text="Topic for question generation")
     difficulty = serializers.CharField(max_length=50, required=True, help_text="Difficulty level")
+    type = serializers.CharField(max_length=50, required=True, help_text="Challenge type")
     
     class Meta:
-        fields = ['topic', 'difficulty']
+        fields = ['topic', 'difficulty', 'type']
 
 
 class QuestionResponseSerializer(serializers.Serializer):

@@ -199,6 +199,104 @@ Contexto dos Documentos:
 
 Por favor, com base APENAS no contexto acima, crie uma questão de múltipla escolha que avalie o entendimento sobre o tópico sugerido. Siga estritamente as regras e o formato JSON definidos nas suas instruções de sistema."""
 
+    def _create_system_prompt_for_challenge(self) -> str:
+        """
+        Creates the system prompt for the challenge generation task.
+        
+        Returns:
+            str: The system prompt.
+        """
+        return """Você é um especialista em legislação tributária da SEFAZ-PE e um criador de conteúdo educacional. Sua tarefa é criar um conjunto de desafios e questões de contextualização com base estritamente em um contexto de documentos fornecido.
+
+# REGRAS GERAIS E INVIOLÁVEIS
+1.  **FIDELIDADE ABSOLUTA AO CONTEXTO:** Todo o conteúdo gerado (cenários, respostas, justificativas, questões, alternativas) deve ser 100% derivado dos documentos fornecidos. NÃO utilize nenhum conhecimento externo.
+2.  **SAÍDA EM JSON PURO:** Sua resposta final deve ser APENAS um objeto JSON, sem nenhum texto, markdown ou explicação adicional antes ou depois.
+3.  **SEMPRE GERE O CONTEÚDO COMPLETO:** Você deve gerar 2 desafios e 5 questões de contextualização.
+
+# ESTRUTURA DE SAÍDA JSON OBRIGATÓRIA
+Sua saída DEVE seguir exatamente esta estrutura:
+{
+  "challenges": [
+    {
+      "challenge": "[Aqui vai o texto completo do desafio contextualizado. Deve ter aproximadamente 1000 caracteres.]",
+      "challenge_answer": "[Se o Tipo de Desafio for 'Discursiva', aqui vai a resposta discursiva e completa. Se for 'Cálculo', aqui vai APENAS o resultado numérico final (ex: '1500.00').]",
+      "challenge_justification": "[Aqui vai a justificativa detalhada para a resposta, explicando o raciocínio ou o cálculo passo a passo. Deve ter aproximadamente 500 caracteres.]"
+    },
+    {
+      "challenge": "[Segundo desafio...]",
+      "challenge_answer": "[Resposta do segundo desafio...]",
+      "challenge_justification": "[Justificativa do segundo desafio...]"
+    }
+  ],
+  "questions": [
+    {
+      "question": "[Texto da pergunta de múltipla escolha 1.]",
+      "options": {
+        "A": "[Alternativa A]",
+        "B": "[Alternativa B]",
+        "C": "[Alternativa C]",
+        "D": "[Alternativa D]",
+        "E": "[Alternativa E]"
+      },
+      "correct_answer": "[Letra da alternativa correta, ex: 'A']",
+      "question_justification": "[Justificativa para a resposta da questão 1.]"
+    },
+    {
+      "question": "[Texto da pergunta de múltipla escolha 2.]",
+      "options": { "A": "...", "B": "...", "C": "...", "D": "...", "E": "..." },
+      "correct_answer": "[Letra]",
+      "question_justification": "[Justificativa...]"
+    },
+    {
+      "question": "[Texto da pergunta de múltipla escolha 3.]",
+      "options": { "A": "...", "B": "...", "C": "...", "D": "...", "E": "..." },
+      "correct_answer": "[Letra]",
+      "question_justification": "[Justificativa...]"
+    },
+    {
+      "question": "[Texto da pergunta de múltipla escolha 4.]",
+      "options": { "A": "...", "B": "...", "C": "...", "D": "...", "E": "..." },
+      "correct_answer": "[Letra]",
+      "question_justification": "[Justificativa...]"
+    },
+    {
+      "question": "[Texto da pergunta de múltipla escolha 5.]",
+      "options": { "A": "...", "B": "...", "C": "...", "D": "...", "E": "..." },
+      "correct_answer": "[Letra]",
+      "question_justification": "[Justificativa...]"
+    }
+  ]
+}
+"""
+
+    def _create_user_prompt_for_challenge(self, topic: str, difficulty: str, type: str, context: str) -> str:
+        """
+        Creates the user prompt for the challenge generation task.
+        
+        Args:
+            topic (str): The topic to focus the generation.
+            difficulty (str): The difficulty of the challenge (Easy, Medium, Hard).
+            type (str): The type of challenge (Calculation or Discursive).
+            context (str): The context of the retrieved documents.
+            
+        Returns:
+            str: The user prompt.
+        """
+        return f"""Com base ESTRITAMENTE no contexto de documentos fornecido abaixo, gere o conjunto completo de desafios e questões de contextualização.
+
+# PARÂMETROS PARA GERAÇÃO
+- Tópico Principal: "{topic}"
+- Dificuldade dos Desafios: "{difficulty}"
+- Tipo dos Desafios: "{type}"
+
+# CONTEXTO DOS DOCUMENTOS
+---
+{context}
+---
+
+Lembre-se de seguir TODAS as regras e a estrutura JSON exata definida em suas instruções de sistema. Se não encontrar informações suficientes sobre o tema '{topic}' no contexto fornecido, você deve indicar isso na sua resposta final, mas ainda assim tentar gerar o que for possível com a informação disponível.
+"""
+
     def _extract_keywords(self, query: str) -> List[str]:
         """
         Extract relevant keywords from the query for hybrid search
@@ -525,6 +623,78 @@ Por favor, com base APENAS no contexto acima, crie uma questão de múltipla esc
                 "sources": []
             }
 
+    def generate_challenges_and_questions(self, 
+                                          topic: str, 
+                                          difficulty: str, 
+                                          type: str, 
+                                          k: int = 10, 
+                                          score_threshold: float = 0.7) -> Dict[str, Any]:
+        """
+        Generates a set of challenges and questions of contextualization based on the topic.
+        """
+        try:
+            normalized_topic = unicodedata.normalize('NFC', topic)
+            logger.info(f"Generating challenges for the topic: '{normalized_topic}' with difficulty '{difficulty}' and type '{type}'")
+
+            # Use hybrid search for better accuracy with specific terms
+            keywords = self._extract_keywords(normalized_topic)
+            logger.info(f"Extracted keywords for challenge generation: {keywords}")
+
+            if hasattr(self.search_engine, 'hybrid_search_with_keywords'):
+                relevant_docs = self.search_engine.hybrid_search_with_keywords(
+                    normalized_topic,
+                    keywords=keywords,
+                    k=k,
+                    score_threshold=score_threshold
+                )
+            else:
+                # Fallback to regular search
+                relevant_docs = self.search_engine.similarity_search(
+                    normalized_topic,
+                    k=k,
+                    score_threshold=score_threshold
+                )
+
+            if not relevant_docs:
+                logger.warning("No relevant document found for challenge generation.")
+                return {"error": f"I couldn't find enough information about the topic '{topic}' in the provided documents."}
+
+            context = self._create_context_from_documents(relevant_docs)
+            
+            system_prompt = self._create_system_prompt_for_challenge()
+            user_prompt = self._create_user_prompt_for_challenge(normalized_topic, difficulty, type, context)
+
+            response = self.client.chat.completions.create(
+                model=self.model,
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_prompt}
+                ],
+                max_tokens=4096,
+                temperature=self.temperature,
+                response_format={"type": "json_object"}
+            )
+
+            ai_response = response.choices[0].message.content.strip() if response.choices and response.choices[0].message else "{}"
+            
+            import json
+            try:
+                challenge_data = json.loads(ai_response)
+            except json.JSONDecodeError as e:
+                logger.error(f"Error  Erro ao decodificar a resposta JSON: {e}")
+                return {"error": "Erro ao processar a resposta do modelo de IA.", "raw_response": ai_response}
+
+            sources = [{"file_name": doc.metadata.get('file_name', 'N/A')} for doc in relevant_docs]
+            unique_sources = [dict(t) for t in {tuple(d.items()) for d in sources}]
+
+            challenge_data["sources"] = unique_sources
+            
+            return challenge_data
+
+        except Exception as e:
+            logger.error(f"Erro ao gerar desafios: {e}")
+            return {"error": f"Ocorreu um erro inesperado: {str(e)}"}
+
     def generate_quiz_set(self, 
                          topics: List[str], 
                          k: int = 4, 
@@ -551,7 +721,7 @@ Por favor, com base APENAS no contexto acima, crie uma questão de múltipla esc
         for i, topic in enumerate(topics):
             logger.info(f"Generating question {i+1}/{len(topics)} for topic: {topic}")
             
-            question_result = self.generate_multiple_choice_question(topic, k, score_threshold)
+            question_result = self.generate_multiple_choice_question(topic)
             
             if "error" in question_result:
                 quiz_set["failed_questions"] += 1

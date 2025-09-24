@@ -96,6 +96,7 @@ class QuestionGenerationView(APIView):
             # Get topic and difficulty
             topic = serializer.validated_data['topic']
             difficulty = serializer.validated_data.get('difficulty', 'medium')
+            type = serializer.validated_data.get('type', 'Discursiva')
             
             # Use the loader to get the unique instance of the RAGPipeline
             pipeline = get_rag_pipeline()
@@ -115,6 +116,7 @@ class QuestionGenerationView(APIView):
                     'answer': "A) First option",
                     'explanation': f"This is a mock explanation for {topic}",
                     'difficulty': difficulty,
+                    'type': type,
                     'sources': [],
                     'confidence': 'high',
                     'avg_score': 0,
@@ -124,7 +126,7 @@ class QuestionGenerationView(APIView):
                 return Response(mock_question_data, status=status.HTTP_200_OK)
             
             # Generate question
-            question_data = pipeline.generate_multiple_choice_question(topic)
+            question_data = pipeline.generate_challenges_and_questions(topic, difficulty, type)
             
             # Parse the JSON response from the RAG pipeline
             if isinstance(question_data, str):
@@ -136,21 +138,9 @@ class QuestionGenerationView(APIView):
                         status=status.HTTP_500_INTERNAL_SERVER_ERROR
                     )
             
-            # Format the response
-            response_data = {
-                'question': question_data.get('question', ''),
-                'topic': topic,
-                'options': question_data.get('options', []),
-                'answer': question_data.get('answer', ''),
-                'explanation': question_data.get('explanation', ''),
-                'difficulty': difficulty,
-                'sources': question_data.get('sources', []),
-                'confidence': question_data.get('confidence', ''),
-                'avg_score': question_data.get('avg_score', 0),
-                'documents_used': question_data.get('documents_used', 0)
-            }
-            
-            return Response(response_data, status=status.HTTP_200_OK)
+            # The output is now a complex JSON object, so we just return it directly.
+            # The old QuestionResponseSerializer is not suitable for this new structure.
+            return Response(question_data, status=status.HTTP_200_OK)
             
         except Exception as e:
             return Response(
