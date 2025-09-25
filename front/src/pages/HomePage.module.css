@@ -1,17 +1,16 @@
-/* --- Layout Principal --- */
 .pageContainer {
   width: 100%;
   padding: 40px;
-  background-color: #f7f9fc; /* Um fundo levemente azulado/acinzentado */
+  background-color: #f7f9fc; 
   font-family: 'Inter', sans-serif;
 }
 
 .contentWrapper {
-  max-width: 1100px; /* Limita a largura do conteúdo central */
-  margin: 0 auto; /* Centraliza o conteúdo na página */
+  max-width: 1100px; 
+  margin: 0 auto; 
 }
 
-/* --- Seções --- */
+
 .welcomeSection {
   margin-bottom: 50px;
 }
@@ -21,12 +20,11 @@
 }
 
 .cardGrid {
-  display: grid; /* Usando grid para os cards */
-  grid-template-columns: 2fr 1fr; /* A primeira coluna é 2x maior que a segunda */
-  gap: 24px;
+  display: grid; 
+  grid-template-columns: 2fr 1fr; 
 }
 
-/* --- Tipografia --- */
+
 .welcomeTitle {
   color: #020f59;
   font-size: 32px;
@@ -47,9 +45,6 @@
   margin-bottom: 24px;
 }
 
-/* --- Componentes Reutilizáveis --- */
-
-/* Card Genérico */
 .card {
   background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -60,9 +55,9 @@
   flex-direction: column;
 }
 
-/* Card Grande (ocupa duas colunas) */
+
 .largeCard {
-  grid-column: span 2; /* Faz este card ocupar as 2 colunas do grid */
+  grid-column: span 2; 
 }
 
 .cardTitle {
@@ -76,11 +71,10 @@
   color: rgba(38, 38, 38, 0.7);
   font-size: 16px;
   line-height: 1.5;
-  flex-grow: 1; /* Empurra o botão para baixo */
+  flex-grow: 1; 
   margin-bottom: 24px;
 }
 
-/* Botão Genérico */
 .button {
   padding: 12px 24px;
   background: #020f59;
@@ -93,29 +87,28 @@
   transition: background-color 0.2s ease;
   text-decoration: none;
   text-align: center;
-  align-self: flex-start; /* Alinha o botão à esquerda dentro do card */
+  align-self: flex-start; 
 }
 
 .button:hover {
   background-color: #1a2a8a;
 }
 
-/* --- Seção Trilhas Sugeridas --- */
 .trailsSection {
   margin-bottom: 50px;
 }
 
 .trailsGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Cria 3 colunas de tamanho igual */
+  grid-template-columns: repeat(3, 1fr); 
   gap: 24px;
 }
 
-/* --- Card da Trilha (Componente Reutilizável) --- */
+
 .trailCard {
   background: #ffffff;
   border-radius: 12px;
-  overflow: hidden; /* Garante que a imagem com cantos retos se ajuste aos cantos arredondados do card */
+  overflow: hidden; 
   display: flex;
   flex-direction: column;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -130,9 +123,9 @@
 
 .trailImage {
   width: 100%;
-  height: 220px; /* Altura fixa para a imagem */
-  object-fit: cover; /* Garante que a imagem cubra o espaço sem distorcer */
-  background-color: #eaf2f8; /* Cor de fundo para o placeholder da imagem */
+  height: 220px; 
+  object-fit: cover; 
+  background-color: #eaf2f8; 
 }
 
 .trailContent {
@@ -140,7 +133,6 @@
 }
 
 .trailTitle {
-  /* Estilos que você passou para "PRODEPE" */
   color: #14145B;
   font-family: 'Inter', sans-serif;
   font-size: 16px;
@@ -150,7 +142,6 @@
 }
 
 .trailDescription {
-  /* Estilos que você passou para o texto de descrição */
   color: #61758A;
   font-family: 'Inter', sans-serif;
   font-size: 14px;

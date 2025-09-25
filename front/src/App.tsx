@@ -6,12 +6,18 @@ import UserList from './components/user/UserList';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import UserSetup from './pages/UserSetup';
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
 import './App.css';
 import './styles/global.css';
 
 
 import FloatingButton from './components/FloatingButton';
 import ChatWindow from './components/ChatWindow';
+import TrailsPanel from './pages/TrailsPanel';
 
 function App() {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -31,7 +37,11 @@ function App() {
           <Route path="/cadastro" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/setup" element={<UserSetup />} />
+<<<<<<< Updated upstream
           {/* Add other routes as needed */}
+=======
+          <Route path="/trilhas/:trilhaId" element={<TrailsPanel />} />
+>>>>>>> Stashed changes
         </Routes>
       </main>
       

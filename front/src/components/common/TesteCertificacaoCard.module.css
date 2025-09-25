@@ -1,0 +1,63 @@
+/* src/components/common/TesteCertificacaoCard.module.css */
+
+.cardContainer {
+  background-color: #DFE9FF; /* Fundo roxo */
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px; /* Espaço entre o header, descriptionBox e button */
+  width: 321px; /* Largura similar ao card de Desafios */
+  height: auto; /* Altura auto para se ajustar ao conteúdo */
+  border: 2px solid rgba(66, 44, 135, 0.20); /* Bordar 20% roxa */
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  color: #8B74DB; /* Cor do ícone */
+}
+
+.title {
+  color: #373333; /* Cor do texto do título */
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.description {
+  color: #000000CC; /* Cor do texto da descrição */
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.button {
+  background-color: #26266D; /* Botão branco */
+  color: #FFFFFF; /* Texto roxo */
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  align-self: flex-end; /* Alinha o botão à direita */
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.button:hover {
+  background-color: #553a9e; /* Tom mais claro no hover */
+}
+
+@media (max-width: 400px) {
+  .cardContainer {
+    width: 100%; /* Largura total em telas pequenas */
+    padding: 16px;
+  }
+}

@@ -1,0 +1,77 @@
+.headerContainer {
+  background-color: #72D4A1; 
+  border-radius: 12px;
+  padding: 30px 24px; 
+  display: flex;
+  align-items: center; 
+  justify-content: space-between; 
+  margin-bottom: 2rem; 
+  position: relative; 
+  min-height: 180px; 
+}
+
+.leftContent {
+  display: flex;
+  flex-direction: column; 
+  gap: 12px; 
+  flex-grow: 1; 
+  color: #061A84; 
+  padding-left: 40px; 
+}
+
+.title {
+  font-size: 32px; 
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0; 
+}
+
+.proindTag {
+  background-color: #061A84; 
+  color: #EFEFFC; 
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  cursor: default; 
+  align-self: flex-start; 
+}
+
+.rightImage {
+  width: 200px; 
+  height: auto; 
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .headerContainer {
+    flex-direction: column; 
+    text-align: center;
+    padding: 20px;
+    min-height: auto;
+  }
+  
+  .backButton {
+    position: static; 
+    margin-bottom: 1rem;
+    align-self: flex-start; 
+  }
+
+  .leftContent {
+    padding-left: 0;
+    align-items: center; 
+  }
+
+  .title {
+    font-size: 28px;
+  }
+
+  .rightImage {
+    width: 150px;
+    height: 100px;
+    margin-top: 20px; 
+    background-position: center;
+  }
+}

@@ -1,10 +1,10 @@
 .pageContainer {
   width: 100%;
   min-height: 100vh;
-  background: #FFF; /* Fundo branco, como no Figma */
+  background: #FFF;
   display: flex;
-  justify-content: center; /* Centraliza o formulário horizontalmente */
-  padding: 3rem 1rem; /* Um respiro nas laterais e no topo/fundo */
+  justify-content: center;
+  padding: 3rem 1rem; 
 }
 
 .formContainer {

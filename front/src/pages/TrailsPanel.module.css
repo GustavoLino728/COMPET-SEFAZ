@@ -1,0 +1,122 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.layoutContainer {
+  display: flex; 
+  align-items: flex-start; 
+  gap: 32px; 
+  margin-top: 32px; 
+}
+
+.mainContent {
+  flex: 2; 
+  min-width: 0; 
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem
+}
+
+.sidebar {
+  flex: 1; 
+  position: sticky;
+  top: 24px; 
+  display: flex;
+  flex-direction: column;
+  gap: 24px; 
+}
+
+.textContent {
+  background-color: #fff;
+  padding: 24px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.contentBlock {
+  margin-bottom: 2.5rem; 
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contentTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #000000CC;
+  margin-bottom: 1rem;
+}
+
+.contentText {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #000000CC;
+}
+
+.tabsContainer {
+  display: flex;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.tabButton {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #6b7280;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin-bottom: -1px; 
+  border-bottom: 2px solid transparent; 
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.tabButton:hover {
+  color: #111827;
+}
+
+.tabActive {
+  color: #4f46e5; 
+  border-bottom-color: #4f46e5;
+}
+
+.customList {
+  list-style: none; /* Remove as bolinhas padrão da lista */
+  padding-left: 1.5rem; /* Adiciona um recuo à esquerda, como no seu print */
+  margin-top: 1rem; /* Adiciona um espaço entre o parágrafo introdutório e a lista */
+}
+
+.listItem {
+  color: #000000CC; /* Mesma cor do .contentText para consistência */
+  font-size: 16px;
+  line-height: 1.6;
+  padding-bottom: 0.5rem; /* Cria um pequeno espaço vertical entre cada item da lista */
+}
+
+.backButton {
+  /* Estilos visuais */
+  background-color: #f3f4f6; /* Um cinza claro para contrastar com o fundo */
+  color: #374151; /* Um cinza mais escuro para o ícone */
+  border: 1px solid #e5e7eb;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%; /* Círculo perfeito */
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  
+  /* Posicionamento */
+  margin-bottom: 1.5rem; /* Cria um espaço para empurrar o header para baixo */
+  align-self: flex-start; /* Alinha o botão à esquerda */
+  
+  /* Para garantir que o ícone fique centralizado */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
