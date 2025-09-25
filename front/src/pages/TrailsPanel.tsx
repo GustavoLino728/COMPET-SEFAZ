@@ -68,33 +68,37 @@ const TrailsPanel = () => {
               
               {/* Loop inteligente para renderizar todos os blocos de conteúdo */}
               {trilhaAtual.blocosDeConteudo.map((bloco, index) => {
-                if (bloco.tipo === 'subtitulo') {
-                  return <h3 key={index} className={styles.contentTitle}>{bloco.conteudo}</h3>;
-                }
-                
-                if (bloco.tipo === 'paragrafo') {
+
+                  if (bloco.tipo === 'subtitulo') {
+                    return <h3 key={index} className={styles.contentTitle}>{bloco.conteudo}</h3>;
+                  }
                   
-                  return bloco.conteudo.split('\n').map((paragrafo, pIndex) => (
-                    <p key={`${index}-${pIndex}`} className={styles.contentText}>
-                      {paragrafo}
-                    </p>
-                  ));
-                }
-                
-                if (bloco.tipo === 'lista') {
-                  if (Array.isArray(bloco.conteudo)) {
+                  if (bloco.tipo === 'subtitulo-bold') { 
+                    return <h3 key={index} className={styles.contentTitleBold}>{bloco.conteudo}</h3>; 
+                  }
+                  
+                  if (bloco.tipo === 'paragrafo') {
                     return (
-                      <ul key={index} className={styles.customList}>
-                        {bloco.conteudo.map((item, itemIndex) => (
-                          <li key={itemIndex} className={styles.listItem}>{item}</li>
-                        ))}
-                      </ul>
+                      <p key={index} className={styles.contentText}>
+                        {bloco.conteudo}
+                      </p>
                     );
                   }
-                }
-                
-                return null;
-              })}
+                  
+                  if (bloco.tipo === 'lista-alfabetica') { // Se o tipo for o novo 'lista-alfabetica'
+                    if (Array.isArray(bloco.conteudo)) {
+                      return (
+                        <ul key={index} className={styles.alphaList}>
+                          {bloco.conteudo.map((item, itemIndex) => (
+                            <li key={itemIndex} className={styles.alphaListItem}>{item}</li>
+                          ))}
+                        </ul>
+                      );
+                    }
+                  }
+                  
+                  return null;
+                })}
             </div>
           )}
 

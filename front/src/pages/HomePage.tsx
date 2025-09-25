@@ -1,5 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './HomePage.module.css';
+
 
 type DashboardCardProps = {
   title: string;
@@ -16,9 +18,9 @@ const DashboardCard = ({ title, description, buttonText, buttonLink, isLarge = f
     <div className={cardClasses}>
       <h3 className={styles.cardTitle}>{title}</h3>
       <p className={styles.cardDescription}>{description}</p>
-      <a href={buttonLink} className={styles.button}>
+    <Link to={buttonLink} className={styles.button}>
         {buttonText}
-      </a>
+      </Link>
     </div>
   );
 };
@@ -68,7 +70,7 @@ function HomePage() {
               title="Explore as Trilhas de Aprendizado"
               description="Descubra trilhas de aprendizado estruturadas, personalizadas para o seu papel e interesses."
               buttonText="Visualizar Trilhas"
-              buttonLink="/trilhas"
+              buttonLink="/trilhas/proind-calculo-incentivo"
             />
             <DashboardCard
               title="Consiga Certificados"
