@@ -13,9 +13,9 @@ RUN apt-get update \
         postgresql-client \
         build-essential \
         libpq-dev \
-        # tesseract-ocr \
-        # tesseract-ocr-por \
-        # poppler-utils \
+        tesseract-ocr \
+        tesseract-ocr-por \
+        poppler-utils \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
@@ -24,7 +24,7 @@ RUN pip install --upgrade pip setuptools wheel \
     && pip install --no-cache-dir -r requirements.txt --timeout 120 --retries 5
 
 # Pre-download the sentence transformer model during build
-# RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('neuralmind/bert-base-portuguese-cased')"
+RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('neuralmind/bert-base-portuguese-cased')"
 
 # Copy project
 COPY . .

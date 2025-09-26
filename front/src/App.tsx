@@ -6,13 +6,14 @@ import UserList from './components/user/UserList';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import UserSetup from './pages/UserSetup';
+import ResetPassword from './pages/ForgotPasswordPage';
+import ResetPasswordConfirm from './pages/ResetPasswordConfirmPage';
 import './App.css';
 import './styles/global.css';
 
 
 import FloatingButton from './components/FloatingButton';
 import ChatWindow from './components/ChatWindow';
-import TrailsPanel from './pages/TrailsPanel';
 
 function App() {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -32,7 +33,9 @@ function App() {
           <Route path="/cadastro" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/setup" element={<UserSetup />} />
-          <Route path="/trilhas" element={<TrailsPanel />} />
+          <Route path="/esqueci-senha" element={<ResetPassword/>}/>
+          <Route path="/nova-senha" element={<ResetPasswordConfirm/>}/>
+          {/* Add other routes as needed */}
         </Routes>
       </main>
       
