@@ -26,12 +26,14 @@ class ChatResponseSerializer(serializers.Serializer):
 
 class QuestionGenerationSerializer(serializers.Serializer):
     """Serializer for question generation requests"""
+    program = serializers.CharField(max_length=100, required=True, help_text="Program for the challenge")
+    track = serializers.CharField(max_length=100, required=True, help_text="Track for the challenge")
     topic = serializers.CharField(max_length=200, help_text="Topic for question generation")
     difficulty = serializers.CharField(max_length=50, required=True, help_text="Difficulty level")
     type = serializers.CharField(max_length=50, required=True, help_text="Challenge type")
     
     class Meta:
-        fields = ['topic', 'difficulty', 'type']
+        fields = ['program', 'track', 'topic', 'difficulty', 'type']
 
 
 class QuestionResponseSerializer(serializers.Serializer):

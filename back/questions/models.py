@@ -114,11 +114,20 @@ class Source(models.Model):
         return self.file_name
 
 class Challenge(models.Model):
+    class ChallengeStatus(models.TextChoices):
+        PENDING = 'PENDING', 'Pendente'
+        APPROVED = 'APPROVED', 'Aprovado'
+
     track = models.ForeignKey('Track', on_delete=models.CASCADE, related_name='challenges')
     title = models.CharField(max_length=255, blank=True, null=True)
     difficulty = models.CharField(
         max_length=10,
         choices=Question.Difficulty.choices,
+    )
+    status = models.CharField(
+        max_length=10,
+        choices=ChallengeStatus.choices,
+        default=ChallengeStatus.PENDING
     )
     sources = models.ManyToManyField('Source', related_name='challenges')
 
