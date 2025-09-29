@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './UserSetup.module.css';
+import { updateUser } from '../api'; // Importe a função para atualizar usuário
 
 function UserSetup() {
   const navigate = useNavigate();
   const [ramo, setRamo] = useState('');
   const [area, setArea] = useState('');
   const [interesses, setInteresses] = useState<string[]>(['Comércio']);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleInterestClick = (interesse: string) => {
     if (interesses.includes(interesse)) {
@@ -16,22 +19,37 @@ function UserSetup() {
     }
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    const formData = { ramo, area, interesses };
-    console.log("Dados do formulário:", formData);
-    // navigate('/proxima-etapa');
+  const handleSubmit = async (event: React.FormEvent) => {
+  event.preventDefault();
+  setLoading(true);
+  setError(null);
+
+  const updateData = {
+    field_of_work: ramo || undefined,
+    interest_area: area || undefined,
+    linkedin_url: undefined,
+    is_auditor: false,
   };
+
+  try {
+    const response = await updateUser(updateData);
+    console.log('Usuário atualizado com sucesso:', response);
+    navigate('/'); 
+  } catch (e: any) {
+    setError('Erro ao atualizar informações. Por favor, tente novamente.');
+    console.error(e);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className={styles.pageContainer}>
       <div className={styles.formContainer}>
         <h1 className={styles.title}>Informações Adicionais</h1>
 
-        {/* Usando a nova classe para o indicador de etapas */}
-        <div className={styles.stepIndicator}>
-          Etapa 2 de 2
-        </div>
+        <div className={styles.stepIndicator}>Etapa 2 de 2</div>
 
         <form onSubmit={handleSubmit} style={{ width: '100%' }}>
           <div className={styles.inputGroup}>
@@ -59,34 +77,41 @@ function UserSetup() {
           <div className={styles.inputGroup}>
             <label className={styles.label}>Áreas de Interesse (Opcional)</label>
             <div className={styles.interestContainer}>
-              {/* Para os ícones, preciso importá-los como SVGs */}
               <button
                 type="button"
-                className={`${styles.interestButton} ${interesses.includes('Agronegócio') ? styles.selected : ''}`}
+                className={`${styles.interestButton} ${
+                  interesses.includes('Agronegócio') ? styles.selected : ''
+                }`}
                 onClick={() => handleInterestClick('Agronegócio')}
               >
-                {/* Ícone aqui */} Agronegócio
+                Agronegócio
               </button>
               <button
                 type="button"
-                className={`${styles.interestButton} ${interesses.includes('Comércio') ? styles.selected : ''}`}
+                className={`${styles.interestButton} ${
+                  interesses.includes('Comércio') ? styles.selected : ''
+                }`}
                 onClick={() => handleInterestClick('Comércio')}
               >
-                {/* Ícone aqui */} Comércio
+                Comércio
               </button>
               <button
                 type="button"
-                className={`${styles.interestButton} ${interesses.includes('Indústria') ? styles.selected : ''}`}
+                className={`${styles.interestButton} ${
+                  interesses.includes('Indústria') ? styles.selected : ''
+                }`}
                 onClick={() => handleInterestClick('Indústria')}
               >
-                {/* Ícone aqui */} Indústria
+                Indústria
               </button>
             </div>
           </div>
-          
+
+          {error && <div className={styles.error}>{error}</div>}
+
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <button type="submit" className={styles.submitButton}>
-              Adicionar informações
+            <button type="submit" className={styles.submitButton} disabled={loading}>
+              {loading ? 'Atualizando...' : 'Adicionar informações'}
             </button>
           </div>
         </form>

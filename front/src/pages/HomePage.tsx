@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './HomePage.module.css';
+import { getCurrentUser } from '../api';
 
 type DashboardCardProps = {
   title: string;
@@ -47,13 +48,26 @@ const TrailCard = ({ imageSrc, title, description }: TrailCardProps) => {
 };
 
 function HomePage() {
+  const [userName, setUserName] = useState('Carregando...');
+
+  useEffect(() => {
+    async function fetchUser() {
+      try {
+        const user = await getCurrentUser();
+        setUserName(user.first_name);
+      } catch {
+        setUserName('Usuário');
+      }
+    }
+    fetchUser();
+  }, []);
   return (
     <div className={styles.pageContainer}>
       <div className={styles.contentWrapper}>
         
         {/* Seção de Boas-vindas (Já existente - NÃO MEXA) */}
         <section className={styles.welcomeSection}>
-          <h1 className={styles.welcomeTitle}>Bem vinda, Júlia</h1>
+          <h1 className={styles.welcomeTitle}>Bem vinda, {userName}</h1>
           <p className={styles.subtitle}>
             Explore sua jornada de aprendizado e mantenha-se atualizado sobre incentivos fiscais.
           </p>

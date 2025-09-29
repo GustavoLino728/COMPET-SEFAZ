@@ -16,7 +16,7 @@ const LoginPage = () => {
 
     try {
       await loginUser({ email, password });
-      navigate("/dashboard"); // rota após login
+      navigate("/"); // rota após login
     } catch (err: any) {
       setError("Email ou senha inválidos");
       console.error(err);

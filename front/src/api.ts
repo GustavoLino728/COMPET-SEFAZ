@@ -9,17 +9,31 @@ const api = axios.create({
   },
 });
 
-
 export const registerUser = async (data: {
-  name: string;
+  first_name: string;  
+  last_name: string;     
   email: string;
-  linkedin?: string;
+  linkedin_url?: string;
   cpf: string;
   password: string;
   re_password: string;
 }) => {
   try {
-    const response = await api.post("/users/", data);
+    const response = await api.post("/register/", data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateUser = async (data: {
+  linkedin_url?: string;
+  interest_area?: string;
+  field_of_work?: string;
+  is_auditor?: boolean;
+}) => {
+  try {
+    const response = await api.patch('/users/me/', data);
     return response.data;
   } catch (error) {
     throw error;
@@ -28,35 +42,95 @@ export const registerUser = async (data: {
 
 export const loginUser = async (data: { email: string; password: string }) => {
   try {
-    const response = await api.post("/token/login/", data);
-    // Salvar token localmente
-    localStorage.setItem("authToken", response.data.auth_token);
+    const response = await api.post("/jwt/create/", data);
+
+    localStorage.setItem("accessToken", response.data.access);
+    localStorage.setItem("refreshToken", response.data.refresh);
     return response.data;
   } catch (error) {
     throw error;
   }
 };
 
-export const logoutUser = async () => {
+export const refreshToken = async () => {
   try {
-    const token = localStorage.getItem("authToken");
-    if (!token) return;
-    await api.post(
-      "/token/logout/",
-      {},
-      {
-        headers: { Authorization: `Token ${token}` },
+    const refresh = localStorage.getItem("refreshToken");
+    if (!refresh) throw new Error("No refresh token");
+    
+    const response = await api.post("/jwt/refresh/", { refresh });
+    localStorage.setItem("accessToken", response.data.access);
+    return response.data;
+  } catch (error) {
+    logoutUser();
+    throw error;
+  }
+};
+
+export const logoutUser = () => {
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
+};
+
+// ✅ Interceptor para adicionar token automaticamente
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      config.headers.Authorization = `JWT ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+// ✅ Interceptor para renovar token automaticamente quando expira
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+    
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        await refreshToken();
+        const token = localStorage.getItem("accessToken");
+        originalRequest.headers.Authorization = `JWT ${token}`;
+        return api(originalRequest);
+      } catch (refreshError) {
+        logoutUser();
+
+        window.location.href = "/login";
       }
-    );
-    localStorage.removeItem("authToken");
+    }
+    
+    return Promise.reject(error);
+  }
+);
+
+export const resetPassword = async (data: { email: string }) => {
+  try {
+    const response = await api.post("/users/reset_password/", data);
+    return response.data;
   } catch (error) {
     throw error;
   }
 };
 
-export const resetPassword = async (data: { email: string }) => {
+export const verifyToken = async () => {
   try {
-    const response = await api.post("/users/reset_password/", data);
+    const token = localStorage.getItem("accessToken");
+    if (!token) return false;
+    
+    await api.post("/jwt/verify/", { token });
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
+export const getCurrentUser = async () => {
+  try {
+    const response = await api.get("/users/me/");
     return response.data;
   } catch (error) {
     throw error;
