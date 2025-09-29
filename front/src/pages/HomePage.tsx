@@ -51,23 +51,32 @@ function HomePage() {
   const [userName, setUserName] = useState('Carregando...');
 
   useEffect(() => {
-    async function fetchUser() {
-      try {
-        const user = await getCurrentUser();
-        setUserName(user.first_name);
-      } catch {
+  async function fetchUser() {
+    try {
+      const user = await getCurrentUser();
+      console.log('Dados do usuário:', user);
+
+      if (user && user.full_name) {
+        const firstName = user.full_name.split(' ')[0];
+        setUserName(firstName);
+      } else {
         setUserName('Usuário');
       }
+    } catch (error) {
+      console.error('Erro ao buscar usuário:', error);
+      setUserName('Usuário');
     }
-    fetchUser();
-  }, []);
+  }
+  fetchUser();
+}, []);
+
   return (
     <div className={styles.pageContainer}>
       <div className={styles.contentWrapper}>
         
         {/* Seção de Boas-vindas (Já existente - NÃO MEXA) */}
         <section className={styles.welcomeSection}>
-          <h1 className={styles.welcomeTitle}>Bem vinda, {userName}</h1>
+          <h1 className={styles.welcomeTitle}>Bem vindo, {userName}</h1>
           <p className={styles.subtitle}>
             Explore sua jornada de aprendizado e mantenha-se atualizado sobre incentivos fiscais.
           </p>

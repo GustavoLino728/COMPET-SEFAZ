@@ -36,3 +36,27 @@ def register_user(request):
         return Response(CustomUserSerializer(user).data, status=status.HTTP_201_CREATED)
     print("Erros:", serializer.errors)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@action(detail=False, methods=['get'], permission_classes=[IsAuthenticated], url_path='me/stats')
+def get_user_stats(self, request):
+
+    stats = {
+        'trilhas_concluidas': 3,
+        'desafios_feitos': 15,
+        'certificados_obtidos': 2
+    }
+    return Response(stats)
+
+@action(detail=False, methods=['get'], permission_classes=[IsAuthenticated], url_path='me/achievements')
+def get_user_achievements(self, request):
+
+    achievements = [
+        {
+            'id': 1,
+            'name': 'Primeira Trilha',
+            'description': 'Completou sua primeira trilha de aprendizado',
+            'date': '2024-01-15',
+            'icon': '🏆'
+        }
+    ]
+    return Response(achievements)

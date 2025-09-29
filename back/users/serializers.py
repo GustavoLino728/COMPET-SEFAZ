@@ -10,7 +10,11 @@ class CustomUserSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = CustomUser
-        exclude = ['email', 'first_name', 'last_name', 'cpf', 'password']
+        fields = [
+            'id', 'email', 'first_name', 'last_name', 'full_name', 
+            'cpf', 'linkedin_url', 'interest_area', 'field_of_work', 'is_auditor'
+        ]
+
         extra_kwargs = {
             'linkedin_url': {'required': False, 'allow_blank': True},
             'interest_area': {'required': False, 'allow_blank': True},
@@ -21,24 +25,19 @@ class CustomUserSerializer(serializers.ModelSerializer):
 class CustomUserCreateSerializer(UserCreateSerializer):
     first_name = serializers.CharField(required=True, max_length=150)
     last_name = serializers.CharField(required=True, max_length=150)
-    cpf = serializers.CharField(required=True, max_length=14)  # ✅ ADICIONE ESTA LINHA
-    re_password = serializers.CharField(write_only=True)       # ✅ ADICIONE ESTA LINHA
+    cpf = serializers.CharField(required=True, max_length=14)  
+    re_password = serializers.CharField(write_only=True)  
     
     class Meta(UserCreateSerializer.Meta):
         model = CustomUser
         fields = [
             'id', 'email', 'first_name', 'last_name', 'cpf', 
-            'password', 're_password',  # ✅ INCLUA re_password AQUI
+            'password', 're_password', 
             'linkedin_url', 'interest_area', 'field_of_work', 'is_auditor'
         ]
 
     def validate(self, attrs):
-        print("=== DEBUG SERIALIZER ===")
-        print("Dados recebidos:", attrs)
-        print("CPF nos dados:", attrs.get('cpf', 'CPF NÃO ENCONTRADO'))
-        print("========================")
-        
-        # ✅ Verificar se senhas coincidem
+
         if attrs.get('password') != attrs.get('re_password'):
             raise serializers.ValidationError({
                 "re_password": "As senhas não coincidem."
@@ -50,12 +49,10 @@ class CustomUserCreateSerializer(UserCreateSerializer):
         return validated_data
 
     def create(self, validated_data):
-        # ✅ Remover re_password antes de criar usuário
         validated_data.pop('re_password', None)
         return super().create(validated_data)
 
     def validate_cpf(self, value):
-        print(f"CPF recebido no serializer: '{value}'")  # ✅ Debug temporário
         
         cpf_numbers = re.sub(r'[^\d]', '', value)
 
@@ -86,6 +83,17 @@ class CustomUserCreateSerializer(UserCreateSerializer):
             digit2 = 0
         
         return cpf[9] == str(digit1) and cpf[10] == str(digit2)
+
+class CustomUserPartialUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        exclude = ['email', 'first_name', 'last_name', 'cpf', 'password']
+        extra_kwargs = {
+            'linkedin_url': {'required': False, 'allow_blank': True},
+            'interest_area': {'required': False, 'allow_blank': True},
+            'field_of_work': {'required': False, 'allow_blank': True},
+            'is_auditor': {'required': False},
+        }
 
 class EmailTokenObtainPairSerializer(TokenObtainPairSerializer):
     username_field = 'email'

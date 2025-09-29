@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './UserSetup.module.css';
-import { updateUser } from '../api'; // Importe a função para atualizar usuário
+import { updateUser } from '../api';
 
 function UserSetup() {
   const navigate = useNavigate();
@@ -19,30 +19,33 @@ function UserSetup() {
     }
   };
 
-  const handleSubmit = async (event: React.FormEvent) => {
-  event.preventDefault();
-  setLoading(true);
-  setError(null);
-
-  const updateData = {
-    field_of_work: ramo || undefined,
-    interest_area: area || undefined,
-    linkedin_url: undefined,
-    is_auditor: false,
+  const handleSkip = () => {
+    navigate('/');
   };
 
-  try {
-    const response = await updateUser(updateData);
-    console.log('Usuário atualizado com sucesso:', response);
-    navigate('/'); 
-  } catch (e: any) {
-    setError('Erro ao atualizar informações. Por favor, tente novamente.');
-    console.error(e);
-  } finally {
-    setLoading(false);
-  }
-};
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setLoading(true);
+    setError(null);
 
+    const updateData = {
+      field_of_work: ramo || undefined,
+      interest_area: area || undefined,
+      linkedin_url: undefined,
+      is_auditor: false,
+    };
+
+    try {
+      const response = await updateUser(updateData);
+      console.log('Usuário atualizado com sucesso:', response);
+      navigate('/'); 
+    } catch (e: any) {
+      setError('Erro ao atualizar informações. Por favor, tente novamente.');
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className={styles.pageContainer}>
@@ -60,6 +63,7 @@ function UserSetup() {
               placeholder="Comércio"
               value={ramo}
               onChange={(e) => setRamo(e.target.value)}
+              disabled={loading}
             />
           </div>
 
@@ -71,6 +75,7 @@ function UserSetup() {
               placeholder="Automotivo e autopeças"
               value={area}
               onChange={(e) => setArea(e.target.value)}
+              disabled={loading}
             />
           </div>
 
@@ -83,6 +88,7 @@ function UserSetup() {
                   interesses.includes('Agronegócio') ? styles.selected : ''
                 }`}
                 onClick={() => handleInterestClick('Agronegócio')}
+                disabled={loading}
               >
                 Agronegócio
               </button>
@@ -92,6 +98,7 @@ function UserSetup() {
                   interesses.includes('Comércio') ? styles.selected : ''
                 }`}
                 onClick={() => handleInterestClick('Comércio')}
+                disabled={loading}
               >
                 Comércio
               </button>
@@ -101,6 +108,7 @@ function UserSetup() {
                   interesses.includes('Indústria') ? styles.selected : ''
                 }`}
                 onClick={() => handleInterestClick('Indústria')}
+                disabled={loading}
               >
                 Indústria
               </button>
@@ -112,6 +120,17 @@ function UserSetup() {
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <button type="submit" className={styles.submitButton} disabled={loading}>
               {loading ? 'Atualizando...' : 'Adicionar informações'}
+            </button>
+          </div>
+
+          <div className={styles.skipContainer}>
+            <button 
+              type="button" 
+              className={styles.skipButton}
+              onClick={handleSkip}
+              disabled={loading}
+            >
+              Pular por enquanto
             </button>
           </div>
         </form>

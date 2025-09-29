@@ -116,6 +116,21 @@ export const resetPassword = async (data: { email: string }) => {
   }
 };
 
+export const confirmResetPassword = async (data: {
+  uid: string;
+  token: string;
+  new_password: string;
+  re_new_password: string;
+}) => {
+  try {
+    const response = await api.post("/users/reset_password_confirm/", data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
 export const verifyToken = async () => {
   try {
     const token = localStorage.getItem("accessToken");
@@ -136,3 +151,15 @@ export const getCurrentUser = async () => {
     throw error;
   }
 };
+
+export const fetchCurrentUser = () => api.get("users/me/");
+
+export const changePassword = (data: { current_password: string; new_password: string }) =>
+  api.post("/users/set_password/", data);
+
+export const patchCurrentUser = (data: any) => api.patch("/users/me/", data);
+
+export const fetchUserStats = () => api.get("/users/me/stats/");
+
+export const fetchUserAchievements = () => api.get("/users/me/achievements/");
+

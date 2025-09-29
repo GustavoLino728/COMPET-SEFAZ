@@ -5,8 +5,9 @@ import HomePage from './pages/HomePage';
 import UserList from './components/user/UserList';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
+import UserProfilePage from './pages/userProfile/UserProfilePage'
 import UserSetup from './pages/UserSetup';
-import ResetPassword from './pages/ForgotPasswordPage';
+import ResetPassword from './pages/ResetPasswordPage';
 import ResetPasswordConfirm from './pages/ResetPasswordConfirmPage';
 import './App.css';
 import './styles/global.css';
@@ -34,7 +35,8 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/setup" element={<UserSetup />} />
           <Route path="/esqueci-senha" element={<ResetPassword/>}/>
-          <Route path="/nova-senha" element={<ResetPasswordConfirm/>}/>
+          <Route path="/reset-password/:uid/:token" element={<ResetPasswordConfirm/>}/>
+          <Route path="/perfil" element={<UserProfilePage/>}/>
           {/* Add other routes as needed */}
         </Routes>
       </main>
