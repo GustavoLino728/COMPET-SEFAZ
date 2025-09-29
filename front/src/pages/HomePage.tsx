@@ -1,6 +1,10 @@
 import React from 'react';
 import styles from './HomePage.module.css';
 
+import prodepeImage from '../assets/images/PRODEPE/PRODEPE-card-programa.png'; 
+import prodeautoImage from '../assets/images/PRODEAUTO/PRODEAUTO-card-programa.png'; 
+import proindImage from '../assets/images/PROIND/PROIND-card-programa.png'; 
+
 type DashboardCardProps = {
   title: string;
   description: string;
@@ -93,19 +97,22 @@ function HomePage() {
           <div className={styles.trailsGrid}>
             
             <TrailCard 
-              imageSrc="https://via.placeholder.com/400x220/d1e7dd/8ea4bf?text=PRODEPE"
+              imageSrc={prodepeImage}
               title="PRODEPE"
               description="Descubra como o Programa de Desenvolvimento de Pernambuco estimula empresas com incentivos fiscais..."
+              //link="/trilhas/id-da-trilha-prodepe"
             />
             <TrailCard 
-              imageSrc="https://via.placeholder.com/400x220/dcd0e8/8ea4bf?text=PRODEAUTO"
+              imageSrc={prodeautoImage}
               title="PRODEAUTO"
               description="Entenda os benefícios do programa voltado ao setor automotivo, que incentiva a instalação e expansão de indústrias..."
+              //link="/trilhas/id-da-trilha-prodeauto"
             />
             <TrailCard 
-              imageSrc="https://via.placeholder.com/400x220/d1f2eb/8ea4bf?text=PROIND"
+              imageSrc={proindImage}
               title="PROIND"
               description="Aprenda como esse programa de incentivos apoia empreendimentos industriais, promovendo inovação..."
+              //link="/trilhas/proind-calculo-incentivo"
             />
             
           </div>

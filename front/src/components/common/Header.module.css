@@ -14,12 +14,14 @@
   align-items: center;
   height: 80px; 
 }
+.logoImage {
+  height: 40px; 
+  object-fit: contain; 
+}
 
-.logo a {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #212529;
-  text-decoration: none;
+.logo {
+  display: flex;
+  align-items: center;
 }
 
 .navLinks {
@@ -30,7 +32,7 @@
 .navLinks a {
   font-size: 1rem;
   font-weight: 500;
-  color: #495057;
+  color: #121417;
   text-decoration: none;
   transition: color 0.2s ease-in-out;
 }
@@ -39,21 +41,25 @@
   color: #007bff; 
 }
 
-.loginButton a {
-  font-size: 1rem;
-  font-weight: 500;
-  color: #212529;
-  background-color: #f1f3f5;
-  padding: 0.6rem 1.2rem;
-  border-radius: 8px;
+.profileButton {
+  background: #292961; 
+  border-radius: 8px;   
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px; 
+  width: 137px; 
+  color: #FFFFFF; 
+  padding: 10px 0; 
   text-decoration: none;
-  transition: background-color 0.2s ease-in-out;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background-color 0.2s ease;
 }
 
-.loginButton a:hover {
-  background-color: #e9ecef;
+.profileButton:hover {
+  background-color: #3d3d8a; /* Um tom mais claro para o efeito hover */
 }
-
 .rightGroup {
   display: flex;
   align-items: center; 

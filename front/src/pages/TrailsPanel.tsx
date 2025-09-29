@@ -1,14 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { trilhas, type Trilha, type ItemDaListaAninhada } from '../data/trilhasData';
+
 import TrackDetailHeader from '../components/common/TrackDetailHeader';
-import VideoSection from '../components/common/VideoSection';
+// import VideoSection from '../components/common/VideoSection';
 import DesafiosCard from '../components/common/DesafiosCard';
 import TesteCertificacaoCard from '../components/common/TesteCertificacaoCard';
 import styles from './TrailsPanel.module.css';
 
-const TrailsPanel: React.FC = () => {
+const RenderList = ({ items }: { items: ItemDaListaAninhada[] }) => {
+  return (
+    <ul className={styles.mainList}>
+      {items.map((item, index) => {
+        if (typeof item === 'string') {
+          return <li key={index} className={styles.mainListItem}>{item}</li>;
+        }
+        return (
+          <li key={index} className={styles.mainListItem}>
+            {item.texto}
+            {item.subItens && <RenderList items={item.subItens} />}
+          </li>
+        );
+      })}
+    </ul>
+  );
+};
+
+
+const TrailsPanel = () => { 
+  const { trilhaId } = useParams();
+  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState('conteudo');
+
+  const trilhaAtual = trilhas.find((trilha: Trilha) => trilha.id === trilhaId);
+
+  if (!trilhaAtual) {
+    return <div>Trilha não encontrada!</div>;
+  }
+
   const handleChallengeClick = (challengeType: string) => {
     console.log(`Iniciando desafio: ${challengeType}`);
-    
   };
 
   const handleTestClick = () => {
@@ -17,47 +48,102 @@ const TrailsPanel: React.FC = () => {
 
   return (
     <div className={styles.container}>
+      <button className={styles.backButton} onClick={() => navigate(-1)}>&larr;</button>
       
       <TrackDetailHeader
-        title="T1: Cálculo do Incentivo"
-        description="Aprenda a calcular incentivos de forma precisa e eficiente utilizando as melhores práticas do mercado."
-        iconUrl="/path/to/your/icon.png" 
+        title={trilhaAtual.titulo}
+        description={trilhaAtual.descricaoHeader}
+        programa={trilhaAtual.programa}
       />
 
-   
-      <VideoSection
-        title="CÁLCULO DO INCENTIVO"
-        description="Material explicativo sobre como realizar cálculos de incentivo de forma correta."
-        imageUrl="/path/to/your/image.jpg" 
-      />
+      <div className={styles.layoutContainer}>
+        <main className={styles.mainContent}>
+          
+          <div className={styles.contentBlock}>
+            <h3 className={styles.contentTitle}>Sobre a trilha</h3>
+            <p className={styles.contentText}>{trilhaAtual.sobreTrilha}</p>
+          </div>
 
-      
-      <div className={styles.section}>
-        <h2 className={styles.sectionTitle}>Desafios</h2>
-        <div className={styles.challengesGrid}>
-          <DesafiosCard
+          <div className={styles.tabsContainer}>
+            <button
+              className={`${styles.tabButton} ${activeTab === 'conteudo' ? styles.tabActive : ''}`}
+              onClick={() => setActiveTab('conteudo')}
+            >
+              Conteúdo
+            </button>
+            <button
+              className={`${styles.tabButton} ${activeTab === 'material' ? styles.tabActive : ''}`}
+              onClick={() => setActiveTab('material')}
+            >
+              Material complementar
+            </button>
+          </div>
+          
+          {activeTab === 'conteudo' && (
+            <div>
+              {/* <VideoSection videoUrl={trilhaAtual.urlVideo} /> */}
+              
+              {/* --- Loop Inteligente para Renderizar o Conteúdo Dinâmico --- */}
+              {trilhaAtual.blocosDeConteudo.map((bloco, index) => {
+
+                if (bloco.tipo === 'subtitulo' || bloco.tipo === 'subtitulo-bold') {
+                  const className = bloco.tipo === 'subtitulo-bold' ? styles.contentTitleBold : styles.contentTitle;
+                  return <h3 key={index} className={className}>{bloco.conteudo as string}</h3>;
+                }
+                
+                if (bloco.tipo === 'paragrafo') {
+                  return <p key={index} className={styles.contentText}>{bloco.conteudo as string}</p>;
+                }
+                
+                if (bloco.tipo === 'lista') {
+                  return <RenderList key={index} items={bloco.conteudo} />;
+                }
+
+                if (bloco.tipo === 'lista-alfabetica' || bloco.tipo === 'lista-bullet') {
+                  if (Array.isArray(bloco.conteudo)) {
+                    const listClass = bloco.tipo === 'lista-alfabetica' ? styles.alphaList : styles.bulletList;
+                    const itemClass = bloco.tipo === 'lista-alfabetica' ? styles.alphaListItem : styles.bulletListItem;
+                    return (
+                      <ul key={index} className={listClass}>
+                        {bloco.conteudo.map((item, itemIndex) => (
+                          <li key={itemIndex} className={itemClass}>{item}</li>
+                        ))}
+                      </ul>
+                    );
+                  }
+                }
+                
+                return null;
+              })}
+            </div>
+          )}
+
+          {activeTab === 'material' && (
+            <div className={styles.contentBlock}>
+              <h3 className={styles.contentTitle}>Material Complementar</h3>
+              <p className={styles.contentText}>
+                Aqui estarão os links e documentos para download.
+              </p>
+            </div>
+          )}
+          
+        </main>
+
+        <aside className={styles.sidebar}>
+          <DesafiosCard 
             title="Desafios"
             number="2"
             description="Teste os seus conhecimentos da trilha com exercícios práticos!"
             buttonText="Fazer simulados"
             onButtonClick={() => handleChallengeClick('conhecimento')}
           />
-          
-          <TesteCertificacaoCard
+          <TesteCertificacaoCard 
             title="Teste de certificação"
             description="Faça um avaliação final da trilha e obtenha o seu certificado."
             buttonText="Fazer teste"
             onButtonClick={handleTestClick}
           />
-        </div>
-      </div>
-
-    
-      <div className={styles.chatBot}>
-        <div className={styles.chatBotIcon}>
-          <span>💬</span>
-        </div>
-        <span className={styles.chatBotText}>Fale com Susy</span>
+        </aside>
       </div>
     </div>
   );

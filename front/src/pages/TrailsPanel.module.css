@@ -2,113 +2,207 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 24px;
-  min-height: 100vh;
-  background-color: #f9fafb;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
-.section {
-  margin-bottom: 32px;
+.layoutContainer {
+  display: flex; 
+  align-items: flex-start; 
+  gap: 32px; 
+  margin-top: 32px; 
 }
 
-.sectionTitle {
-  font-size: 24px;
+.mainContent {
+  flex: 2; 
+  min-width: 0; 
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem
+}
+
+.sidebar {
+  flex: 1; 
+  position: sticky;
+  top: 24px; 
+  display: flex;
+  flex-direction: column;
+  gap: 24px; 
+}
+
+.textContent {
+  background-color: #fff;
+  padding: 24px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.contentBlock {
+  margin-bottom: 2.5rem; 
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contentTitle {
+  font-size: 18px;
   font-weight: 600;
-  color: #1f2937;
-  margin: 0 0 20px 0;
+  color: #000000CC;
+  margin-bottom: 1rem;
 }
 
-.challengesGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
-}
-
-
-.chatBot {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  background: #1f2937;
-  color: white;
-  padding: 12px 20px;
-  border-radius: 25px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: all 0.2s;
-  z-index: 1000;
-}
-
-.chatBot:hover {
-  background: #374151;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-}
-
-.chatBotIcon {
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.contentText {
   font-size: 16px;
+  line-height: 1.6;
+  color: #000000CC;
 }
 
-.chatBotText {
-  font-size: 14px;
+.tabsContainer {
+  display: flex;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.tabButton {
+  padding: 12px 24px;
+  font-size: 16px;
   font-weight: 500;
+  color: #6b7280;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin-bottom: -1px; 
+  border-bottom: 2px solid transparent; 
+  transition: color 0.2s ease, border-color 0.2s ease;
 }
 
-/* Responsivo */
-@media (max-width: 768px) {
-  .container {
-    padding: 16px;
-  }
-  
-  .challengesGrid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-  
-  .sectionTitle {
-    font-size: 20px;
-  }
-  
-  .chatBot {
-    bottom: 20px;
-    right: 20px;
-    padding: 10px 16px;
-  }
-  
-  .chatBotText {
-    font-size: 13px;
-  }
+.tabButton:hover {
+  color: #111827;
 }
 
-@media (max-width: 480px) {
-  .container {
-    padding: 12px;
-  }
-  
-  .chatBot {
-    bottom: 16px;
-    right: 16px;
-    padding: 8px 12px;
-  }
-  
-  .chatBotIcon {
-    width: 20px;
-    height: 20px;
-    font-size: 14px;
-  }
-  
-  .chatBotText {
-    font-size: 12px;
-  }
+.tabActive {
+  color: #4f46e5; 
+  border-bottom-color: #4f46e5;
+}
+
+.customList {
+  list-style: none; 
+  padding-left: 1.5rem; 
+  margin-top: 1rem; 
+}
+
+.listItem {
+  color: #000000CC; 
+  font-size: 16px;
+  line-height: 1.6;
+  padding-bottom: 0.5rem; 
+}
+
+.backButton {
+  background-color: #f3f4f6; 
+  color: #374151; 
+  border: 1px solid #e5e7eb;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%; 
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-bottom: 1.5rem;
+  align-self: flex-start; 
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Em TrailsPanel.module.css */
+
+/* Estilo para o subtítulo em negrito */
+.contentTitleBold {
+  font-size: 16px; /* Ajuste o tamanho se for diferente */
+  font-weight: 700; /* 700 é o valor comum para bold */
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+/* Container para a lista alfabética */
+.alphaList {
+  list-style: none; /* Remove os pontinhos */
+  padding-left: 1.5rem; /* Adiciona o recuo */
+  margin-top: 1rem;
+}
+
+/* Cada item da lista */
+.alphaListItem {
+  color: #374151;
+  font-size: 16px;
+  line-height: 1.6;
+  padding-bottom: 1rem; /* Espaço entre os itens */
+}
+
+/* Em TrailsPanel.module.css */
+
+/* --- ESTILOS PARA A LISTA ANINHADA (Bolinhas e Quadrados) --- */
+/* Em TrailsPanel.module.css */
+
+/* Lista Principal (Nível 1 - Bolinha vazia) */
+.mainList {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 1rem;
+}
+
+.mainListItem {
+  padding-left: 1.5rem;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.mainListItem::before {
+  content: '○';
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 1.2rem;
+  line-height: 1.3;
+}
+
+/* Sub-Lista (Nível 2 - Quadrado) */
+.subList {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 1rem;
+}
+
+.subListItem {
+  padding-left: 1.5rem;
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+
+
+.subListItem::before {
+  content: '■';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #374151;
+  font-size: 0.8rem;
+  line-height: 1.8;
+}
+
+/* --- ESTILOS PARA A LISTA ALFABÉTICA (Recuada, sem marcadores) --- */
+.alphaList {
+  list-style: none;
+  padding-left: 1.5rem;
+  margin-top: 1rem;
+}
+
+.alphaListItem {
+  color: #374151;
+  font-size: 16px;
+  line-height: 1.6;
+  padding-bottom: 1rem;
 }
