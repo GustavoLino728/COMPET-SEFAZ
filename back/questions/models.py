@@ -19,7 +19,7 @@ class Question(models.Model):
         MEDIUM = 'MEDIUM', 'Médio'
         HARD = 'HARD', 'Difícil'
 
-    # PASSO 2: Adicionar o novo campo 'difficulty'
+    # Add the new field 'difficulty' 
     difficulty = models.CharField(
         max_length=10,
         choices=Difficulty.choices,
@@ -91,3 +91,68 @@ class Option(models.Model):
     def __str__(self):
         correct_indicator = " (CORRECT)" if self.is_correct else ""
         return f"{self.question.topic} - {self.option_text[:30]}...{correct_indicator}"
+
+
+class Program(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
+class Track(models.Model):
+    program = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='tracks')
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f'{self.program.name} - {self.name}'
+
+class Source(models.Model):
+    file_name = models.CharField(max_length=255, unique=True)
+    description = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.file_name
+
+class Challenge(models.Model):
+    class ChallengeStatus(models.TextChoices):
+        PENDING = 'PENDING', 'Pendente'
+        APPROVED = 'APPROVED', 'Aprovado'
+
+    track = models.ForeignKey('Track', on_delete=models.CASCADE, related_name='challenges')
+    title = models.CharField(max_length=255, blank=True, null=True)
+    difficulty = models.CharField(
+        max_length=10,
+        choices=Question.Difficulty.choices,
+    )
+    status = models.CharField(
+        max_length=10,
+        choices=ChallengeStatus.choices,
+        default=ChallengeStatus.PENDING
+    )
+    sources = models.ManyToManyField('Source', related_name='challenges')
+
+    def __str__(self):
+        return self.title or f"Challenge {self.id}"
+
+class ProblemQuestion(models.Model):
+    challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE, related_name='problem_questions')
+    statement = models.TextField()
+    correct_answer = models.DecimalField(max_digits=15, decimal_places=2)
+    justification = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.statement[:50] + '...'
+
+class MultipleChoiceQuestion(models.Model):
+    challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE, related_name='multiple_choice_questions')
+    statement = models.TextField()
+    option_a = models.TextField()
+    option_b = models.TextField()
+    option_c = models.TextField()
+    option_d = models.TextField()
+    option_e = models.TextField()
+    correct_option = models.CharField(max_length=1)
+    justification = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.statement[:50] + '...'

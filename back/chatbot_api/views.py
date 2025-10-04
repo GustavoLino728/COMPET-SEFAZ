@@ -14,6 +14,8 @@ from .serializers import (
 
 # Import the loader of the RAGPipeline
 from .rag_loader import get_rag_pipeline, is_initialized
+from django.db import transaction
+from questions.models import Program, Track, Challenge, Source, ProblemQuestion, MultipleChoiceQuestion, Question
 
 
 class ChatbotChatView(APIView):
@@ -90,10 +92,10 @@ class QuestionGenerationView(APIView):
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-
-        
         try:
-            # Get topic and difficulty
+            # Get data from serializer
+            program_name = serializer.validated_data['program']
+            track_name = serializer.validated_data['track']
             topic = serializer.validated_data['topic']
             difficulty = serializer.validated_data.get('difficulty', 'medium')
             type = serializer.validated_data.get('type', 'Discursiva')
@@ -102,28 +104,11 @@ class QuestionGenerationView(APIView):
             pipeline = get_rag_pipeline()
             
             if pipeline is None:
-                # Fallback to mock response
-                mock_question_data = {
-                    'question': f"Mock question about {topic}",
-                    'topic': topic,
-                    'options': [
-                        "A) First option",
-                        "B) Second option", 
-                        "C) Third option",
-                        "D) Fourth option",
-                        "E) Fifth option"
-                    ],
-                    'answer': "A) First option",
-                    'explanation': f"This is a mock explanation for {topic}",
-                    'difficulty': difficulty,
-                    'type': type,
-                    'sources': [],
-                    'confidence': 'high',
-                    'avg_score': 0,
-                    'documents_used': 0
-                }
-                
-                return Response(mock_question_data, status=status.HTTP_200_OK)
+                # Fallback for when pipeline is not initialized
+                return Response(
+                    {"error": "RAG pipeline not initialized"}, 
+                    status=status.HTTP_503_SERVICE_UNAVAILABLE
+                )
             
             # Generate question
             question_data = pipeline.generate_challenges_and_questions(topic, difficulty, type)
@@ -137,9 +122,63 @@ class QuestionGenerationView(APIView):
                         {"error": "Invalid question format from RAG pipeline"}, 
                         status=status.HTTP_500_INTERNAL_SERVER_ERROR
                     )
-            
-            # The output is now a complex JSON object, so we just return it directly.
-            # The old QuestionResponseSerializer is not suitable for this new structure.
+
+            # --- Save to database ---
+            try:
+                with transaction.atomic():
+                    # Map difficulty from "Médio" to "MEDIUM"
+                    difficulty_map = {v: k for k, v in Question.Difficulty.choices}
+                    difficulty_enum = difficulty_map.get(difficulty.capitalize(), Question.Difficulty.MEDIUM)
+
+                    # Get or create Program and Track
+                    program, _ = Program.objects.get_or_create(name=program_name.upper())
+                    track, _ = Track.objects.get_or_create(program=program, name=track_name.capitalize())
+
+                    # Create Challenge
+                    challenge = Challenge.objects.create(
+                        track=track,
+                        title=f"Desafio sobre {topic.capitalize()} ({difficulty})",
+                        difficulty=difficulty_enum,
+                        status=Challenge.ChallengeStatus.PENDING
+                    )
+
+                    # Create and associate sources
+                    source_objects = []
+                    for source_data in question_data.get('sources', []):
+                        source, _ = Source.objects.get_or_create(file_name=source_data['file_name'])
+                        source_objects.append(source)
+                    challenge.sources.add(*source_objects)
+                    
+                    # Create Problem Questions
+                    for pq_data in question_data.get('challenges', []):
+                        ProblemQuestion.objects.create(
+                            challenge=challenge,
+                            statement=pq_data['challenge'],
+                            correct_answer=pq_data['challenge_answer'],
+                            justification=pq_data['challenge_justification']
+                        )
+                    
+                    # Create Multiple Choice Questions
+                    for mcq_data in question_data.get('questions', []):
+                        MultipleChoiceQuestion.objects.create(
+                            challenge=challenge,
+                            statement=mcq_data['question'],
+                            option_a=mcq_data['options']['A'],
+                            option_b=mcq_data['options']['B'],
+                            option_c=mcq_data['options']['C'],
+                            option_d=mcq_data['options']['D'],
+                            option_e=mcq_data['options']['E'],
+                            correct_option=mcq_data['correct_answer'],
+                            justification=mcq_data['question_justification']
+                        )
+            except Exception as e:
+                # If database saving fails, return an error but don't expose details
+                return Response(
+                    {"error": f"Error saving generated challenge to the database: {str(e)}"},
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+            # --- End of save to database ---
+
             return Response(question_data, status=status.HTTP_200_OK)
             
         except Exception as e:

@@ -1,128 +1,64 @@
-.card {
-  width: 321px;
-  height: 215px;
-  flex-shrink: 0;
-  border-radius: 8px;
-  border: 2px solid #F0F2F5;
-  background: #FFF;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
-  cursor: pointer;
-}
+/* src/components/common/DesafiosCard.module.css */
 
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.10);
+.cardContainer {
+  /* Propriedades passadas do Figma */
+  width: 321px; /* Largura fixa */
+  height: 223px; /* Altura fixa */
+  padding: 24px;
+  border-radius: 12px;
+  border: 2px solid rgba(66, 44, 135, 0.20); /* Bordar 20% roxa */
+  background: #DFE9FF; /* Cor de fundo do Figma */
+
+  /* Para o layout interno: título/descrição em cima, botão embaixo à direita */
+  display: flex;
+  flex-direction: column; /* Organiza os filhos em coluna */
+  justify-content: space-between; /* Empurra o botão para baixo */
+  /* align-items: flex-start;  Isso pode ser usado para alinhar todo o conteúdo ao topo se necessário */
 }
 
 .header {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 12px;
+  justify-content: space-between; /* Título à esquerda, número à direita */
+  align-items: center; /* Alinha verticalmente */
+  margin-bottom: 12px; /* Espaço entre o header e a descrição */
 }
 
 .title {
-  font-size: 24px;
-  font-weight: 700;
-  margin: 0;
-  line-height: 1.2;
-  color: #1F2937;
-  flex: 1;
+  color: #1F2937; /* Cor do texto no Figma */
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0; /* Remover margens padrão */
 }
 
-.number {
-  background: #E5E7EB;
-  color: #6B7280;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.numberTag {
+  background-color: #F0F2F5; /* Um verde do Figma ou similar para o número */
+  color: #121417; /* Cor do texto no Figma */
   font-size: 14px;
-  font-weight: 600;
-  flex-shrink: 0;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 9999px; /* Para deixar redondo */
 }
 
 .description {
+  color: #000000CC; /* Cor do texto no Figma */
   font-size: 16px;
   line-height: 1.5;
-  margin: 0 0 20px 0;
-  color: #6B7280;
-  flex: 1;
+  margin-bottom: auto; /* Empurra o botão para baixo, ocupando espaço restante */
 }
 
 .button {
-  background: #4338CA;
-  border: none;
-  border-radius: 8px;
-  padding: 12px 24px;
+  background-color: #26266D; /* Cor roxa do botão no Figma */
+  color: #FFFFFF;
+  padding: 10px 20px;
+  border-radius: 6px;
   font-size: 14px;
   font-weight: 600;
+  border: none;
   cursor: pointer;
-  transition: all 0.2s;
-  color: white;
-  align-self: flex-start;
+  align-self: flex-end; /* Alinha o botão à direita no final */
+  transition: background-color 0.2s ease;
 }
 
 .button:hover {
-  background: #3730A3;
-  transform: translateY(-1px);
-}
-
-.iconContainer {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.icon {
-  opacity: 0.8;
-}
-
-/* Responsivo */
-@media (max-width: 768px) {
-  .card {
-    width: 100%;
-    max-width: 321px;
-    height: auto;
-    min-height: 215px;
-    padding: 20px;
-  }
-  
-  .title {
-    font-size: 20px;
-  }
-  
-  .description {
-    font-size: 14px;
-  }
-  
-  .button {
-    padding: 10px 20px;
-    font-size: 13px;
-  }
-  
-  .iconContainer {
-    width: 40px;
-    height: 40px;
-    bottom: 16px;
-    right: 16px;
-  }
-  
-  .icon svg {
-    width: 24px;
-    height: 24px;
-  }
+  background-color: #553a9e; /* Um pouco mais claro no hover */
 }

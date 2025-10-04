@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Question, Option
+from .models import Question, Option, Source, ProblemQuestion, MultipleChoiceQuestion, Challenge
 
 
 class OptionSerializer(serializers.ModelSerializer):
@@ -71,3 +71,40 @@ class QuestionUpdateSerializer(serializers.ModelSerializer):
                 Option.objects.create(question=instance, **option_data)
         
         return instance
+
+class SourceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Source
+        fields = '__all__'
+
+class ProblemQuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProblemQuestion
+        fields = '__all__'
+
+class MultipleChoiceQuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MultipleChoiceQuestion
+        fields = '__all__'
+
+class ChallengeSerializer(serializers.ModelSerializer):
+    problem_questions = ProblemQuestionSerializer(many=True, read_only=True)
+    multiple_choice_questions = MultipleChoiceQuestionSerializer(many=True, read_only=True)
+    sources = SourceSerializer(many=True, read_only=True)
+    track_name = serializers.CharField(source='track.name', read_only=True)
+    program_name = serializers.CharField(source='track.program.name', read_only=True)
+
+
+    class Meta:
+        model = Challenge
+        fields = (
+            'id', 'title', 'difficulty', 'status', 
+            'track', 'track_name', 'program_name', 'sources',
+            'problem_questions', 'multiple_choice_questions'
+        )
+        read_only_fields = ('track',)
+
+class ChallengeUpdateStatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Challenge
+        fields = ['status']

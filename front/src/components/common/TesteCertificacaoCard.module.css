@@ -1,134 +1,63 @@
-.card {
-  width: 321px;
-  height: 275px;
-  flex-shrink: 0;
-  border-radius: 8px;
-  background: #4338CA;
+/* src/components/common/TesteCertificacaoCard.module.css */
+
+.cardContainer {
+  background-color: #DFE9FF; /* Fundo roxo */
+  border-radius: 12px;
   padding: 24px;
   display: flex;
   flex-direction: column;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
-  cursor: pointer;
+  gap: 24px; /* Espaço entre o header, descriptionBox e button */
+  width: 321px; /* Largura similar ao card de Desafios */
+  height: auto; /* Altura auto para se ajustar ao conteúdo */
+  border: 2px solid rgba(66, 44, 135, 0.20); /* Bordar 20% roxa */
 }
 
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 25px rgba(67, 56, 202, 0.25);
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  gap: 20px;
-}
-
-.titleSection {
+.header {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.iconTitle {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+.icon {
+  width: 24px;
+  height: 24px;
+  color: #8B74DB; /* Cor do ícone */
 }
 
 .title {
+  color: #373333; /* Cor do texto do título */
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 600;
   margin: 0;
-  line-height: 1.3;
-  color: white;
-  flex: 1;
-}
-
-.descriptionBox {
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 8px;
-  padding: 16px;
-  flex: 1;
 }
 
 .description {
-  font-size: 14px;
+  color: #000000CC; /* Cor do texto da descrição */
+  font-size: 16px;
   line-height: 1.5;
   margin: 0;
-  color: rgba(255, 255, 255, 0.9);
 }
 
 .button {
-  background: white;
-  border: none;
-  border-radius: 8px;
-  padding: 12px 24px;
+  background-color: #26266D; /* Botão branco */
+  color: #FFFFFF; /* Texto roxo */
+  padding: 10px 20px;
+  border-radius: 6px;
   font-size: 14px;
   font-weight: 600;
+  border: none;
   cursor: pointer;
-  transition: all 0.2s;
-  color: #4338CA;
-  align-self: flex-start;
+  align-self: flex-end; /* Alinha o botão à direita */
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .button:hover {
-  background: #F3F4F6;
-  transform: translateY(-1px);
+  background-color: #553a9e; /* Tom mais claro no hover */
 }
 
-.iconContainer {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.icon {
-  opacity: 0.8;
-}
-
-@media (max-width: 768px) {
-  .card {
-    width: 100%;
-    max-width: 321px;
-    height: auto;
-    min-height: 275px;
-    padding: 20px;
-  }
-  
-  .title {
-    font-size: 18px;
-  }
-  
-  .description {
-    font-size: 13px;
-  }
-  
-  .button {
-    padding: 10px 20px;
-    font-size: 13px;
-  }
-  
-  .iconContainer {
-    width: 40px;
-    height: 40px;
-    bottom: 16px;
-    right: 16px;
-  }
-  
-  .icon svg {
-    width: 24px;
-    height: 24px;
+@media (max-width: 400px) {
+  .cardContainer {
+    width: 100%; /* Largura total em telas pequenas */
+    padding: 16px;
   }
 }

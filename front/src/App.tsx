@@ -15,6 +15,7 @@ import './styles/global.css';
 
 import FloatingButton from './components/FloatingButton';
 import ChatWindow from './components/ChatWindow';
+import TrailsPanel from './pages/TrailsPanel';
 
 function App() {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -37,6 +38,8 @@ function App() {
           <Route path="/esqueci-senha" element={<ResetPassword/>}/>
           <Route path="/reset-password/:uid/:token" element={<ResetPasswordConfirm/>}/>
           <Route path="/perfil" element={<UserProfilePage/>}/>
+          <Route path="/trilhas/:trilhaId" element={<TrailsPanel />} />
+
           {/* Add other routes as needed */}
         </Routes>
       </main>
