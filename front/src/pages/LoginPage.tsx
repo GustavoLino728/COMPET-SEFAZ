@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import styles from "./LoginPage.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser, logoutUser, verifyToken } from "../api";
+import { useAuth } from '../contexts/AuthContext';
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -52,6 +54,7 @@ const LoginPage = () => {
 
     try {
       await loginUser({ email: email.trim(), password });
+      login();
       navigate("/");
     } catch (err: any) {
       let errorMessage = "Email ou senha inválidos.";

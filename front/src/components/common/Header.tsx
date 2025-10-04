@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";   
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
 import styles from './Header.module.css';
 import logoColorida from '../../assets/images/Logo/PNG/Logo-colorida.png'; 
+import { useAuth } from '../../contexts/AuthContext';
 
 const Header = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const { isLoggedIn, logout } = useAuth();
+  const location = useLocation();
+  
+  const isOnProfilePage = location.pathname === '/perfil';
 
-  useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    setLoggedIn(!!token);
-  }, []);
+  const handleLogout = () => {
+    logout();
+  };
 
   return (
     <header className={styles.header}>
@@ -30,8 +33,14 @@ const Header = () => {
           </nav>
 
           <div className={styles.loginButton}>
-            {loggedIn ? (
-              <Link to="/perfil">Acessar Perfil</Link>
+            {isLoggedIn ? (
+              isOnProfilePage ? (
+                <button onClick={handleLogout} className={styles.logoutButton}>
+                  Sair
+                </button>
+              ) : (
+                <Link to="/perfil">Acessar Perfil</Link>
+              )
             ) : (
               <Link to="/login">Login</Link>
             )}

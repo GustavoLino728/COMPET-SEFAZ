@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
 import Header from './components/common/Header';
 import HomePage from './pages/HomePage';
 import UserList from './components/user/UserList';
@@ -25,29 +26,29 @@ function App() {
   };
 
   return (
-   <div>
-      <Header />
+    <AuthProvider>
+      <div>
+        <Header />
 
-      <main>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/usuarios" element={<UserList />} />
-          <Route path="/cadastro" element={<RegisterPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/setup" element={<UserSetup />} />
-          <Route path="/esqueci-senha" element={<ResetPassword/>}/>
-          <Route path="/reset-password/:uid/:token" element={<ResetPasswordConfirm/>}/>
-          <Route path="/perfil" element={<UserProfilePage/>}/>
-          <Route path="/trilhas/:trilhaId" element={<TrailsPanel />} />
-
-          {/* Add other routes as needed */}
-        </Routes>
-      </main>
-      
-      <FloatingButton onClick={handleChatToggle} />
-      <ChatWindow isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
-    </div>
-
+        <main>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/usuarios" element={<UserList />} />
+            <Route path="/cadastro" element={<RegisterPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/setup" element={<UserSetup />} />
+            <Route path="/esqueci-senha" element={<ResetPassword/>}/>
+            <Route path="/reset-password/:uid/:token" element={<ResetPasswordConfirm/>}/>
+            <Route path="/perfil" element={<UserProfilePage/>}/>
+            <Route path="/trilhas/:trilhaId" element={<TrailsPanel />} />
+            {/* Add other routes as needed */}
+          </Routes>
+        </main>
+        
+        <FloatingButton onClick={handleChatToggle} />
+        <ChatWindow isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
+      </div>
+    </AuthProvider>
   );
 }
 

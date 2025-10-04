@@ -6,7 +6,7 @@ class CustomPasswordResetEmail(PasswordResetEmail):
     def get_context_data(self):
         context = super().get_context_data()
         user = context["user"]
-        reset_url = f"https://localhost:8000/reset-password/{context['uid']}/{context['token']}"
+        reset_url = f"http://localhost:3000/reset-password/{context['uid']}/{context['token']}"
         context["message"] = (
             f"Olá {user.email},\n\n"
             f"Para redefinir sua senha, acesse:\n{reset_url}\n\n"

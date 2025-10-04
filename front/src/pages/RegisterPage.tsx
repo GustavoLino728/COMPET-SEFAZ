@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from './RegisterPage.module.css';
-import { registerUser } from "../api";
+import { registerUser, loginUser } from "../api";
+import { useAuth } from '../contexts/AuthContext';
 
 const RegisterPage = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -13,6 +15,7 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const splitFullName = (fullName: string) => {
     const nameParts = fullName.trim().split(' ');
@@ -43,15 +46,18 @@ const RegisterPage = () => {
   const handleRegisterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     if (password !== rePassword) {
       setError("As senhas não coincidem");
+      setLoading(false);
       return;
     }
 
     const { firstName, lastName } = splitFullName(name);
     if (!firstName || !lastName) {
       setError("Por favor, digite seu nome completo (nome e sobrenome)");
+      setLoading(false);
       return;
     }
 
@@ -64,29 +70,22 @@ const RegisterPage = () => {
       password,
       re_password: rePassword
     };
-    
-    console.log("Dados sendo enviados:", dataToSend); // ✅ Debug
 
     try {
+
       await registerUser(dataToSend);
-      navigate("/setup");
-    } catch (err: any) {
-      // ... tratamento de erro
-    }
+      console.log('Usuário registrado com sucesso');
 
-    try {
-      await registerUser({
-        first_name: firstName,
-        last_name: lastName,
-        email: email.trim(),
-        linkedin_url: linkedin.trim() || undefined,
-        cpf: cleanCPF(cpf),
-        password,
-        re_password: rePassword
+      await loginUser({ 
+        email: email.trim(), 
+        password 
       });
-      navigate("/setup");
-    } catch (err: any) {
+      console.log('Login automático realizado');
 
+      login();
+      navigate("/setup");
+
+    } catch (err: any) {
       if (err.response?.data) {
         const backendErrors = err.response.data;
         let errorMessage = "Erro ao cadastrar usuário:\n";
@@ -101,7 +100,9 @@ const RegisterPage = () => {
       } else {
         setError("Erro ao cadastrar usuário");
       }
-      console.error(err);
+      console.error('Erro no registro:', err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -120,6 +121,7 @@ const RegisterPage = () => {
           className={styles.inputField} 
           value={name} 
           onChange={e => setName(e.target.value)} 
+          disabled={loading}
           required 
         />
         <input 
@@ -128,6 +130,7 @@ const RegisterPage = () => {
           className={styles.inputField} 
           value={email} 
           onChange={e => setEmail(e.target.value)} 
+          disabled={loading}
           required 
         />
         <input 
@@ -136,6 +139,7 @@ const RegisterPage = () => {
           className={styles.inputField} 
           value={linkedin} 
           onChange={e => setLinkedin(e.target.value)} 
+          disabled={loading}
         />
         <input 
           type="text" 
@@ -144,6 +148,7 @@ const RegisterPage = () => {
           value={cpf} 
           onChange={handleCpfChange} 
           maxLength={14}
+          disabled={loading}
           required 
         />
         <input 
@@ -152,6 +157,7 @@ const RegisterPage = () => {
           className={styles.inputField} 
           value={password} 
           onChange={e => setPassword(e.target.value)} 
+          disabled={loading}
           required 
         />
         <input 
@@ -160,10 +166,17 @@ const RegisterPage = () => {
           className={styles.inputField} 
           value={rePassword} 
           onChange={e => setRePassword(e.target.value)} 
+          disabled={loading}
           required 
         />
         
-        <button type="submit" className={styles.submitButton}>Continuar...</button>
+        <button 
+          type="submit" 
+          className={styles.submitButton}
+          disabled={loading}
+        >
+          {loading ? "Cadastrando..." : "Continuar..."} {/* ✅ Feedback visual */}
+        </button>
         
         <p className={styles.termsText}>
           Li e concordo com os <a href="/terms">Termos de Serviço</a> e <a href="/privacy">Política de Privacidade</a>.
