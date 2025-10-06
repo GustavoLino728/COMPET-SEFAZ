@@ -143,6 +143,16 @@ class ProblemQuestion(models.Model):
     def __str__(self):
         return self.statement[:50] + '...'
 
+class DiscursiveQuestion(models.Model):
+    """Stores discursive/textual challenges that do not have numeric answers."""
+    challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE, related_name='discursive_questions')
+    statement = models.TextField()
+    answer_text = models.TextField()
+    justification = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.statement[:50] + '...'
+
 class MultipleChoiceQuestion(models.Model):
     challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE, related_name='multiple_choice_questions')
     statement = models.TextField()

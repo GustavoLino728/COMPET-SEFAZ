@@ -15,7 +15,7 @@ from .serializers import (
 # Import the loader of the RAGPipeline
 from .rag_loader import get_rag_pipeline, is_initialized
 from django.db import transaction
-from questions.models import Program, Track, Challenge, Source, ProblemQuestion, MultipleChoiceQuestion, Question
+from questions.models import Program, Track, Challenge, Source, ProblemQuestion, DiscursiveQuestion, MultipleChoiceQuestion, Question
 
 
 class ChatbotChatView(APIView):
@@ -123,6 +123,27 @@ class QuestionGenerationView(APIView):
                         status=status.HTTP_500_INTERNAL_SERVER_ERROR
                     )
 
+            # Validate AI response before attempting DB writes
+            if not isinstance(question_data, dict):
+                return Response(
+                    {"error": "Unexpected format from RAG pipeline"},
+                    status=status.HTTP_502_BAD_GATEWAY
+                )
+
+            if question_data.get("error"):
+                return Response(
+                    {"error": question_data.get("error")},
+                    status=status.HTTP_502_BAD_GATEWAY
+                )
+
+            required_top_level_keys = ["sources", "challenges", "questions"]
+            missing_keys = [k for k in required_top_level_keys if k not in question_data]
+            if missing_keys:
+                return Response(
+                    {"error": f"Missing keys in AI response: {', '.join(missing_keys)}"},
+                    status=status.HTTP_502_BAD_GATEWAY
+                )
+
             # --- Save to database ---
             try:
                 with transaction.atomic():
@@ -149,17 +170,46 @@ class QuestionGenerationView(APIView):
                         source_objects.append(source)
                     challenge.sources.add(*source_objects)
                     
-                    # Create Problem Questions
+                    # Create Discursive or Problem Questions based on type
+                    is_calculation = str(type).strip().lower().startswith(('calc', 'cálc', 'c\u00e1lc'))
+                    is_discursive = str(type).strip().lower().startswith(('disc', 'discur', 'discurs', 'discursiva'))
                     for pq_data in question_data.get('challenges', []):
-                        ProblemQuestion.objects.create(
-                            challenge=challenge,
-                            statement=pq_data['challenge'],
-                            correct_answer=pq_data['challenge_answer'],
-                            justification=pq_data['challenge_justification']
-                        )
+                        if not all(key in pq_data for key in ['challenge', 'challenge_answer', 'challenge_justification']):
+                            raise ValueError("Malformed 'challenges' item from AI response")
+                        if is_discursive and not is_calculation:
+                            DiscursiveQuestion.objects.create(
+                                challenge=challenge,
+                                statement=pq_data['challenge'],
+                                answer_text=pq_data['challenge_answer'],
+                                justification=pq_data['challenge_justification']
+                            )
+                        else:
+                            # Parse decimal answer (accept formats with comma or dot)
+                            from decimal import Decimal, InvalidOperation
+                            import re
+                            raw_answer = str(pq_data['challenge_answer'])
+                            match = re.search(r"[-+]?\d+[\.,]?\d*", raw_answer)
+                            if not match:
+                                raise ValueError("challenge_answer must include a decimal number for calculation type")
+                            normalized_number = match.group(0).replace(',', '.')
+                            try:
+                                decimal_answer = Decimal(normalized_number)
+                            except InvalidOperation:
+                                raise ValueError("Invalid decimal value in challenge_answer")
+                            ProblemQuestion.objects.create(
+                                challenge=challenge,
+                                statement=pq_data['challenge'],
+                                correct_answer=decimal_answer,
+                                justification=pq_data['challenge_justification']
+                            )
                     
                     # Create Multiple Choice Questions
                     for mcq_data in question_data.get('questions', []):
+                        if not all(key in mcq_data for key in ['question', 'options', 'correct_answer', 'question_justification']):
+                            raise ValueError("Malformed 'questions' item from AI response")
+                        options = mcq_data['options']
+                        if not isinstance(options, dict) or not all(k in options for k in ['A','B','C','D','E']):
+                            raise ValueError("Options must include A, B, C, D, E")
                         MultipleChoiceQuestion.objects.create(
                             challenge=challenge,
                             statement=mcq_data['question'],
