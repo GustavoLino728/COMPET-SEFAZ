@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const API_BASE_URL = "http://localhost:8000/api/auth";
+const CHATBOT_API_BASE_URL = "http://localhost:8000/api/chatbot";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -163,3 +164,25 @@ export const fetchUserStats = () => api.get("/users/me/stats/");
 
 export const fetchUserAchievements = () => api.get("/users/me/achievements/");
 
+// Chatbot API functions
+const chatbotApi = axios.create({
+  baseURL: CHATBOT_API_BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+export const generateQuestions = async (data: {
+  program: string;
+  track: string;
+  topic: string;
+  difficulty: string;
+  type: string;
+}) => {
+  try {
+    const response = await chatbotApi.post("/generate-question/", data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
