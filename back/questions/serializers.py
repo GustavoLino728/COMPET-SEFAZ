@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Question, Option, Source, ProblemQuestion, MultipleChoiceQuestion, Challenge
+from .models import Question, Option, Source, ProblemQuestion, DiscursiveQuestion, MultipleChoiceQuestion, Challenge
 
 
 class OptionSerializer(serializers.ModelSerializer):
@@ -82,6 +82,11 @@ class ProblemQuestionSerializer(serializers.ModelSerializer):
         model = ProblemQuestion
         fields = '__all__'
 
+class DiscursiveQuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DiscursiveQuestion
+        fields = '__all__'
+
 class MultipleChoiceQuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = MultipleChoiceQuestion
@@ -89,6 +94,7 @@ class MultipleChoiceQuestionSerializer(serializers.ModelSerializer):
 
 class ChallengeSerializer(serializers.ModelSerializer):
     problem_questions = ProblemQuestionSerializer(many=True, read_only=True)
+    discursive_questions = DiscursiveQuestionSerializer(many=True, read_only=True)
     multiple_choice_questions = MultipleChoiceQuestionSerializer(many=True, read_only=True)
     sources = SourceSerializer(many=True, read_only=True)
     track_name = serializers.CharField(source='track.name', read_only=True)
@@ -100,7 +106,7 @@ class ChallengeSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'title', 'difficulty', 'status', 
             'track', 'track_name', 'program_name', 'sources',
-            'problem_questions', 'multiple_choice_questions'
+            'problem_questions', 'discursive_questions', 'multiple_choice_questions'
         )
         read_only_fields = ('track',)
 

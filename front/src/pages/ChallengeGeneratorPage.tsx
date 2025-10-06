@@ -97,11 +97,9 @@ const ChallengeGeneratorPage: React.FC = () => {
         type: formData.type
       });
       
+      // Response now returns the persisted Challenge with IDs
       navigate('/admin/desafio-gerado', { 
-        state: { 
-          generatedData: response,
-          formData: formData 
-        } 
+        state: { challenge: response }
       });
     } catch (error) {
       console.error('Erro ao gerar questões:', error);

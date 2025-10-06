@@ -186,3 +186,47 @@ export const generateQuestions = async (data: {
     throw error;
   }
 };
+
+// Questions/Challenges API (backend questions app)
+const QUESTIONS_API_BASE_URL = "http://localhost:8000";
+const questionsApi = axios.create({
+  baseURL: QUESTIONS_API_BASE_URL,
+  headers: { "Content-Type": "application/json" },
+});
+
+export const fetchChallenge = async (id: number) => {
+  const response = await questionsApi.get(`/api/challenges/${id}/`);
+  return response.data;
+};
+
+export const updateProblemQuestion = async (id: number, data: {
+  statement?: string;
+  correct_answer?: string | number;
+  justification?: string | null;
+}) => {
+  const response = await questionsApi.patch(`/api/problem-questions/${id}/`, data);
+  return response.data;
+};
+
+export const updateDiscursiveQuestion = async (id: number, data: {
+  statement?: string;
+  answer_text?: string;
+  justification?: string | null;
+}) => {
+  const response = await questionsApi.patch(`/api/discursive-questions/${id}/`, data);
+  return response.data;
+};
+
+export const updateMultipleChoiceQuestion = async (id: number, data: {
+  statement?: string;
+  option_a?: string;
+  option_b?: string;
+  option_c?: string;
+  option_d?: string;
+  option_e?: string;
+  correct_option?: 'A'|'B'|'C'|'D'|'E';
+  justification?: string | null;
+}) => {
+  const response = await questionsApi.patch(`/api/mc-questions/${id}/`, data);
+  return response.data;
+};

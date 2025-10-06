@@ -4,14 +4,17 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.shortcuts import get_object_or_404
-from .models import Question, Option, Challenge
+from .models import Question, Option, Challenge, ProblemQuestion, DiscursiveQuestion, MultipleChoiceQuestion
 from .serializers import (
     QuestionSerializer, 
     QuestionCreateSerializer, 
     QuestionUpdateSerializer,
     OptionSerializer,
     ChallengeSerializer,
-    ChallengeUpdateStatusSerializer
+    ChallengeUpdateStatusSerializer,
+    ProblemQuestionSerializer,
+    DiscursiveQuestionSerializer,
+    MultipleChoiceQuestionSerializer,
 )
 
 class QuestionViewSet(viewsets.ModelViewSet):
@@ -137,6 +140,21 @@ class ChallengeDetailView(generics.RetrieveUpdateDestroyAPIView):
             {"error": "Only the 'status' field can be updated to 'APPROVED' via PATCH."},
             status=status.HTTP_400_BAD_REQUEST
         )
+
+class ProblemQuestionDetailView(generics.RetrieveUpdateAPIView):
+    queryset = ProblemQuestion.objects.all()
+    serializer_class = ProblemQuestionSerializer
+    permission_classes = [AllowAny]
+
+class DiscursiveQuestionDetailView(generics.RetrieveUpdateAPIView):
+    queryset = DiscursiveQuestion.objects.all()
+    serializer_class = DiscursiveQuestionSerializer
+    permission_classes = [AllowAny]
+
+class MultipleChoiceQuestionDetailView(generics.RetrieveUpdateAPIView):
+    queryset = MultipleChoiceQuestion.objects.all()
+    serializer_class = MultipleChoiceQuestionSerializer
+    permission_classes = [AllowAny]
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
