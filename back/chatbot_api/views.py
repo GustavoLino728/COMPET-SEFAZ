@@ -229,7 +229,10 @@ class QuestionGenerationView(APIView):
                 )
             # --- End of save to database ---
 
-            return Response(question_data, status=status.HTTP_200_OK)
+            # Return the persisted challenge with IDs so the frontend can edit
+            from questions.serializers import ChallengeSerializer
+            serialized = ChallengeSerializer(challenge)
+            return Response(serialized.data, status=status.HTTP_200_OK)
             
         except Exception as e:
             return Response(
