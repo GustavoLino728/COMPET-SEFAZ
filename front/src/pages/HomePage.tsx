@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './HomePage.module.css';
+import TrailCard from '../components/cards/TrailCard';
 
 import prodepeImage from '../assets/images/PRODEPE/PRODEPE-card-programa.png'; 
 import prodeautoImage from '../assets/images/PRODEAUTO/PRODEAUTO-card-programa.png'; 
@@ -27,29 +28,6 @@ const DashboardCard = ({ title, description, buttonText, buttonLink, isLarge = f
   );
 };
 
-type TrailCardProps = {
-  imageSrc: string;
-  title: string;
-  description: string;
-}
-
-const TrailCard = ({ imageSrc, title, description }: TrailCardProps) => {
-  return (
-    <div className={styles.trailCard}>
-      <div 
-        className={styles.trailImage} 
-        style={{ backgroundImage: `url(${imageSrc})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
-      >
-        {/* A imagem é aplicada via CSS no background desta div */}
-      </div>
-      <div className={styles.trailContent}>
-        <h4 className={styles.trailTitle}>{title}</h4>
-        <p className={styles.trailDescription}>{description}</p>
-      </div>
-    </div>
-  );
-};
-
 function HomePage() {
   return (
     <div className={styles.pageContainer}>
@@ -67,6 +45,7 @@ function HomePage() {
         <section className={styles.quickAccessSection}>
           <h2 className={styles.sectionTitle}>Acesso Rápido</h2>
           <div className={styles.cardGrid}>
+
             <DashboardCard
               isLarge={true}
               title="Explore as Trilhas de Aprendizado"
@@ -89,10 +68,7 @@ function HomePage() {
           </div>
         </section>
 
-        {/* ================================================================== */}
-        {/* lembrar de colocar as outras seções de trilhas sugeridas aqui      */}
-        {/* ================================================================== */}
-        <section className={styles.trailsSection}>
+          <section className={styles.trailsSection}>
           <h2 className={styles.sectionTitle}>Trilhas Sugeridas</h2>
           <div className={styles.trailsGrid}>
             
@@ -100,19 +76,19 @@ function HomePage() {
               imageSrc={prodepeImage}
               title="PRODEPE"
               description="Descubra como o Programa de Desenvolvimento de Pernambuco estimula empresas com incentivos fiscais..."
-              //link="/trilhas/id-da-trilha-prodepe"
+              link="/trilha/id-da-trilha-prodepe"
             />
             <TrailCard 
               imageSrc={prodeautoImage}
               title="PRODEAUTO"
               description="Entenda os benefícios do programa voltado ao setor automotivo, que incentiva a instalação e expansão de indústrias..."
-              //link="/trilhas/id-da-trilha-prodeauto"
+              link="/trilha/id-da-trilha-prodeauto"
             />
             <TrailCard 
               imageSrc={proindImage}
               title="PROIND"
               description="Aprenda como esse programa de incentivos apoia empreendimentos industriais, promovendo inovação..."
-              //link="/trilhas/proind-calculo-incentivo"
+              link="/trilhas/proind"
             />
             
           </div>

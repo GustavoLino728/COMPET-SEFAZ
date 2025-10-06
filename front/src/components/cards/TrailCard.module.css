@@ -1,0 +1,64 @@
+.trailCardLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.trailCard {
+  display: flex;
+  width: 261px;
+  padding: 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  background: #FFF;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.trailCard:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.trailImage {
+  height: 223px;
+  align-self: stretch;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  background:lightgray 50% / cover no-repeat;
+}
+
+.trailTitle {
+  color: #121417;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.trailDescription {
+  color: #6b7280; /* Cor cinza para a descrição */
+  font-size: 14px;
+  line-height: 1.5;
+  margin-top: 8px; /* Adiciona um pequeno espaço acima da descrição */
+}
+
+.backButton {
+  background-color: #f3f4f6; 
+  color: #374151; 
+  border: 1px solid #e5e7eb;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%; 
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-bottom: 1.5rem;
+  align-self: flex-start; 
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

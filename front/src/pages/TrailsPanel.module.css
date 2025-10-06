@@ -98,24 +98,6 @@
   padding-bottom: 0.5rem; 
 }
 
-.backButton {
-  background-color: #f3f4f6; 
-  color: #374151; 
-  border: 1px solid #e5e7eb;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%; 
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  margin-bottom: 1.5rem;
-  align-self: flex-start; 
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 /* Em TrailsPanel.module.css */
 

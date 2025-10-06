@@ -29,6 +29,10 @@ const RenderList = ({ items }: { items: ItemDaListaAninhada[] }) => {
 
 const TrailsPanel = () => { 
   const { trilhaId } = useParams();
+
+  console.log("ID que eu li da URL:", trilhaId);
+  console.log("Estou a procurar por este ID na seguinte lista de trilhas:", trilhas);
+
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('conteudo');
 
