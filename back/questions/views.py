@@ -107,6 +107,14 @@ class PendingChallengeListView(generics.ListAPIView):
     serializer_class = ChallengeSerializer
     permission_classes = [AllowAny] # TODO: Change to IsAdminUser or similar in production
 
+class AllChallengesListView(generics.ListAPIView):
+    """
+    API endpoint to list all challenges.
+    """
+    queryset = Challenge.objects.all().order_by('-id')
+    serializer_class = ChallengeSerializer
+    permission_classes = [AllowAny] # TODO: Change to IsAdminUser or similar in production
+
 class ChallengeDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
     API endpoint to retrieve, update (approve), or delete (reject) a challenge.

@@ -139,19 +139,11 @@ const ChallengeGeneratedPage: React.FC = () => {
 
     return (
         <PageWrapper>
-            <AdminHeader />
             <MainContent>
                 <BackLink to="/admin/gerador"><IoIosArrowBack /> Voltar</BackLink>
                 <HeaderActions>
                     <div>
-                        <PageTitle>Desafio Gerado</PageTitle>
-                        {grouped && (
-                          <TagsContainer>
-                            <Tag>{grouped.meta.program}</Tag>
-                            <Tag>{grouped.meta.track}</Tag>
-                            <Tag>Nível: {grouped.meta.difficulty}</Tag>
-                          </TagsContainer>
-                        )}
+                        <PageTitle>Desafio {challenge?.id || 'N/A'}</PageTitle>
                     </div>
                     <ActionButtons>
                         <Button primary onClick={handleSave}>Salvar Alterações</Button>

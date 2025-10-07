@@ -1,19 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import AdminHeader from '../components/admin/AdminHeader';
 import StatsCards from '../components/admin/StatsCards';
 import ChallengesGrid from '../components/admin/ChallengesGrid';
 import { IoIosArrowBack } from 'react-icons/io';
-
-// Dados mocados apenas para esta página
-const approvedChallenges = [
-  { id: 1, title: 'Desafio Proind 01', tags: ['Trilha Proind', 'Cálculo do Incentivo', 'Nível: Fácil'] },
-  { id: 4, title: 'Desafio Proind 02', tags: ['Trilha Proind', 'Cálculo do Incentivo', 'Nível: Difícil'] },
-  { id: 5, title: 'Desafio Prodeauto 01', tags: ['Trilha Prodeauto', 'Cálculo do Incentivo', 'Nível: Fácil'] },
-  { id: 7, title: 'Desafio Proind 03', tags: ['Trilha Proind', 'Cálculo do Incentivo', 'Nível: Fácil'] },
-  { id: 9, title: 'Desafio Prodepe 03', tags: ['Trilha Prodepe', 'Cálculo do Incentivo', 'Nível: Médio'] },
-];
+import { fetchApprovedChallenges } from '../api';
 
 
 const PageWrapper = styled.div`
@@ -30,6 +22,33 @@ const BackLink = styled(Link)`...`; // re-use estilos de AdminSefaz
 const PageTitle = styled.h1`...`; // re-use estilos de AdminSefaz
 
 const ApprovedChallenges: React.FC = () => {
+  const [challenges, setChallenges] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadChallenges = async () => {
+      try {
+        const data = await fetchApprovedChallenges();
+        const formattedChallenges = data.map((challenge: any) => ({
+          id: challenge.id,
+          title: challenge.title || `Desafio ${challenge.id}`,
+          tags: [
+            challenge.program_name || 'Programa',
+            challenge.track_name || 'Trilha',
+            `Nível: ${challenge.difficulty === 'EASY' ? 'Fácil' : challenge.difficulty === 'MEDIUM' ? 'Médio' : 'Difícil'}`
+          ]
+        }));
+        setChallenges(formattedChallenges);
+      } catch (error) {
+        console.error('Erro ao carregar desafios aprovados:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadChallenges();
+  }, []);
+
   return (
     <PageWrapper>
       <AdminHeader />
@@ -44,7 +63,11 @@ const ApprovedChallenges: React.FC = () => {
         </div>
         
         {/* E aqui passamos o título e a lista de desafios aprovados */}
-        <ChallengesGrid title="Desafios Aprovados" challenges={approvedChallenges} />
+        {loading ? (
+          <div>Carregando desafios aprovados...</div>
+        ) : (
+          <ChallengesGrid title="Desafios Aprovados" challenges={challenges} />
+        )}
 
       </MainContent>
     </PageWrapper>

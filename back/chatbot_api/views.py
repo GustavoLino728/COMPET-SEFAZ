@@ -158,7 +158,7 @@ class QuestionGenerationView(APIView):
                     # Create Challenge
                     challenge = Challenge.objects.create(
                         track=track,
-                        title=f"Desafio sobre {topic.capitalize()} ({difficulty})",
+                        title=f"{topic.capitalize()}",
                         difficulty=difficulty_enum,
                         status=Challenge.ChallengeStatus.PENDING
                     )
