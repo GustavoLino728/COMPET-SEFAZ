@@ -111,7 +111,6 @@ const ChallengeGeneratorPage: React.FC = () => {
 
   return (
     <PageWrapper>
-      <AdminHeader />
       <MainContent>
         <BackLink to="/admin"><IoIosArrowBack /> Voltar</BackLink>
         <PageTitle>Gerador de desafios</PageTitle>

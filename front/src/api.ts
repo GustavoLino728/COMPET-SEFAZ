@@ -230,3 +230,27 @@ export const updateMultipleChoiceQuestion = async (id: number, data: {
   const response = await questionsApi.patch(`/api/mc-questions/${id}/`, data);
   return response.data;
 };
+
+// Fetch pending challenges
+export const fetchPendingChallenges = async () => {
+  const response = await questionsApi.get('/api/challenges/pending/');
+  return response.data;
+};
+
+// Fetch approved challenges
+export const fetchApprovedChallenges = async () => {
+  const response = await questionsApi.get('/api/challenges/');
+  return response.data.filter((challenge: any) => challenge.status === 'APPROVED');
+};
+
+// Update challenge status
+export const updateChallengeStatus = async (id: number, status: 'APPROVED' | 'PENDING') => {
+  const response = await questionsApi.patch(`/api/challenges/${id}/`, { status });
+  return response.data;
+};
+
+// Delete challenge
+export const deleteChallenge = async (id: number) => {
+  const response = await questionsApi.delete(`/api/challenges/${id}/`);
+  return response.data;
+};

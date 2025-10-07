@@ -1,11 +1,13 @@
-import React from 'react';
+// AdminSefaz.tsx
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import AdminHeader from '../components/admin/AdminHeader';
 import StatsCards from '../components/admin/StatsCards';
 import ChallengesGrid from '../components/admin/ChallengesGrid';
 import { IoIosArrowBack } from 'react-icons/io';
-import { FiPlus } from 'react-icons/fi'; 
+import { FiPlus } from 'react-icons/fi';
+import { fetchPendingChallenges } from '../api'; 
 
 const AdminWrapper = styled.div`
   background-color: #f4f5fa;
@@ -70,12 +72,32 @@ const GenerateButton = styled(Link)`
 
 
 const AdminSefaz: React.FC = () => {
-    // Dados mocados para o grid, ajuste conforme necessário
-    const allChallenges = Array.from({ length: 12 }, (_, i) => ({
-        id: i + 1,
-        title: `Desafio Exemplo ${i + 1}`,
-        tags: ['Trilha Exemplo', 'Tópico', 'Nível: Fácil']
-    }));
+    const [challenges, setChallenges] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const loadChallenges = async () => {
+            try {
+                const data = await fetchPendingChallenges();
+                const formattedChallenges = data.map((challenge: any) => ({
+                    id: challenge.id,
+                    title: `Desafio ${challenge.id} - ${challenge.title}`,
+                    tags: [
+                        challenge.program_name || 'Programa',
+                        challenge.track_name || 'Trilha',
+                        `Nível: ${challenge.difficulty === 'EASY' ? 'Fácil' : challenge.difficulty === 'MEDIUM' ? 'Médio' : 'Difícil'}`
+                    ]
+                }));
+                setChallenges(formattedChallenges);
+            } catch (error) {
+                console.error('Erro ao carregar desafios:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        loadChallenges();
+    }, []);
 
   return (
     <AdminWrapper>
@@ -94,7 +116,11 @@ const AdminSefaz: React.FC = () => {
                 <FiPlus /> Gerar Desafios
             </GenerateButton>
         </TopSection>
-        <ChallengesGrid title="Últimos Desafios Gerados" challenges={allChallenges} />
+        {loading ? (
+            <div>Carregando desafios...</div>
+        ) : (
+            <ChallengesGrid title="Desafios Pendentes" challenges={challenges} />
+        )}
       </MainContent>
     </AdminWrapper>
   );
