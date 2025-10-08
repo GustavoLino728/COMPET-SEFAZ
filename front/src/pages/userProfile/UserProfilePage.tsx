@@ -2,19 +2,17 @@ import React, { useState, useEffect } from 'react';
 import styles from './UserProfilePage.module.css';
 import { 
   getCurrentUser, 
-  fetchUserStats, 
-  fetchUserAchievements, 
   patchCurrentUser, 
   getUserProgress,
   changePassword 
 } from '../../api';
 import type { UserProgressResponse } from '../../api';
+import { useBadges } from '../../hooks/useBadges';
 
 interface User {
   id: number;
   first_name: string;
   last_name: string;
-  full_name: string;
   email: string;
   cpf?: string;
   linkedin_url?: string;
@@ -26,27 +24,13 @@ interface UserStats {
   trilhas_concluidas: number;
   desafios_feitos: number;
   certificados_obtidos: number;
-  progresso_geral?: number;
-  programas_iniciados?: number;
-  total_trilhas_acessadas?: number;
 }
 
-interface Achievement {
-  id: number;
-  name: string;
-  description: string;
-  date: string;
-  icon: string;
-}
-
-type ProfileTabProps = {
-  label: string;
-  isActive: boolean;
-  onClick: () => void;
-  badge?: number;
-};
-
-const ProfileTab = ({ label, isActive, onClick, badge }: ProfileTabProps) => (
+const ProfileTab = ({ label, isActive, onClick }: { 
+  label: string; 
+  isActive: boolean; 
+  onClick: () => void; 
+}) => (
   <button 
     className={`${styles.tab} ${isActive ? styles.activeTab : ''}`}
     onClick={onClick}
@@ -58,16 +42,10 @@ const ProfileTab = ({ label, isActive, onClick, badge }: ProfileTabProps) => (
       {label === 'Insignia' && '🏆'}
     </span>
     <span className={styles.tabLabel}>{label}</span>
-    {badge && <span className={styles.badge}>{badge}</span>}
   </button>
 );
 
-type ProgressCardProps = {
-  title: string;
-  count: number;
-};
-
-const ProgressCard = ({ title, count }: ProgressCardProps) => (
+const ProgressCard = ({ title, count }: { title: string; count: number }) => (
   <div className={styles.progressCard}>
     <div className={styles.progressIcon}>{count}</div>
     <div className={styles.progressContent}>
@@ -76,24 +54,11 @@ const ProgressCard = ({ title, count }: ProgressCardProps) => (
   </div>
 );
 
-const AchievementBadge = ({ achievement }: { achievement: Achievement }) => (
-  <div className={styles.achievementBadge}>
-    <div className={styles.achievementIcon}>
-      <span>{achievement.icon}</span>
-    </div>
-    <div className={styles.achievementInfo}>
-      <h4 className={styles.achievementName}>{achievement.name}</h4>
-      <p className={styles.achievementDate}>{achievement.date}</p>
-    </div>
-  </div>
-);
-
 function ProfilePage() {
   const [activeTab, setActiveTab] = useState('progresso');
   const [user, setUser] = useState<User | null>(null);
   const [stats, setStats] = useState<UserStats | null>(null);
-  const [achievements, setAchievements] = useState<Achievement[]>([]);
-  const [progressData, setProgressData] = useState<UserProgressResponse | null>(null);
+  const { userBadges, loading: badgesLoading } = useBadges();
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [isEditingProfessional, setIsEditingProfessional] = useState(false);
@@ -102,8 +67,6 @@ function ProfilePage() {
     current_password: '',
     new_password: ''
   });
-
-  // Campos profissionais e interesses
   const [businessField, setBusinessField] = useState('');
   const [interestAreas, setInterestAreas] = useState<string[]>([]);
 
@@ -113,8 +76,11 @@ function ProfilePage() {
 
   const loadAllData = async () => {
     setLoading(true);
-    await Promise.all([loadUserData(), loadStats(), loadAchievements()]);
-    setLoading(false);
+    try {
+      await Promise.all([loadUserData(), loadStats()]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const loadUserData = async () => {
@@ -123,7 +89,7 @@ function ProfilePage() {
       setUser(userData);
       setEditedUser(userData);
       setBusinessField(userData.field_of_work || '');
-      setInterestAreas(userData.interest_area ? userData.interest_area.split(',').map((s: string) => s.trim()) : []);
+      setInterestAreas(userData.interest_area ? userData.interest_area.split(',').map(s => s.trim()) : []);
     } catch (error) {
       console.error('Erro ao carregar dados do usuário:', error);
     }
@@ -132,55 +98,20 @@ function ProfilePage() {
   const loadStats = async () => {
     try {
       const progressResponse = await getUserProgress();
-      setProgressData(progressResponse);
-
-      try {
-        const response = await fetchUserStats();
-        setStats({
-          ...response.data,
-          trilhas_concluidas: progressResponse.overall_progress.total_trails_accessed,
-          progresso_geral: progressResponse.overall_progress.overall_percentage,
-          programas_iniciados: progressResponse.program_progress.length,
-          total_trilhas_acessadas: progressResponse.overall_progress.total_trails_accessed
-        });
-      } catch (error) {
-        // Se o mock não existir, usar apenas dados reais
-        console.log('Mock stats não disponível, usando dados reais');
-        setStats({
-          trilhas_concluidas: progressResponse.overall_progress.total_trails_accessed,
-          desafios_feitos: 0, // Placeholder até implementarmos desafios
-          certificados_obtidos: progressResponse.overall_progress.programs_completed.length,
-          progresso_geral: progressResponse.overall_progress.overall_percentage,
-          programas_iniciados: progressResponse.program_progress.length,
-          total_trilhas_acessadas: progressResponse.overall_progress.total_trails_accessed
-        });
-      }
+      setStats({
+        trilhas_concluidas: progressResponse.overall_progress.total_trails_accessed,
+        desafios_feitos: progressResponse.total_challenges_completed,
+        certificados_obtidos: progressResponse.overall_progress.programs_completed.length,
+      });
     } catch (error) {
       console.error('Erro ao carregar progresso:', error);
-      setStats({
-        trilhas_concluidas: 0,
-        desafios_feitos: 0,
-        certificados_obtidos: 0
-      });
-    }
-  };
-
-  const loadAchievements = async () => {
-    try {
-      const response = await fetchUserAchievements();
-      setAchievements(response.data);
-    } catch (error) {
-      console.error('Erro ao carregar conquistas:', error);
+      setStats({ trilhas_concluidas: 0, desafios_feitos: 0, certificados_obtidos: 0 });
     }
   };
 
   const handleSaveProfile = async () => {
     try {
-      const dataToUpdate = {
-        ...editedUser,
-        field_of_work: businessField,
-        interest_area: interestAreas.join(', '),
-      };
+      const dataToUpdate = { ...editedUser, field_of_work: businessField, interest_area: interestAreas.join(', ') };
       const response = await patchCurrentUser(dataToUpdate);
       setUser(response.data);
       setIsEditing(false);
@@ -201,10 +132,7 @@ function ProfilePage() {
 
   const handleSaveProfessional = async () => {
     try {
-      const dataToUpdate = {
-        field_of_work: businessField,
-        interest_area: interestAreas.join(', '),
-      };
+      const dataToUpdate = { field_of_work: businessField, interest_area: interestAreas.join(', ') };
       const response = await patchCurrentUser(dataToUpdate);
       setUser(response.data);
       setIsEditingProfessional(false);
@@ -222,7 +150,6 @@ function ProfilePage() {
   return (
     <div className={styles.pageContainer}>
       <div className={styles.contentWrapper}>
-
         {/* Header do Perfil */}
         <section className={styles.profileHeader}>
           <div className={styles.profileAvatar}>
@@ -236,37 +163,19 @@ function ProfilePage() {
           <div className={styles.profileInfo}>
             <p className={styles.userRole}>Aluno</p>
             <h1 className={styles.userName}>
-              {user ? `${user.first_name} ${user.last_name}` : 'Júlia Bacelar'}
+              {user ? `${user.first_name} ${user.last_name}` : 'Carregando...'}
             </h1>
           </div>
         </section>
 
-        {/* Container Principal com Menu e Conteúdo */}
+        {/* Container Principal */}
         <section className={styles.mainContent}>
-
           {/* Menu Lateral */}
           <div className={styles.sidebar}>
-            <ProfileTab 
-              label="Progresso" 
-              isActive={activeTab === 'progresso'}
-              onClick={() => setActiveTab('progresso')}
-            />
-            <ProfileTab 
-              label="Meu perfil" 
-              isActive={activeTab === 'perfil'}
-              onClick={() => setActiveTab('perfil')}
-            />
-            <ProfileTab 
-              label="Profissional" 
-              isActive={activeTab === 'profissional'}
-              onClick={() => setActiveTab('profissional')}
-            />
-            <ProfileTab 
-              label="Insignia" 
-              isActive={activeTab === 'insignia'}
-              onClick={() => setActiveTab('insignia')}
-              badge={achievements.length > 0 ? achievements.length : 1}
-            />
+            <ProfileTab label="Progresso" isActive={activeTab === 'progresso'} onClick={() => setActiveTab('progresso')} />
+            <ProfileTab label="Meu perfil" isActive={activeTab === 'perfil'} onClick={() => setActiveTab('perfil')} />
+            <ProfileTab label="Profissional" isActive={activeTab === 'profissional'} onClick={() => setActiveTab('profissional')} />
+            <ProfileTab label="Insignia" isActive={activeTab === 'insignia'} onClick={() => setActiveTab('insignia')} />
           </div>
 
           {/* Área de Conteúdo */}
@@ -280,18 +189,9 @@ function ProfilePage() {
                   </p>
                 </div>
                 <div className={styles.progressGrid}>
-                  <ProgressCard 
-                    title="Trilhas concluídas"
-                    count={stats?.trilhas_concluidas || 0}
-                  />
-                  <ProgressCard 
-                    title="Desafios feitos"
-                    count={stats?.desafios_feitos || 0}
-                  />
-                  <ProgressCard 
-                    title="Certificados obtidos"
-                    count={stats?.certificados_obtidos || 0}
-                  />
+                  <ProgressCard title="Trilhas concluídas" count={stats?.trilhas_concluidas || 0} />
+                  <ProgressCard title="Desafios feitos" count={stats?.desafios_feitos || 0} />
+                  <ProgressCard title="Certificados obtidos" count={stats?.certificados_obtidos || 0} />
                 </div>
               </div>
             )}
@@ -300,10 +200,7 @@ function ProfilePage() {
               <div className={styles.tabContent}>
                 <div className={styles.contentHeader}>
                   <h2 className={styles.contentTitle}>Informações pessoais</h2>
-                  <button 
-                    className={styles.editButton}
-                    onClick={() => setIsEditing(!isEditing)}
-                  >
+                  <button className={styles.editButton} onClick={() => setIsEditing(!isEditing)}>
                     ✏️ Editar
                   </button>
                 </div>
@@ -317,11 +214,7 @@ function ProfilePage() {
                         value={`${editedUser.first_name || ''} ${editedUser.last_name || ''}`}
                         onChange={(e) => {
                           const [firstName, ...lastName] = e.target.value.split(' ');
-                          setEditedUser({
-                            ...editedUser,
-                            first_name: firstName,
-                            last_name: lastName.join(' ')
-                          });
+                          setEditedUser({ ...editedUser, first_name: firstName, last_name: lastName.join(' ') });
                         }}
                       />
                     ) : (
@@ -352,9 +245,7 @@ function ProfilePage() {
                   </div>
 
                   {isEditing && (
-                    <button className={styles.saveButton} onClick={handleSaveProfile}>
-                      Salvar
-                    </button>
+                    <button className={styles.saveButton} onClick={handleSaveProfile}>Salvar</button>
                   )}
                 </div>
 
@@ -392,75 +283,125 @@ function ProfilePage() {
             )}
 
             {activeTab === 'profissional' && (
-            <div className={styles.tabContent}>
-              <div className={styles.contentHeader}>
-                <h2 className={styles.contentTitle}>Informações profissionais</h2>
-                <button 
-                  className={styles.editButton}
-                  onClick={() => setIsEditingProfessional(!isEditingProfessional)}
-                >
-                  ✏️ Editar
-                </button>
-              </div>
-              <div className={styles.formSection}>
-                <div className={styles.formGroup}>
-                  <label className={styles.formLabel}>Ramo empresarial</label>
-                  {isEditingProfessional ? (
-                    <input
-                      type="text"
-                      className={styles.formInput}
-                      placeholder="Ex: Comércio"
-                      value={businessField}
-                      onChange={(e) => setBusinessField(e.target.value)}
-                    />
-                  ) : (
-                    <div className={styles.formValue}>
-                      {user?.field_of_work || 'Não informado'}
-                    </div>
-                  )}
-                </div>
-                
-                <div className={styles.formGroup}>
-                  <label className={styles.formLabel}>Áreas de interesse</label>
-                  {isEditingProfessional ? (
-                    <input
-                      type="text"
-                      className={styles.formInput}
-                      placeholder="Digite suas áreas de interesse separadas por vírgula"
-                      value={interestAreas.join(', ')}
-                      onChange={(e) => setInterestAreas(e.target.value.split(',').map((s: string) => s.trim()))}
-                    />
-                  ) : (
-                    <div className={styles.formValue}>
-                      {user?.interest_area || 'Não informado'}
-                    </div>
-                  )}
-                </div>
-
-                {/* ✅ Botão salvar só aparece durante edição */}
-                {isEditingProfessional && (
-                  <button className={styles.saveButton} onClick={handleSaveProfessional}>
-                    Salvar
-                  </button>
-                )}
-              </div>
-            </div>
-          )}
-
-            {activeTab === 'insignia' && (
               <div className={styles.tabContent}>
                 <div className={styles.contentHeader}>
-                  <h2 className={styles.contentTitle}>Conquistas</h2>
+                  <h2 className={styles.contentTitle}>Informações profissionais</h2>
+                  <button className={styles.editButton} onClick={() => setIsEditingProfessional(!isEditingProfessional)}>
+                    ✏️ Editar
+                  </button>
                 </div>
-                <div className={styles.achievementsGrid}>
-                  {achievements.length === 0 && <p>Sem conquistas ainda.</p>}
-                  {achievements.map((ach) => (
-                    <AchievementBadge key={ach.id} achievement={ach} />
-                  ))}
+                <div className={styles.formSection}>
+                  <div className={styles.formGroup}>
+                    <label className={styles.formLabel}>Ramo empresarial</label>
+                    {isEditingProfessional ? (
+                      <input
+                        type="text"
+                        className={styles.formInput}
+                        placeholder="Ex: Comércio"
+                        value={businessField}
+                        onChange={(e) => setBusinessField(e.target.value)}
+                      />
+                    ) : (
+                      <div className={styles.formValue}>
+                        {user?.field_of_work || 'Não informado'}
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className={styles.formGroup}>
+                    <label className={styles.formLabel}>Áreas de interesse</label>
+                    {isEditingProfessional ? (
+                      <input
+                        type="text"
+                        className={styles.formInput}
+                        placeholder="Digite suas áreas de interesse separadas por vírgula"
+                        value={interestAreas.join(', ')}
+                        onChange={(e) => setInterestAreas(e.target.value.split(',').map(s => s.trim()))}
+                      />
+                    ) : (
+                      <div className={styles.formValue}>
+                        {user?.interest_area || 'Não informado'}
+                      </div>
+                    )}
+                  </div>
+
+                  {isEditingProfessional && (
+                    <button className={styles.saveButton} onClick={handleSaveProfessional}>Salvar</button>
+                  )}
                 </div>
               </div>
             )}
 
+            {activeTab === 'insignia' && (
+              <div className={styles.tabContent}>
+                <div className={styles.contentHeader}>
+                  <h2 className={styles.contentTitle}>Insignias</h2>
+                </div>
+
+                {badgesLoading ? (
+                  <div className={styles.loading}>🔄 Carregando badges...</div>
+                ) : (
+                  <div>
+                    {userBadges && userBadges.badges.length > 0 ? (
+                      <>
+                        {/* Grid de badges */}
+                        <div className={styles.badgesGridTop}>
+                          {userBadges.badges.map((badge) => (
+                            <div key={`badge-mini-${badge.id}`} className={styles.badgeMini}>
+                              <img 
+                                src={badge.image_url}
+                                alt={badge.name}
+                                className={styles.badgeMiniImage}
+                                onError={(e) => {
+                                  const target = e.target as HTMLImageElement;
+                                  target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iMzIiIGZpbGw9IiNmZmQ3MDAiLz4KPHRleHQgeD0iMzIiIHk9IjM2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjIwIiBmaWxsPSJ3aGl0ZSI+8J+PhjwvdGV4dD4KPC9zdmc+';
+                                }}
+                              />
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Badge mais recente */}
+                        <div className={styles.recentBadgeSection}>
+                          <h3 className={styles.recentBadgeTitle}>Conquista recente</h3>
+                          <div className={styles.recentBadgeCard}>
+                            <div className={styles.recentBadgeImage}>
+                              <img 
+                                src={userBadges.badges[0].image_url}
+                                alt={userBadges.badges[0].name}
+                                onError={(e) => {
+                                  const target = e.target as HTMLImageElement;
+                                  target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjUwIiBmaWxsPSIjZmZkNzAwIi8+Cjx0ZXh0IHg9IjUwIiB5PSI1NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIzMCIgZmlsbD0id2hpdGUiPvCfj4Y8L3RleHQ+Cjwvc3ZnPg==';
+                                }}
+                              />
+                            </div>
+                            <div className={styles.recentBadgeInfo}>
+                              {/* TEXTOS DINÂMICOS baseados nos dados reais do backend */}
+                              <h4 className={styles.recentBadgeName}>
+                                {userBadges.badges[0].name}
+                              </h4>
+                              <p className={styles.recentBadgeDescription}>
+                                {userBadges.badges[0].description}
+                              </p>
+                              <p className={styles.recentBadgeDate}>
+                                Obtido em: {new Date(userBadges.badges[0].earned_at!).toLocaleDateString('pt-BR')}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                      </>
+                    ) : (
+                      <div className={styles.emptyState}>
+                        <div className={styles.emptyIcon}>🏆</div>
+                        <h3>Nenhuma conquista ainda</h3>
+                        <p>Complete desafios para conquistar suas primeiras insignias!</p>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </section>
       </div>

@@ -197,6 +197,7 @@ export interface UserProgressResponse {
   program_progress: ProgramProgress[];
   overall_progress: OverallProgress;
   recent_accesses: any[];
+  total_challenges_completed: number;
 }
 
 const progressApi = axios.create({
@@ -253,6 +254,70 @@ export const getUserProgress = async (): Promise<UserProgressResponse> => {
 // Buscar progresso específico de um programa
 export const getProgramProgress = async (program: string): Promise<ProgramProgress> => {
   const response = await progressApi.get(`/progress/program/${program.toLowerCase()}/`);
+  return response.data;
+};
+
+// === BADGE APIs ===
+export interface Badge {
+  id: number;
+  name: string;
+  description: string;
+  image_url: string;
+  image_path: string;
+  type: 'BRONZE' | 'SILVER' | 'GOLD';
+  program: string;
+  trail_number: number;
+  difficulty: string;
+  earned_at?: string;
+  score?: number;
+}
+
+export interface BadgeStats {
+  total_badges: number;
+  bronze_badges: number;
+  silver_badges: number;
+  gold_badges: number;
+  completion_percentage: number;
+  proind_badges: number;
+  prodepe_badges: number;
+  prodeauto_badges: number;
+  first_badge_earned?: string;
+  last_badge_earned?: string;
+}
+
+export interface UserBadgesResponse {
+  badges: Badge[];
+  stats: BadgeStats;
+}
+
+// Buscar badges conquistados do usuário
+export const getUserBadges = async (): Promise<UserBadgesResponse> => {
+  const response = await progressApi.get('/progress/badges/');
+  return response.data;
+};
+
+// Buscar badges disponíveis (não conquistados)
+export const getAvailableBadges = async () => {
+  const response = await progressApi.get('/progress/badges/available/');
+  return response.data;
+};
+
+// Completar desafio e ganhar badge
+export const completeChallengeAndEarnBadge = async (data: {
+  program: string;
+  trail_number: number;
+  difficulty: 'EASY' | 'MEDIUM' | 'HARD';
+  score: number;
+  challenge_id?: number;
+  completion_time_seconds?: number;
+}) => {
+  const response = await progressApi.post('/progress/challenges/complete/', data);
+  return response.data;
+};
+
+// Buscar estatísticas detalhadas de badges
+export const getBadgeStats = async () => {
+  const response = await progressApi.get('/progress/badges/stats/');
   return response.data;
 };
 

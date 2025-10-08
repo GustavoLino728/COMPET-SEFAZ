@@ -25,6 +25,7 @@ import ChallengeSelectionPage from './pages/ChallengeSelectionPage';
 import ChallengeStartPage from './pages/ChallengeStartPage';
 import QuizPage from './pages/QuizPage';
 import QuizCompletionPage from './pages/QuizCompletionPage';
+import QuizCompletionPage2 from './pages/QuizCompletionPage2';
 import ProfilePage from './pages/ProfilePage';
 import ProgressTab from './components/profile/tabs/ProgressTab';
 import PersonalInfoTab from './components/profile/tabs/PersonalInfoTab';
@@ -68,6 +69,7 @@ function App() {
             <Route path="/desafio/:id" element={<ChallengeStartPage />} />
             <Route path="/quiz/:id" element={<QuizPage />} />
             <Route path="/quiz/resultado/:id" element={<QuizCompletionPage />} />
+            <Route path="/quiz/resultado2/:id" element={<QuizCompletionPage2 />} />
             <Route path="/admin/gerador" element={<ChallengeGeneratorPage />} />
             <Route path="/admin/desafio-gerado" element={<ChallengeGeneratedPage />} />
             {/* Fim rotas Victor */}
