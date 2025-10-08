@@ -94,16 +94,13 @@
   border: 1px solid #e5e7eb;
   width: 40px;
   height: 40px;
-  border-radius: 50%; /* Círculo perfeito */
+  border-radius: 50%;
   font-size: 20px;
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  
-  /* Posicionamento */
-  margin-bottom: 1.5rem; /* Cria um espaço para empurrar o título para baixo */
-  align-self: flex-start; /* Alinha o botão à esquerda */
-  
+  margin-bottom: 1.5rem; 
+  align-self: flex-start; 
   display: flex;
   justify-content: center;
   align-items: center;
