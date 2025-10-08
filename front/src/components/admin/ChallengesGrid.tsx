@@ -1,16 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 import { IoIosArrowForward } from 'react-icons/io';
+import { useNavigate } from 'react-router-dom';
 
 interface Challenge {
   id: number;
   title: string;
   tags: string[];
+  status?: string;
 }
 
 interface ChallengesGridProps {
   title: string;
   challenges: Challenge[];
+  showApproveButton?: boolean;
+  onApprove?: (challengeId: number) => void;
 }
 
 const SectionContainer = styled.section`
@@ -73,7 +77,46 @@ const AccessButton = styled.button`
   &:hover { background-color: #343a40; }
 `;
 
-const ChallengesGrid: React.FC<ChallengesGridProps> = ({ title, challenges }) => {
+const ApproveButton = styled.button`
+  background-color: #2f3a7d;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  align-self: flex-start;
+  font-weight: 500;
+  transition: background-color 0.2s ease-in-out;
+  &:hover { background-color: #212529; }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+`;
+
+const ChallengesGrid: React.FC<ChallengesGridProps> = ({ 
+  title, 
+  challenges, 
+  showApproveButton = false, 
+  onApprove 
+}) => {
+  const navigate = useNavigate();
+
+  const handleAccessChallenge = (challenge: Challenge) => {
+    // Navegar para a página de detalhes do desafio
+    navigate('/admin/desafio-gerado', { 
+      state: { challenge } 
+    });
+  };
+
+  const handleApprove = (challengeId: number) => {
+    if (onApprove) {
+      onApprove(challengeId);
+    }
+  };
+
   return (
     <SectionContainer>
       <SectionTitle>{title}</SectionTitle>
@@ -84,9 +127,16 @@ const ChallengesGrid: React.FC<ChallengesGridProps> = ({ title, challenges }) =>
             <TagsContainer>
               {challenge.tags.map(tag => <Tag key={tag}>{tag}</Tag>)}
             </TagsContainer>
-            <AccessButton>
-              Acessar Desafio <IoIosArrowForward />
-            </AccessButton>
+            <ButtonContainer>
+              <AccessButton onClick={() => handleAccessChallenge(challenge)}>
+                Acessar Desafio <IoIosArrowForward />
+              </AccessButton>
+              {showApproveButton && (
+                <ApproveButton onClick={() => handleApprove(challenge.id)}>
+                  Aprovar
+                </ApproveButton>
+              )}
+            </ButtonContainer>
           </ChallengeCard>
         ))}
       </GridContainer>

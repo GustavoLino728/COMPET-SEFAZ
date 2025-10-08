@@ -5,7 +5,7 @@ import AdminHeader from '../components/admin/AdminHeader';
 import StatsCards from '../components/admin/StatsCards';
 import ChallengesGrid from '../components/admin/ChallengesGrid';
 import { IoIosArrowBack } from 'react-icons/io';
-import { fetchApprovedChallenges } from '../api';
+import { fetchApprovedChallenges, fetchPendingChallenges } from '../api';
 
 
 const PageWrapper = styled.div`
@@ -23,15 +23,17 @@ const PageTitle = styled.h1`...`; // re-use estilos de AdminSefaz
 
 const ApprovedChallenges: React.FC = () => {
   const [challenges, setChallenges] = useState<any[]>([]);
+  const [pendingCount, setPendingCount] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadChallenges = async () => {
       try {
-        const data = await fetchApprovedChallenges();
-        const formattedChallenges = data.map((challenge: any) => ({
+        // Carregar desafios aprovados
+        const approvedData = await fetchApprovedChallenges();
+        const formattedChallenges = approvedData.map((challenge: any) => ({
           id: challenge.id,
-          title: challenge.title || `Desafio ${challenge.id}`,
+          title: `Desafio ${challenge.id} - ${challenge.title}`,
           tags: [
             challenge.program_name || 'Programa',
             challenge.track_name || 'Trilha',
@@ -39,6 +41,10 @@ const ApprovedChallenges: React.FC = () => {
           ]
         }));
         setChallenges(formattedChallenges);
+
+        // Carregar contagem de desafios pendentes
+        const pendingData = await fetchPendingChallenges();
+        setPendingCount(pendingData.length);
       } catch (error) {
         console.error('Erro ao carregar desafios aprovados:', error);
       } finally {
@@ -59,14 +65,22 @@ const ApprovedChallenges: React.FC = () => {
         </PageHeader>
         <div style={{ margin: '2rem 0' }}>
             {/* Aqui passamos a prop para destacar o card correto */}
-            <StatsCards activeStat="Desafios Aprovados" />
+            <StatsCards 
+                activeStat="Desafios Aprovados" 
+                pendingCount={pendingCount}
+                approvedCount={challenges.length}
+            />
         </div>
         
         {/* E aqui passamos o título e a lista de desafios aprovados */}
         {loading ? (
           <div>Carregando desafios aprovados...</div>
         ) : (
-          <ChallengesGrid title="Desafios Aprovados" challenges={challenges} />
+          <ChallengesGrid 
+            title="Desafios Aprovados" 
+            challenges={challenges} 
+            showApproveButton={false}
+          />
         )}
 
       </MainContent>

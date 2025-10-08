@@ -7,7 +7,7 @@ import StatsCards from '../components/admin/StatsCards';
 import ChallengesGrid from '../components/admin/ChallengesGrid';
 import { IoIosArrowBack } from 'react-icons/io';
 import { FiPlus } from 'react-icons/fi';
-import { fetchPendingChallenges } from '../api'; 
+import { fetchPendingChallenges, fetchApprovedChallenges, updateChallengeStatus } from '../api'; 
 
 const AdminWrapper = styled.div`
   background-color: #f4f5fa;
@@ -73,13 +73,15 @@ const GenerateButton = styled(Link)`
 
 const AdminSefaz: React.FC = () => {
     const [challenges, setChallenges] = useState<any[]>([]);
+    const [approvedCount, setApprovedCount] = useState(0);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const loadChallenges = async () => {
             try {
-                const data = await fetchPendingChallenges();
-                const formattedChallenges = data.map((challenge: any) => ({
+                // Carregar desafios pendentes
+                const pendingData = await fetchPendingChallenges();
+                const formattedChallenges = pendingData.map((challenge: any) => ({
                     id: challenge.id,
                     title: `Desafio ${challenge.id} - ${challenge.title}`,
                     tags: [
@@ -89,6 +91,10 @@ const AdminSefaz: React.FC = () => {
                     ]
                 }));
                 setChallenges(formattedChallenges);
+
+                // Carregar contagem de desafios aprovados
+                const approvedData = await fetchApprovedChallenges();
+                setApprovedCount(approvedData.length);
             } catch (error) {
                 console.error('Erro ao carregar desafios:', error);
             } finally {
@@ -98,6 +104,31 @@ const AdminSefaz: React.FC = () => {
 
         loadChallenges();
     }, []);
+
+    const handleApproveChallenge = async (challengeId: number) => {
+        try {
+            await updateChallengeStatus(challengeId, 'APPROVED');
+            // Recarregar ambas as listas
+            const pendingData = await fetchPendingChallenges();
+            const approvedData = await fetchApprovedChallenges();
+            
+            const formattedChallenges = pendingData.map((challenge: any) => ({
+                id: challenge.id,
+                title: `Desafio ${challenge.id} - ${challenge.title}`,
+                tags: [
+                    challenge.program_name || 'Programa',
+                    challenge.track_name || 'Trilha',
+                    `Nível: ${challenge.difficulty === 'EASY' ? 'Fácil' : challenge.difficulty === 'MEDIUM' ? 'Médio' : 'Difícil'}`
+                ]
+            }));
+            setChallenges(formattedChallenges);
+            setApprovedCount(approvedData.length);
+            alert('Desafio aprovado com sucesso!');
+        } catch (error) {
+            console.error('Erro ao aprovar desafio:', error);
+            alert('Erro ao aprovar desafio. Tente novamente.');
+        }
+    };
 
   return (
     <AdminWrapper>
@@ -110,7 +141,11 @@ const AdminSefaz: React.FC = () => {
         </div>
         <TopSection>
             <div style={{ flexGrow: 1 }}>
-                <StatsCards activeStat="Desafios Gerados" />
+                <StatsCards 
+                    activeStat="Desafios Gerados" 
+                    pendingCount={challenges.length}
+                    approvedCount={approvedCount}
+                />
             </div>
             <GenerateButton to="/admin/gerador">
                 <FiPlus /> Gerar Desafios
@@ -119,7 +154,12 @@ const AdminSefaz: React.FC = () => {
         {loading ? (
             <div>Carregando desafios...</div>
         ) : (
-            <ChallengesGrid title="Desafios Pendentes" challenges={challenges} />
+            <ChallengesGrid 
+                title="Desafios Pendentes" 
+                challenges={challenges} 
+                showApproveButton={true}
+                onApprove={handleApproveChallenge}
+            />
         )}
       </MainContent>
     </AdminWrapper>
