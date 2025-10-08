@@ -34,6 +34,7 @@ import BadgesTab from './components/profile/tabs/BadgesTab';
 import ChallengeGeneratorPage from './pages/ChallengeGeneratorPage';
 import ChallengeGeneratedPage from './pages/ChallengeGeneratedPage';
 import Dashboard from './pages/Dashboard';
+import CertificatesPage from './pages/CertificatesPage';
 
 
 const GlobalStyle = createGlobalStyle`
@@ -83,6 +84,7 @@ function App() {
             <Route path="/reset-password/:uid/:token" element={<ResetPasswordConfirm/>}/>
             <Route path="/perfil" element={<UserProfilePage/>}/>
             <Route path="/trilhas/:trilhaId" element={<TrailsPanel />} />
+            <Route path="/certificados" element={<CertificatesPage />} />
 
             {/* Add other routes as needed */}
           </Routes>

@@ -29,7 +29,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       const isValid = await verifyToken();
       setIsLoggedIn(isValid);
-    } catch {
+    } catch (error) {
       setIsLoggedIn(false);
     }
   };
