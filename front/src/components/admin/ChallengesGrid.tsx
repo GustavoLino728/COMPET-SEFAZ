@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { IoIosArrowForward } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
+import { fetchChallenge, deleteChallenge } from '../../api';
 
 interface Challenge {
   id: number;
@@ -15,6 +16,7 @@ interface ChallengesGridProps {
   challenges: Challenge[];
   showApproveButton?: boolean;
   onApprove?: (challengeId: number) => void;
+  onDelete?: (challengeId: number) => void;
 }
 
 const SectionContainer = styled.section`
@@ -75,6 +77,11 @@ const AccessButton = styled.button`
   font-weight: 500;
   transition: background-color 0.2s ease-in-out;
   &:hover { background-color: #343a40; }
+  &:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+    &:hover { background-color: #6c757d; }
+  }
 `;
 
 const ApproveButton = styled.button`
@@ -90,6 +97,19 @@ const ApproveButton = styled.button`
   &:hover { background-color: #212529; }
 `;
 
+const DeleteButton = styled.button`
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  align-self: flex-start;
+  font-weight: 500;
+  transition: background-color 0.2s ease-in-out;
+  &:hover { background-color: #c82333; }
+`;
+
 const ButtonContainer = styled.div`
   display: flex;
   gap: 0.5rem;
@@ -100,20 +120,38 @@ const ChallengesGrid: React.FC<ChallengesGridProps> = ({
   title, 
   challenges, 
   showApproveButton = false, 
-  onApprove 
+  onApprove,
+  onDelete
 }) => {
   const navigate = useNavigate();
+  const [loadingChallenge, setLoadingChallenge] = useState<number | null>(null);
 
-  const handleAccessChallenge = (challenge: Challenge) => {
-    // Navegar para a página de detalhes do desafio
-    navigate('/admin/desafio-gerado', { 
-      state: { challenge } 
-    });
+  const handleAccessChallenge = async (challenge: Challenge) => {
+    setLoadingChallenge(challenge.id);
+    try {
+      // Buscar dados completos do desafio
+      const fullChallengeData = await fetchChallenge(challenge.id);
+      // Navegar para a página de detalhes do desafio com dados completos
+      navigate('/admin/desafio-gerado', { 
+        state: { challenge: fullChallengeData } 
+      });
+    } catch (error) {
+      console.error('Erro ao carregar dados do desafio:', error);
+      alert('Erro ao carregar dados do desafio. Tente novamente.');
+    } finally {
+      setLoadingChallenge(null);
+    }
   };
 
   const handleApprove = (challengeId: number) => {
     if (onApprove) {
       onApprove(challengeId);
+    }
+  };
+
+  const handleDelete = (challengeId: number) => {
+    if (onDelete) {
+      onDelete(challengeId);
     }
   };
 
@@ -128,9 +166,16 @@ const ChallengesGrid: React.FC<ChallengesGridProps> = ({
               {challenge.tags.map(tag => <Tag key={tag}>{tag}</Tag>)}
             </TagsContainer>
             <ButtonContainer>
-              <AccessButton onClick={() => handleAccessChallenge(challenge)}>
-                Acessar Desafio <IoIosArrowForward />
+              <AccessButton 
+                onClick={() => handleAccessChallenge(challenge)}
+                disabled={loadingChallenge === challenge.id}
+              >
+                {loadingChallenge === challenge.id ? 'Carregando...' : 'Acessar Desafio'} 
+                {loadingChallenge !== challenge.id && <IoIosArrowForward />}
               </AccessButton>
+              <DeleteButton onClick={() => handleDelete(challenge.id)}>
+                Excluir
+              </DeleteButton>
               {showApproveButton && (
                 <ApproveButton onClick={() => handleApprove(challenge.id)}>
                   Aprovar

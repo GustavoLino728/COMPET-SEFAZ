@@ -7,7 +7,7 @@ import StatsCards from '../components/admin/StatsCards';
 import ChallengesGrid from '../components/admin/ChallengesGrid';
 import { IoIosArrowBack } from 'react-icons/io';
 import { FiPlus } from 'react-icons/fi';
-import { fetchPendingChallenges, fetchApprovedChallenges, updateChallengeStatus } from '../api'; 
+import { fetchPendingChallenges, fetchApprovedChallenges, updateChallengeStatus, deleteChallenge } from '../api'; 
 
 const AdminWrapper = styled.div`
   background-color: #f4f5fa;
@@ -130,6 +130,33 @@ const AdminSefaz: React.FC = () => {
         }
     };
 
+    const handleDeleteChallenge = async (challengeId: number) => {
+        if (window.confirm('Tem certeza que deseja excluir este desafio? Esta ação não pode ser desfeita.')) {
+            try {
+                await deleteChallenge(challengeId);
+                // Recarregar ambas as listas
+                const pendingData = await fetchPendingChallenges();
+                const approvedData = await fetchApprovedChallenges();
+                
+                const formattedChallenges = pendingData.map((challenge: any) => ({
+                    id: challenge.id,
+                    title: `Desafio ${challenge.id} - ${challenge.title}`,
+                    tags: [
+                        challenge.program_name || 'Programa',
+                        challenge.track_name || 'Trilha',
+                        `Nível: ${challenge.difficulty === 'EASY' ? 'Fácil' : challenge.difficulty === 'MEDIUM' ? 'Médio' : 'Difícil'}`
+                    ]
+                }));
+                setChallenges(formattedChallenges);
+                setApprovedCount(approvedData.length);
+                alert('Desafio excluído com sucesso!');
+            } catch (error) {
+                console.error('Erro ao excluir desafio:', error);
+                alert('Erro ao excluir desafio. Tente novamente.');
+            }
+        }
+    };
+
   return (
     <AdminWrapper>
       <MainContent>
@@ -159,6 +186,7 @@ const AdminSefaz: React.FC = () => {
                 challenges={challenges} 
                 showApproveButton={true}
                 onApprove={handleApproveChallenge}
+                onDelete={handleDeleteChallenge}
             />
         )}
       </MainContent>
