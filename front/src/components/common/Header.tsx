@@ -46,7 +46,7 @@ const Header = () => {
             <Link to="/">Início</Link>
             <Link to="/trilhas">Trilhas</Link>
             <Link to="/teste-perfil">Teste de perfil</Link>
-            <Link to="/certificacoes">Certificações</Link>
+            <Link to="/certificados">Certificações</Link>
           </nav>
 
           <div className={styles.loginButton}>
@@ -64,7 +64,6 @@ const Header = () => {
               <Link to="/login">Login</Link>
             )}
           </div>
-
         </div>
       </div>
     </header>
