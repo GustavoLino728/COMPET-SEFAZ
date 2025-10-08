@@ -7,25 +7,24 @@ interface StatInfo {
   title: string;
   value: number;
   link: string;
+  isActive?: boolean;
 }
-
-const statsData: StatInfo[] = [
-  { title: 'Desafios Gerados', value: 9, link: '/admin' },
-  { title: 'Desafios Aprovados', value: 5, link: '/admin/aprovados' },
-  { title: 'Desafios Editados', value: 16, link: '#' },
-];
 
 interface StatsCardsProps {
   activeStat: string;
+  pendingCount?: number;
+  approvedCount?: number;
 }
 
 interface CardProps {
   primary?: boolean;
 }
 
-const CardsContainer = styled.div`
+const CardsContainer = styled.div<{ activeCardsCount: number }>`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: ${props => 
+    props.activeCardsCount === 2 ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)'
+  };
   gap: 1.5rem;
   @media (max-width: 768px) { grid-template-columns: 1fr; }
 `;
@@ -56,11 +55,48 @@ const Card = styled.div<CardProps>`
   p { margin: 0; font-size: 2rem; font-weight: 600; }
 `;
 
-const StatsCards: React.FC<StatsCardsProps> = ({ activeStat }) => {
+const StatsCards: React.FC<StatsCardsProps> = ({ 
+  activeStat, 
+  pendingCount = 0, 
+  approvedCount = 0 
+}) => {
+  // Dados dos cards - "Desafios Editados" comentado mas mantido para layout
+  const statsData: StatInfo[] = [
+    { 
+      title: 'Desafios Gerados', 
+      value: pendingCount, 
+      link: '/admin',
+      isActive: true
+    },
+    { 
+      title: 'Desafios Aprovados', 
+      value: approvedCount, 
+      link: '/admin/aprovados',
+      isActive: true
+    },
+    // Comentado mas mantido para não quebrar o layout
+    { 
+      title: 'Desafios Editados', 
+      value: 0, 
+      link: '#',
+      isActive: false // Não ativo, mas ainda renderiza
+    },
+  ];
+
+  // Filtra apenas os cards ativos para contagem
+  const activeCards = statsData.filter(stat => stat.isActive);
+  const activeCardsCount = activeCards.length;
+
   return (
-    <CardsContainer>
+    <CardsContainer activeCardsCount={activeCardsCount}>
       {statsData.map(stat => (
-        <CardLink to={stat.link} key={stat.title}>
+        <CardLink 
+          to={stat.link} 
+          key={stat.title}
+          style={{ 
+            display: stat.isActive ? 'block' : 'none' // Esconde o card comentado
+          }}
+        >
           <Card primary={stat.title === activeStat}>
             <header>
               <h3>{stat.title}</h3>
