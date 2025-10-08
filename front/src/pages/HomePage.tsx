@@ -58,7 +58,6 @@ function HomePage() {
   async function fetchUser() {
     try {
       const user = await getCurrentUser();
-      console.log('Dados do usuário:', user);
 
       if (user && user.full_name) {
         const firstName = user.full_name.split(' ')[0];
@@ -111,10 +110,7 @@ function HomePage() {
             />
           </div>
         </section>
-
-        {/* ================================================================== */}
-        {/* lembrar de colocar as outras seções de trilhas sugeridas aqui      */}
-        {/* ================================================================== */}
+        
         <section className={styles.trailsSection}>
           <h2 className={styles.sectionTitle}>Trilhas Sugeridas</h2>
           <div className={styles.trailsGrid}>

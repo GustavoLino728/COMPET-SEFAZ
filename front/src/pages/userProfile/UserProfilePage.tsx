@@ -5,8 +5,10 @@ import {
   fetchUserStats, 
   fetchUserAchievements, 
   patchCurrentUser, 
+  getUserProgress,
   changePassword 
 } from '../../api';
+import type { UserProgressResponse } from '../../api';
 
 interface User {
   id: number;
@@ -24,6 +26,9 @@ interface UserStats {
   trilhas_concluidas: number;
   desafios_feitos: number;
   certificados_obtidos: number;
+  progresso_geral?: number;
+  programas_iniciados?: number;
+  total_trilhas_acessadas?: number;
 }
 
 interface Achievement {
@@ -88,8 +93,10 @@ function ProfilePage() {
   const [user, setUser] = useState<User | null>(null);
   const [stats, setStats] = useState<UserStats | null>(null);
   const [achievements, setAchievements] = useState<Achievement[]>([]);
+  const [progressData, setProgressData] = useState<UserProgressResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
+  const [isEditingProfessional, setIsEditingProfessional] = useState(false);
   const [editedUser, setEditedUser] = useState<Partial<User>>({});
   const [passwordData, setPasswordData] = useState({
     current_password: '',
@@ -112,7 +119,7 @@ function ProfilePage() {
 
   const loadUserData = async () => {
     try {
-      const userData = await getCurrentUser(); // ✅ Sem .data
+      const userData = await getCurrentUser(); 
       setUser(userData);
       setEditedUser(userData);
       setBusinessField(userData.field_of_work || '');
@@ -124,10 +131,37 @@ function ProfilePage() {
 
   const loadStats = async () => {
     try {
-      const response = await fetchUserStats();
-      setStats(response.data);
+      const progressResponse = await getUserProgress();
+      setProgressData(progressResponse);
+
+      try {
+        const response = await fetchUserStats();
+        setStats({
+          ...response.data,
+          trilhas_concluidas: progressResponse.overall_progress.total_trails_accessed,
+          progresso_geral: progressResponse.overall_progress.overall_percentage,
+          programas_iniciados: progressResponse.program_progress.length,
+          total_trilhas_acessadas: progressResponse.overall_progress.total_trails_accessed
+        });
+      } catch (error) {
+        // Se o mock não existir, usar apenas dados reais
+        console.log('Mock stats não disponível, usando dados reais');
+        setStats({
+          trilhas_concluidas: progressResponse.overall_progress.total_trails_accessed,
+          desafios_feitos: 0, // Placeholder até implementarmos desafios
+          certificados_obtidos: progressResponse.overall_progress.programs_completed.length,
+          progresso_geral: progressResponse.overall_progress.overall_percentage,
+          programas_iniciados: progressResponse.program_progress.length,
+          total_trilhas_acessadas: progressResponse.overall_progress.total_trails_accessed
+        });
+      }
     } catch (error) {
-      console.error('Erro ao carregar estatísticas:', error);
+      console.error('Erro ao carregar progresso:', error);
+      setStats({
+        trilhas_concluidas: 0,
+        desafios_feitos: 0,
+        certificados_obtidos: 0
+      });
     }
   };
 
@@ -162,6 +196,22 @@ function ProfilePage() {
       alert('Senha alterada com sucesso!');
     } catch (error) {
       console.error('Erro ao alterar senha:', error);
+    }
+  };
+
+  const handleSaveProfessional = async () => {
+    try {
+      const dataToUpdate = {
+        field_of_work: businessField,
+        interest_area: interestAreas.join(', '),
+      };
+      const response = await patchCurrentUser(dataToUpdate);
+      setUser(response.data);
+      setIsEditingProfessional(false);
+      alert('Informações profissionais atualizadas com sucesso!');
+    } catch (error) {
+      console.error('Erro ao salvar informações profissionais:', error);
+      alert('Erro ao salvar informações. Tente novamente.');
     }
   };
 
@@ -342,16 +392,20 @@ function ProfilePage() {
             )}
 
             {activeTab === 'profissional' && (
-              <div className={styles.tabContent}>
-                <div className={styles.contentHeader}>
-                  <h2 className={styles.contentTitle}>Informações profissionais</h2>
-                  <button className={styles.editButton}>
-                    ✏️ Editar
-                  </button>
-                </div>
-                <div className={styles.formSection}>
-                  <div className={styles.formGroup}>
-                    <label className={styles.formLabel}>Ramo empresarial</label>
+            <div className={styles.tabContent}>
+              <div className={styles.contentHeader}>
+                <h2 className={styles.contentTitle}>Informações profissionais</h2>
+                <button 
+                  className={styles.editButton}
+                  onClick={() => setIsEditingProfessional(!isEditingProfessional)}
+                >
+                  ✏️ Editar
+                </button>
+              </div>
+              <div className={styles.formSection}>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Ramo empresarial</label>
+                  {isEditingProfessional ? (
                     <input
                       type="text"
                       className={styles.formInput}
@@ -359,9 +413,16 @@ function ProfilePage() {
                       value={businessField}
                       onChange={(e) => setBusinessField(e.target.value)}
                     />
-                  </div>
-                  <div className={styles.formGroup}>
-                    <label className={styles.formLabel}>Áreas de interesse</label>
+                  ) : (
+                    <div className={styles.formValue}>
+                      {user?.field_of_work || 'Não informado'}
+                    </div>
+                  )}
+                </div>
+                
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Áreas de interesse</label>
+                  {isEditingProfessional ? (
                     <input
                       type="text"
                       className={styles.formInput}
@@ -369,10 +430,22 @@ function ProfilePage() {
                       value={interestAreas.join(', ')}
                       onChange={(e) => setInterestAreas(e.target.value.split(',').map((s: string) => s.trim()))}
                     />
-                  </div>
+                  ) : (
+                    <div className={styles.formValue}>
+                      {user?.interest_area || 'Não informado'}
+                    </div>
+                  )}
                 </div>
+
+                {/* ✅ Botão salvar só aparece durante edição */}
+                {isEditingProfessional && (
+                  <button className={styles.saveButton} onClick={handleSaveProfessional}>
+                    Salvar
+                  </button>
+                )}
               </div>
-            )}
+            </div>
+          )}
 
             {activeTab === 'insignia' && (
               <div className={styles.tabContent}>

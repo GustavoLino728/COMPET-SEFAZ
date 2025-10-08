@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
 import Header from './components/common/Header';
 import HomePage from './pages/HomePage';
 import UserList from './components/user/UserList';
@@ -51,43 +52,44 @@ function App() {
   };
 
   return (
-   <div>
-      <GlobalStyle />
-      <Header />
+   <AuthProvider>
+    <div>
+        <GlobalStyle />
+        <Header />
 
-      <main>
-        <Routes>
+        <main>
+          <Routes>
 
-          {/* Rotas Victor */}
-          {/* <Route path="/" element={<Dashboard />} /> */}
-          <Route path="/admin" element={<AdminSefaz />} />
-          <Route path="/admin/aprovados" element={<ApprovedChallenges />} />
-          <Route path="/desafios" element={<ChallengeSelectionPage />} />
-          <Route path="/desafio/:id" element={<ChallengeStartPage />} />
-          <Route path="/quiz/:id" element={<QuizPage />} />
-          <Route path="/quiz/resultado/:id" element={<QuizCompletionPage />} />
-          <Route path="/admin/gerador" element={<ChallengeGeneratorPage />} />
-          <Route path="/admin/desafio-gerado" element={<ChallengeGeneratedPage />} />
-          {/* Fim rotas Victor */}
+            {/* Rotas Victor */}
+            {/* <Route path="/" element={<Dashboard />} /> */}
+            <Route path="/admin" element={<AdminSefaz />} />
+            <Route path="/admin/aprovados" element={<ApprovedChallenges />} />
+            <Route path="/desafios" element={<ChallengeSelectionPage />} />
+            <Route path="/desafio/:id" element={<ChallengeStartPage />} />
+            <Route path="/quiz/:id" element={<QuizPage />} />
+            <Route path="/quiz/resultado/:id" element={<QuizCompletionPage />} />
+            <Route path="/admin/gerador" element={<ChallengeGeneratorPage />} />
+            <Route path="/admin/desafio-gerado" element={<ChallengeGeneratedPage />} />
+            {/* Fim rotas Victor */}
 
-          <Route path="/" element={<HomePage />} />
-          <Route path="/usuarios" element={<UserList />} />
-          <Route path="/cadastro" element={<RegisterPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/setup" element={<UserSetup />} />
-          <Route path="/esqueci-senha" element={<ResetPassword/>}/>
-          <Route path="/reset-password/:uid/:token" element={<ResetPasswordConfirm/>}/>
-          <Route path="/perfil" element={<UserProfilePage/>}/>
-          <Route path="/trilhas/:trilhaId" element={<TrailsPanel />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/usuarios" element={<UserList />} />
+            <Route path="/cadastro" element={<RegisterPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/setup" element={<UserSetup />} />
+            <Route path="/esqueci-senha" element={<ResetPassword/>}/>
+            <Route path="/reset-password/:uid/:token" element={<ResetPasswordConfirm/>}/>
+            <Route path="/perfil" element={<UserProfilePage/>}/>
+            <Route path="/trilhas/:trilhaId" element={<TrailsPanel />} />
 
-          {/* Add other routes as needed */}
-        </Routes>
-      </main>
-      
-      <FloatingButton onClick={handleChatToggle} />
-      <ChatWindow isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
-    </div>
-
+            {/* Add other routes as needed */}
+          </Routes>
+        </main>
+        
+        <FloatingButton onClick={handleChatToggle} />
+        <ChatWindow isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
+        </div>
+    </AuthProvider>
   );
 }
 
