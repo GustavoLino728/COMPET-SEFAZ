@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'djoser',
     'corsheaders',
     'users',
+    'progress',
     'questions',
     'chatbot_api',
 ]
@@ -166,6 +167,8 @@ SIMPLE_JWT = {
 DJOSER = {
     "USER_ID_FIELD": "id",
     "LOGIN_FIELD": "email",
+    
+    "USER_CREATE_PASSWORD_RETYPE": True,
 
     "PERMISSIONS": {
         "user_create": ["rest_framework.permissions.AllowAny"],
@@ -187,6 +190,8 @@ DJOSER = {
         "password_reset": "users.emails.CustomPasswordResetEmail",
     },
 }
+
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend', 'users.backends.EmailBackend']
 
 # Redefinição de senha (dev)
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -266,6 +271,5 @@ LOGGING = {
     },
 }
 
-# Redefinição de senha (dev)
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# DEFAULT_FROM_EMAIL = 'webmaster@localhost'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

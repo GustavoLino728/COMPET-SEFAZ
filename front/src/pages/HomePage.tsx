@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './HomePage.module.css';
 import TrailCard from '../components/cards/TrailCard';
+import { getCurrentUser } from '../api';
 
 import prodepeImage from '../assets/images/PRODEPE/PRODEPE-card-programa.png'; 
 import prodeautoImage from '../assets/images/PRODEAUTO/PRODEAUTO-card-programa.png'; 
@@ -29,13 +30,34 @@ const DashboardCard = ({ title, description, buttonText, buttonLink, isLarge = f
 };
 
 function HomePage() {
+  const [userName, setUserName] = useState('Carregando...');
+
+  useEffect(() => {
+  async function fetchUser() {
+    try {
+      const user = await getCurrentUser();
+
+      if (user && user.full_name) {
+        const firstName = user.full_name.split(' ')[0];
+        setUserName(firstName);
+      } else {
+        setUserName('Usuário');
+      }
+    } catch (error) {
+      console.error('Erro ao buscar usuário:', error);
+      setUserName('Usuário');
+    }
+  }
+  fetchUser();
+}, []);
+
   return (
     <div className={styles.pageContainer}>
       <div className={styles.contentWrapper}>
         
         {/* Seção de Boas-vindas (Já existente - NÃO MEXA) */}
         <section className={styles.welcomeSection}>
-          <h1 className={styles.welcomeTitle}>Bem vinda, Júlia</h1>
+          <h1 className={styles.welcomeTitle}>Bem vindo, {userName}</h1>
           <p className={styles.subtitle}>
             Explore sua jornada de aprendizado e mantenha-se atualizado sobre incentivos fiscais.
           </p>
@@ -69,6 +91,8 @@ function HomePage() {
         </section>
 
           <section className={styles.trailsSection}>
+        
+        <section className={styles.trailsSection}>
           <h2 className={styles.sectionTitle}>Trilhas Sugeridas</h2>
           <div className={styles.trailsGrid}>
             

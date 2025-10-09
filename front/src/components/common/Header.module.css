@@ -65,3 +65,19 @@
   align-items: center; 
   gap: 2rem; 
 }
+
+.logoutButton {
+  background: none;
+  border: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 0;
+  margin: 0;
+}
+
+.logoutButton:hover {
+  text-decoration: underline;
+}

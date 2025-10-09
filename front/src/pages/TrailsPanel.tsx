@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { trilhas, type Trilha, type ItemDaListaAninhada } from '../data/trilhasData';
-
+import { useProgress } from '../hooks/useProgress';
 import TrackDetailHeader from '../components/common/TrackDetailHeader';
-// import VideoSection from '../components/common/VideoSection';
 import DesafiosCard from '../components/common/DesafiosCard';
 import TesteCertificacaoCard from '../components/common/TesteCertificacaoCard';
 import styles from './TrailsPanel.module.css';
@@ -26,6 +25,10 @@ const RenderList = ({ items }: { items: ItemDaListaAninhada[] }) => {
   );
 };
 
+const extractTrailNumber = (trailId: string): number => {
+  const match = trailId.match(/t(\d+)/i);
+  return match ? parseInt(match[1]) : 1;
+};
 
 const TrailsPanel = () => { 
   const { trilhaId } = useParams();
@@ -35,8 +38,41 @@ const TrailsPanel = () => {
 
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('conteudo');
+  const { trackAccess } = useProgress();
+  const [hasTracked, setHasTracked] = useState(false);
 
   const trilhaAtual = trilhas.find((trilha: Trilha) => trilha.id === trilhaId);
+
+  useEffect(() => {
+    const registerAccess = async () => {
+      if (!trilhaAtual || !trilhaId || hasTracked) {
+        return;
+      }
+
+      try {
+        setHasTracked(true); 
+        
+        const trailNumber = extractTrailNumber(trilhaId);
+        
+        await trackAccess({
+          trail_id: trilhaId,
+          program: trilhaAtual.programa,
+          trail_number: trailNumber,
+        });
+        
+        console.log(`✅ Acesso registrado: ${trilhaId} - T${trailNumber}`);
+      } catch (error) {
+        console.error('❌ Erro ao registrar acesso:', error);
+        setHasTracked(false); 
+      }
+    };
+
+    registerAccess();
+  }, [trilhaId]);
+
+  useEffect(() => {
+    setHasTracked(false);
+  }, [trilhaId]);
 
   if (!trilhaAtual) {
     return <div>Trilha não encontrada!</div>;
@@ -85,11 +121,7 @@ const TrailsPanel = () => {
           
           {activeTab === 'conteudo' && (
             <div>
-              {/* <VideoSection videoUrl={trilhaAtual.urlVideo} /> */}
-              
-              {/* --- Loop Inteligente para Renderizar o Conteúdo Dinâmico --- */}
               {trilhaAtual.blocosDeConteudo.map((bloco, index) => {
-
                 if (bloco.tipo === 'subtitulo' || bloco.tipo === 'subtitulo-bold') {
                   const className = bloco.tipo === 'subtitulo-bold' ? styles.contentTitleBold : styles.contentTitle;
                   return <h3 key={index} className={className}>{bloco.conteudo as string}</h3>;
