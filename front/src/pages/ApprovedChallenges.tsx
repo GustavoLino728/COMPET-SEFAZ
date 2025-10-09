@@ -5,7 +5,7 @@ import AdminHeader from '../components/admin/AdminHeader';
 import StatsCards from '../components/admin/StatsCards';
 import ChallengesGrid from '../components/admin/ChallengesGrid';
 import { IoIosArrowBack } from 'react-icons/io';
-import { fetchApprovedChallenges, fetchPendingChallenges } from '../api';
+import { fetchApprovedChallenges, fetchPendingChallenges, deleteChallenge } from '../api';
 
 
 const PageWrapper = styled.div`
@@ -55,9 +55,35 @@ const ApprovedChallenges: React.FC = () => {
     loadChallenges();
   }, []);
 
+  const handleDeleteChallenge = async (challengeId: number) => {
+    if (window.confirm('Tem certeza que deseja excluir este desafio? Esta ação não pode ser desfeita.')) {
+      try {
+        await deleteChallenge(challengeId);
+        // Recarregar ambas as listas
+        const approvedData = await fetchApprovedChallenges();
+        const pendingData = await fetchPendingChallenges();
+        
+        const formattedChallenges = approvedData.map((challenge: any) => ({
+          id: challenge.id,
+          title: `Desafio ${challenge.id} - ${challenge.title}`,
+          tags: [
+            challenge.program_name || 'Programa',
+            challenge.track_name || 'Trilha',
+            `Nível: ${challenge.difficulty === 'EASY' ? 'Fácil' : challenge.difficulty === 'MEDIUM' ? 'Médio' : 'Difícil'}`
+          ]
+        }));
+        setChallenges(formattedChallenges);
+        setPendingCount(pendingData.length);
+        alert('Desafio excluído com sucesso!');
+      } catch (error) {
+        console.error('Erro ao excluir desafio:', error);
+        alert('Erro ao excluir desafio. Tente novamente.');
+      }
+    }
+  };
+
   return (
     <PageWrapper>
-      <AdminHeader />
       <MainContent>
         <PageHeader>
           <BackLink to="/admin"><IoIosArrowBack /> Voltar</BackLink>
@@ -80,6 +106,7 @@ const ApprovedChallenges: React.FC = () => {
             title="Desafios Aprovados" 
             challenges={challenges} 
             showApproveButton={false}
+            onDelete={handleDeleteChallenge}
           />
         )}
 
