@@ -5,7 +5,7 @@ import DifficultySelector from '../components/user/DifficultySelector';
 import ChallengeList from '../components/user/ChallengeList';
 import { IoArrowBack } from 'react-icons/io5';
 
-import { Challenge } from '../types';
+import { type Challenge } from '../types';
 import { basicChallenges, intermediateChallenges, advancedChallenges } from '../challenges/challenges';
 
 

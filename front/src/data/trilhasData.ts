@@ -597,7 +597,7 @@ export const trilhas: Trilha[] = [
 {
     id: 'proind-concessao-incentivo',
     programa: 'PROIND',
-    titulo: 'Trilha 4: Concessão do Incentivo (PROIND)',
+    titulo: 'Trilha 4: Concessão do Incentivo',
     descricaoHeader: 'Entenda o processo de concessão e os requisitos para a fruição do benefício fiscal.', 
     sobreTrilha: 'Esta trilha detalha as etapas e critérios para a concessão formal do incentivo PROIND, desde a solicitação até a publicação do decreto.', 
     urlVideo: '', 
@@ -814,6 +814,2009 @@ export const trilhas: Trilha[] = [
       },
     ]
   },
+  
+  {
+    id: 'prodepe-calculo-incentivo',
+    programa: 'PRODEPE',
+    titulo: 'Trilha 1: Cálculo do Incentivo',
+    descricaoHeader: 'Detalha os passos e critérios essenciais para a apuração do valor do incentivo do PRODEPE.',
+    sobreTrilha: 'O Programa de Desenvolvimento do Estado de Pernambuco (PRODEPE) é uma das principais ferramentas de incentivo fiscal do Estado...',
+    urlVideo: '',
+    blocosDeConteudo: [
+      {
+      tipo: 'paragrafo',
+      conteudo: 'O Programa de Desenvolvimento do Estado de Pernambuco (PRODEPE), instituído pela Lei nº 11.675/1999 e regulamentado pelo Decreto nº 21.959/1999, é uma das principais ferramentas de incentivo fiscal do Estado. A compreensão da metodologia de cálculo do incentivo é fundamental para empresas que buscam se beneficiar do programa, garantindo a correta aplicação da legislação e a plena fruição dos benefícios concedidos. Esta trilha detalha os passos e critérios essenciais para a apuração do valor do incentivo do PRODEPE.'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '1. Critérios de Elegibilidade para o Cálculo do Incentivo'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'O cálculo do incentivo do PRODEPE se aplica a empresas industriais e comerciais atacadistas que foram previamente habilitadas e tiveram seu benefício formalizado por decreto do Poder Executivo. A elegibilidade para o cálculo específico do incentivo está ligada ao tipo de atividade e projeto, sendo principalmente direcionada aos seguintes cenários:'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Projetos de Implantação: Empresas que estão iniciando suas atividades industriais ou comerciais atacadistas em Pernambuco.',
+        'B - Projetos de Ampliação: Empresas já existentes que aumentam sua capacidade produtiva ou de comercialização. Nesses casos, o cálculo do benefício incide exclusivamente sobre o incremento da produção comercializada ou sobre o ICMS mensal que exceda a arrecadação média dos últimos 12 meses anteriores à apresentação do projeto.',
+        'C - Projetos de Revitalização: Empresas que reativam operações paralisadas por determinado período, ou que demonstram significativo declínio em sua produção.'
+      ]
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'O incentivo incide sobre Produtos Incentivados (PI), que são aqueles relacionados especificamente no decreto concessivo de cada empresa. A correta identificação e segregação das operações com PI é o primeiro passo para qualquer cálculo.'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '2. Metodologia de Cálculo: Percentuais e Bases'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'O principal mecanismo do PRODEPE é a concessão de crédito presumido do ICMS, embora também possa envolver diferimento ou financiamento em modalidades específicas. O cálculo se baseia na aplicação de percentuais sobre o ICMS de responsabilidade direta do contribuinte, apurado em cada período fiscal.'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '2.1 Agrupamentos Industriais Prioritários'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Conforme o Art. 5º da Lei nº 11.675/1999 e Art. 5º do Decreto nº 21.959/1999, as empresas enquadradas nos agrupamentos industriais prioritários (como agroindústria, metalmecânica, eletroeletrônica, farmoquímica, bebidas, minerais não-metálicos, têxtil, plásticos) podem ser estimuladas com crédito presumido do ICMS, que observa as seguintes características:'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Base de Cálculo: O ICMS de responsabilidade direta do contribuinte, apurado em cada período fiscal. Para projetos de ampliação, a base é o imposto incidente sobre a parcela do incremento da produção comercializada.',
+        'B - Percentuais (Crédito Presumido):'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        {
+          texto: 'Até 75% do imposto (Art. 5º, II, Lei).',
+          subItens: [] 
+        },
+        {
+          texto: 'Até 95% em substituição ao percentual de 75%, desde que atendam a condições específicas, como:',
+          subItens: [
+            'C - Localização em município não integrante da Região Metropolitana do Recife (RMR) (Art. 5º, §1º, I, Lei).',
+            'D - Integração em agrupamentos industriais especiais (automobilístico, farmoquímico, siderúrgico, produção de laminados de alumínio a quente, fabricação de vidros planos, metalúrgico) (Art. 5º, §1º, II, Lei).',
+            'E - Adicional: A partir de 1º de maio de 2010, podem ser acrescidos dez pontos percentuais ao crédito presumido para empresas com projeto de investimentos de no mínimo R$ 100.000.000,00 e que atendam a condições definidas em decreto (Art. 5º, §20, Lei).'
+          ]
+        }
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '2.2 Demais Atividades Industriais Relevantes'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Para as atividades industriais não compreendidas nos agrupamentos prioritários (Art. 6º da Lei nº 11.675/1999 e Art. 7º do Decreto nº 21.959/1999):'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Base de Cálculo: O ICMS de responsabilidade direta do contribuinte, apurado em cada período fiscal. Para projetos de ampliação, a base é o imposto incidente sobre a parcela do incremento da produção comercializada.',
+        'B - Percentuais (Crédito Presumido):'
+      ]
+    },
+    {
+      tipo: 'lista', 
+      conteudo: [
+        'Até 47,5% do ICMS (Art. 7º, I, Lei).',
+        'Em substituição, pode ser concedido crédito presumido de até 75% do imposto, desde que a empresa beneficiária esteja localizada em município fora da RMR (Art. 7º, §1º, Lei).',
+        'Adicional: A partir de 1º de janeiro de 2011, podem ser acrescidos dez pontos percentuais para empresas fabricantes de tintas, vernizes e afins (Art. 7º, §12, Lei).'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '2.3 Atividade Portuária e Aeroportuária'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Para importadores atacadistas de mercadorias do exterior (Art. 8º da Lei nº 11.675/1999 e Art. 9º do Decreto nº 21.959/1999):'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Diferimento na Importação: Diferimento do ICMS incidente sobre a importação para a saída subsequente promovida pelo importador (Art. 9º, I, Lei).',
+        'B - Crédito Presumido na Saída Subsequente:'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Operações Internas: Limites que variam de 3,5% a 10% do valor da operação de importação, dependendo da carga tributária aplicável (Art. 9º, II, a, Lei).',
+        'Operações Interestaduais: Limite de até 47,5% do imposto apurado (Art. 9º, II, b, Lei).',
+        'Adicional: O percentual para operações interestaduais pode ser majorado em até 5 pontos percentuais com base em proposta do Comitê Diretor (Art. 9º, §6º, Lei).'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '2.4 Central de Distribuição'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Para centrais de distribuição (Art. 10º da Lei nº 11.675/1999 e Art. 10º do Decreto nº 21.959/1999):'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Crédito Presumido:'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        '3% do valor total das saídas interestaduais promovidas pela Central de Distribuição (Art. 10º, I, Lei).',
+        '3% do valor da transferência, na entrada por transferência de mercadoria de estabelecimento industrial localizado em outra UF (Art. 10º, II, Lei).',
+        'Adicional: O percentual pode ser elevado em até um ponto percentual para operações de distribuição de veículos automotores (Art. 10º, §4º, Lei).'
+      ]
+    }, 
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '3. Aspectos Operacionais do Cálculo e Consolidação'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'A Portaria SF nº 239/2001 estabelece diretrizes operacionais cruciais para o cálculo e a escrituração do incentivo, especialmente para empresas industriais:'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Segregação de Escrituração: Empresas devem manter escrituração distinta para produtos incentivados (PI) e não incentivados, utilizando séries diferentes nos livros fiscais (Registro de Entradas, Registro de Saídas e Registro de Apuração do ICMS – RAICMS). Por exemplo, série "A" para não incentivados e "B" com subséries para PI (Portaria Inciso VII).',
+        'B - Tratamento de Insumos Comuns: Para produtos que utilizam matérias-primas e insumos comuns entre PI e não PI, o contribuinte deve:'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Lançar inicialmente os documentos de aquisição de uso comum nos livros de produtos não incentivados.',
+        'Transferir os valores relativos ao consumo real de insumos usados na fabricação de PI para os livros de PI, mediante emissão de Nota Fiscal. A alocação deve ser baseada no consumo real ou, na impossibilidade, proporcionalmente às saídas de PI em relação às saídas totais do período fiscal (Portaria Inciso VIII).'
+      ]
+    },
+    {
+      tipo: 'lista-bullet',
+      conteudo: [
+        'Apropriação de Crédito de Ativo Fixo: O crédito de ativo fixo deve ser rateado mensalmente na proporção do faturamento de PI e não PI, em relação ao total das saídas do mês (Portaria Inciso VIII, e).',
+        'Cálculo para Projetos de Ampliação: A Portaria SF nº 239/2001, em seu Inciso XIV, detalha como o cálculo para projetos de ampliação deve considerar o "limite de produção a ser comercializada" ou o "limite mínimo de recolhimento do ICMS". A base para o cálculo do incentivo é o excedente da produção ou arrecadação em relação a um patamar pré-definido. Se não for atingido o limite mínimo de produção ou arrecadação, o benefício pode ser reduzido.'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '4. Exemplos Práticos de Aplicação do Cálculo'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Cenário 1: Indústria Prioritária (Implantação) no Sertão Pernambucano'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Uma nova indústria de bebidas (agrupamento prioritário) se instala no Sertão Pernambucano. No primeiro mês de operação, o saldo devedor do ICMS é de R$ 500.000,00.'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Percentual Aplicável: Indústria prioritária em Sertão Pernambucano = 95% (Art. 5º, §1º, I, Lei).',
+        'B - Cálculo do Crédito Presumido: R$ 500.000,00 (saldo devedor) * 95% = R$ 475.000,00.',
+        'C - ICMS a Recolher: R$ 500.000,00 - R$ 475.000,00 = R$ 25.000,00.'
+      ]
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Cenário 2: Indústria Prioritária (Ampliação) na RMR'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Uma indústria metalmecânica na RMR (já existente) ampliou sua produção. Antes da ampliação, sua arrecadação média mensal de ICMS era de R$ 200.000,00. Após a ampliação, em um determinado mês, sua arrecadação de ICMS incidente sobre o incremento da produção comercializada (a parcela que excede a média anterior) foi de R$ 150.000,00. O benefício é de 75%.'
+    },
+    {
+      tipo: 'lista-bullet',
+      conteudo: [
+        'Base de Cálculo (Incremento): R$150.000,00 (ICMS sobre o incremento).',
+        'Percentual Aplicável: Indústria prioritária na RMR = 75% (Art. 5º, II, Lei).',
+        'Cálculo do Crédito Presumido: R$ 150.000,00 * 75% = R$ 112.500,00.',
+        'ICMS Adicional a Recolher (sobre o incremento): R$150.000,00 - R$112.500,00 = R$37.500,00.'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Este valor é somado ao recolhimento do ICMS sobre a produção "normal" (base de R$200.000,00), garantindo que o Estado não perca arrecadação sobre o volume já existente.'
+      ]
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Cenário 3: Central de Distribuição (Vendas Interestaduais)'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Uma central de distribuição promoveu R$1.000.000,00 em saídas interestaduais incentivadas em um mês.'
+    },
+    {
+      tipo: 'lista-bullet',
+      conteudo: [
+        'Percentual Aplicável: Central de Distribuição (vendas interestaduais) = 3% (Art. 10º, I, Lei).',
+        'Cálculo do Crédito Presumido: R$ 1.000.000,00 * 3% = R$ 30.000,00.',
+        'Impacto no ICMS a Recolher: O valor do crédito presumido é deduzido do ICMS apurado sobre as saídas interestaduais.'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '5. Considerações sobre Variações e Impactos no Incentivo'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'O cálculo do incentivo do PRODEPE pode variar e ser impactado por diversos fatores:'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Mix de Produtos: A proporção de vendas de produtos incentivados versus não incentivados impacta diretamente a base de cálculo para a aplicação do percentual, exigindo uma segregação e controle rigorosos.',
+        'B - Variação na Arrecadação: Em projetos de ampliação, a base do incentivo é o "incremento". Se o incremento não se mantiver, o valor do benefício flutua.',
+        'C - Alterações Legislativas: Os percentuais e regras de cálculo podem ser alterados por novas leis e decretos, exigindo que o contribuinte esteja sempre atualizado com a legislação vigente.',
+        'D - Cumprimento de Metas: A Portaria SF nº 239/2001 estabelece que o não atingimento de um limite mínimo anual de produção comercializada pode resultar na necessidade de recolher a diferença do ICMS que deveria ter sido paga, impactando o benefício líquido.',
+        'E - Taxa de Administração: Embora não faça parte do cálculo do incentivo em si, a taxa de administração de 2% sobre o valor do benefício efetivamente utilizado é um custo associado que reduz o incentivo líquido. A falta de recolhimento dessa taxa pode levar à suspensão do benefício.',
+        'F - Regularidade Fiscal: A manutenção da regularidade fiscal é um pré-requisito para a fruição do benefício. Qualquer irregularidade pode impedir a utilização do incentivo no período correspondente.'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '6. Referências Normativas'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'O cálculo do incentivo do PRODEPE é fundamentado nas seguintes normas, sendo crucial consultar suas versões mais atualizadas, incluindo as alterações e revogações:'
+    },
+    {
+      tipo: 'lista-bullet',
+      conteudo: [
+        'Lei nº 11.675, de 11 de outubro de 1999: Consolidou e alterou o PRODEPE, estabelecendo as bases dos incentivos, percentuais e condições gerais.',
+        'Decreto nº 21.959, de 27 de dezembro de 1999: Regulamenta o PRODEPE, detalhando as condições e requisitos.',
+        'Portaria SF nº 239, de 14 de dezembro de 2001: Estabelece os procedimentos relativos à emissão e escrituração de documentos e livros fiscais, além de aspectos operacionais do cálculo e acompanhamento de metas.'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        {
+          texto: '',
+          subItens: [
+            'Art. 1º, §3º: Termos finais máximos para fruição dos incentivos.',
+            'Capítulo II (Art. 4º, 5º e 7º): Detalhes sobre o estímulo à atividade industrial (prioritários e demais relevantes).',
+            'Capítulo III (Art. 8º e 9º): Detalhes sobre o estímulo à atividade portuária.',
+            'Capítulo IV (Art. 10º e 11º): Detalhes sobre o estímulo à Central de Distribuição.',
+            'Capítulos II, III e IV (Arts. 4º a 11): Reforçam e complementam as disposições da Lei quanto aos percentuais e bases de cálculo.',
+            'Inciso VII: Segregação de escrituração.',
+            'Inciso VIII: Tratamento de insumos comuns.',
+            'Inciso XIV: Metodologia para cálculo em projetos industriais (produção comercializada e limite mínimo de ICMS).'
+          ]
+        }
+      ]
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'A correta aplicação da metodologia de cálculo do PRODEPE exige não apenas a compreensão dos percentuais, mas também um controle fiscal e contábil rigoroso, com a segregação adequada de operações e o monitoramento constante das condições de manutenção do benefício.'
+    }
+    ]
+  },
+
+  {
+    id: 'prodepe-lancamentos-incentivo', 
+    programa: 'PRODEPE',
+    titulo: 'Trilha 2: Lançamentos do Incentivo (PRODEPE)',
+    descricaoHeader: 'Aprenda a refletir os valores apurados nos documentos e livros fiscais.',
+    sobreTrilha: 'Esta trilha abordará como os valores do incentivo devem ser refletidos nos documentos e livros fiscais, além das obrigações acessórias.',
+    urlVideo: '', 
+    blocosDeConteudo: [
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '1. Introdução e Contextualização do Tema'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'A eficácia de um programa de incentivo fiscal como o PRODEPE não se manifesta apenas na concessão do benefício, mas também na sua correta e transparente aplicação no dia a dia do contribuinte. Os lançamentos do incentivo são o pilar da conformidade fiscal, traduzindo o benefício concedido em registros contábeis e fiscais que refletem a realidade da empresa e permitem a fiscalização por parte da Secretaria da Fazenda. Uma escrituração precisa é essencial para evitar sanções, como suspensão ou perda do benefício, e para garantir a segurança jurídica da operação. Esta trilha abordará como os valores apurados na Trilha 1 (Cálculo do Incentivo) devem ser refletidos nos documentos e livros fiscais, além das obrigações acessórias e as consequências de sua inobservância.'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '2. Registro dos Benefícios na Escrituração Fiscal'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'O PRODEPE estabelece regras claras para a escrituração dos incentivos, visando a separação e identificação das operações incentivadas. A Portaria SF nº 239/2001 detalha os procedimentos a serem seguidos.'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Categorização de Produtos: Para fins de escrituração, a Portaria SF nº 239/2001, Inciso IV, define:',
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Produto Incentivado (PI): Aquele listado no decreto concessivo.',
+        'Produto Não Incentivado: Aquele não relacionado no decreto concessivo.'
+      ]
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'B - Documentos Fiscais: As Notas Fiscais relativas às operações de saída de PI e produtos não incentivados devem identificar os produtos por código, com a correspondente decodificação no Livro Registro de Utilização de Documentos Fiscais e Termos de Ocorrências (Inciso V). Alternativamente, podem ser usadas Notas Fiscais de séries distintas para PI e não PI (Inciso VI).',
+        'C - Escrituração Segregada: Empresas industriais e centrais de distribuição devem adotar escrituração distinta, mantendo conjuntos separados dos livros fiscais.'
+      ]
+    },
+    {
+      tipo: 'lista-bullet',
+      conteudo: [
+        'Livros Fiscais: Deverão ter um conjunto de Livros Registro de Entradas, Registro de Saídas e Registro de Apuração do ICMS (RAICMS) específico para:',
+      ]
+    },
+    {
+      tipo: 'lista', 
+      conteudo: [
+        'PI: Um conjunto para cada hipótese de benefício (crédito presumido, financiamento) e, se for o caso, para cada percentual distinto de incentivo.',
+        'Produtos Não Incentivados: Um conjunto separado, quando aplicável (Inciso VII, a).'
+      ]
+    },
+    {
+      tipo: 'lista-bullet',
+      conteudo: [
+        'Séries e Subséries: Os livros de produtos não incentivados utilizam a série "A". Os livros de PI utilizam a série "B", com subséries distintas para cada conjunto de livros (ex: 01, 02, etc.), iniciando com a subsérie 01 (Inciso VII, c).'
+      ]
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'D - Lançamento no RAICMS: Os valores do crédito presumido e do financiamento devem ser totalizados e detalhados no quadro "Deduções" do RAICMS. Para indústrias, a indicação pode ser "Crédito presumido PRODEPE – indústria" ou "Financiamento PRODEPE – indústria". Para centrais de distribuição, "Crédito presumido PRODEPE sobre as entradas – central de distribuição" ou "Crédito presumido PRODEPE sobre as saídas interestaduais - central de distribuição" (Inciso VII, c, 4).',
+        'E - Emissão Eletrônica (a partir de 01.01.2001): Os contribuintes beneficiários do PRODEPE são obrigados a emitir e escriturar documentos e livros fiscais por sistema eletrônico de processamento de dados (Inciso IX).'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '2.1. Guia de Informação e Apuração do ICMS (GIAM) e Guia de Informação e Apuração de Incentivos Fiscais e Financeiros (GIAF)'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - GIAM: Deve ser apresentada uma GIAM série "A" para produtos não incentivados e uma GIAM série "B" para cada hipótese de PI, com subsérie distinta. Os incentivos de crédito presumido e financiamento devem ser informados no campo "DEDUÇÃO PARA INVESTIMENTO" do QUADRO E – APURAÇÃO DO ICMS. Para financiamentos, o QUADRO H – RECOLHIMENTO DO ICMS, detalha as parcelas dos municípios, do financiamento e remanescente do Estado (Inciso VII, d).',
+        'B - GIAF: Uma GIAF (modelo no Anexo 1 da Portaria SF nº 239/2001) deve ser preenchida e entregue conjuntamente com as respectivas GIAMs, com ou sem aproveitamento do incentivo (Inciso VII, e). A GIAF detalha o cálculo do crédito presumido, as saídas incentivadas e não incentivadas, os valores do ICMS correspondentes e outras deduções.',
+        'C - Documento de Arrecadação Estadual (DAE): O recolhimento dos valores apurados é feito via DAE, utilizando códigos de receita específicos (listados no Anexo 2 da Portaria), conforme a modalidade do benefício e a parcela do imposto (e.g., ICMS normal, parcela dos municípios, parcela do incentivo, parcela remanescente do Estado) (Inciso VII, f).'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '2.2. Lançamentos Específicos para Importação Incentivada'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Para o comércio importador atacadista, além das exigências gerais, há especificidades (Inciso XIII da Portaria SF nº 239/2001):'
+    },
+    {
+      tipo: 'lista-bullet',
+      conteudo: [
+        'Nota Fiscal e Declaração de Mercadoria Importada (DMI): Devem conter os dados do decreto concessivo e do cálculo do incentivo.',
+        'RAICMS:',
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Para projetos com crédito presumido na importação, o campo "ICMS Mercadorias Importadas" (Quadro "Obrigações a Recolher") reflete o saldo após a dedução do crédito.',
+        'Para projetos com financiamento na importação, o mesmo campo reflete o ICMS de produtos não incentivados e PI importados fora da faixa de incentivo.',
+        'Para diferimento na entrada e crédito presumido na saída, adota-se um conjunto de livros fiscais específico e detalha-se o "Crédito presumido PRODEPE na saída – Importação" no quadro "Deduções".'
+      ]
+    },
+    {
+      tipo: 'lista-bullet',
+      conteudo: [
+        'GIAM: Preenchimento específico dos campos para "ICMS de Mercadorias Importadas" ou "Outros Recolhimentos", conforme o tipo de benefício (crédito presumido ou financiamento).'
+      ]
+    }, 
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '3. Manutenção de Controles Internos e Extracontábeis'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'A Portaria SF nº 239/2001 ressalta a importância de controles internos detalhados, que vão além da mera escrituração fiscal.'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Controles Extracontábeis: O contribuinte pode, a seu critério, estabelecer controles extracontábeis de produção, comercialização, rateios e apropriações. Estes devem ser compatíveis com as condições do PRODEPE e da Portaria, para comprovar a fruição do benefício nos limites e condições fixadas no decreto concessivo (Inciso X).',
+        'B - Tratamento de Insumos Comuns: Para indústrias que fabricam PI e não PI usando insumos comuns, há a exigência de rateio e transferência de valores entre os livros fiscais distintos, com base em consumo real ou proporção das saídas, detalhado em Nota Fiscal (Inciso VIII).',
+        'C - Acompanhamento de Limites: Para projetos industriais e, em alguns casos, para importadores e centrais de distribuição, a empresa deve acompanhar o limite de produção a ser comercializada e o limite mínimo de recolhimento do ICMS. Isso envolve elaborar demonstrativos comparativos entre o limite estabelecido no decreto e a produção/arrecadação efetiva. A Portaria SF nº 239/2001, Inciso XIV, detalha este acompanhamento anual e as consequências se os limites não forem atingidos, podendo resultar em recolhimentos adicionais.',
+        'D - Estoque de PI Não Comercializados: Ao final da fruição dos incentivos, qualquer estoque de PI não comercializado passará a ser considerado produto não incentivado para o período seguinte (Inciso XXI).'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '4. Implicações da Irregularidade nos Lançamentos e Obrigações Acessórias'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'O não cumprimento das diretrizes de lançamento e das obrigações acessórias acarreta sérias consequências para o contribuinte, podendo levar à suspensão ou à perda do incentivo.'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Impedimento (Suspensão) do Incentivo (Art. 16, Lei nº 11.675/1999; Art. 21-A, Decreto nº 21.959/1999): A empresa fica impedida de utilizar os incentivos se:'
+      ]
+    },
+    {
+      tipo: 'lista', 
+      conteudo: [
+        'Não efetuar o recolhimento integral do ICMS devido nos prazos legais (com tolerância de 5 dias). O impedimento não ocorre se o valor não recolhido for muito baixo (até 5% do incentivo utilizado, limitado a R$30.000,00 a partir de 2006).',
+        'Deixar de cumprir os requisitos de habilitação.',
+        'Para as Centrais de Distribuição, não alcançar o limite mínimo de recolhimento.',
+        'Não efetuar o pagamento da taxa de administração.',
+        'Não entregar à Secretaria da Fazenda, nos prazos, documentos de informações econômico-fiscais, arquivos magnéticos, livros e demais documentos fiscais/contábeis solicitados.',
+        'Alterar as características do produto, processo produtivo ou etapas de produção sem aprovação.',
+        'Reduzir a capacidade instalada ou paralisar as atividades.',
+        'Promover a terceirização das atividades sem aprovação.',
+        'Efeito: O impedimento implica a impossibilidade de utilizar o benefício enquanto a causa persistir, mas o prazo de fruição continua contando (Art. 16, §1º, Lei).'
+      ]
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'B - Perda (Cancelamento) do Incentivo (Art. 17, Lei nº 11.675/1999; Art. 22, Decreto nº 21.959/1999): A empresa perde o direito ao incentivo de forma definitiva se:'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Não efetuar o recolhimento integral do ICMS devido por mais de 12 vezes (consecutivas ou não).',
+        'Alterar as características do produto que fundamentou a concessão sem aprovação (até 31.12.2013).',
+        'Reduzir a capacidade instalada ou paralisar as atividades (até 31.12.2013).',
+        'Não iniciar a implantação do projeto no prazo.',
+        'Praticar crime de sonegação fiscal (ou contra a ordem tributária a partir de 2014) após sentença transitada em julgado.',
+        'Permanecer com a inscrição no CACEPE cancelada/bloqueada por mais de 3 meses consecutivos.',
+        'Formalizar a renúncia ao incentivo.',
+        'Estar impedida de utilizar os incentivos (nos termos do Art. 16) por mais de 12 meses, consecutivos ou não.',
+        'Efeito: A perda resulta no cancelamento do benefício, restaurando o valor original do imposto, que deve ser corrigido com todos os acréscimos legais desde a data em que deveria ter sido recolhido (Art. 17, §1º, Lei). Os efeitos do cancelamento são retroativos à data do fato ensejador (Art. 17, §2º, Lei).'
+      ]
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'C - Regularização Espontânea: Em muitos casos, se o contribuinte regularizar a pendência (e.g., recolher o ICMS devido, entregar a declaração) antes de qualquer procedimento fiscal de ofício, a penalidade de impedimento pode ser afastada ou o benefício restabelecido (Art. 16, §2º, Lei; Art. 21-A, §2º, Decreto).'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '5. Exemplo Prático Detalhado'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Consideremos uma indústria de bebidas incentivada pelo PRODEPE na Mesorregião da Mata Pernambucana, com um crédito presumido de 90% (conforme Art. 5º, §17, I, a, 1 e 2 do Decreto). No mês de setembro de 2024, a empresa apurou um saldo devedor de ICMS de R$300.000,00 sobre seus produtos incentivados.'
+    },
+    {
+      tipo: 'subtitulo', 
+      conteudo: '1. Cálculo do Incentivo (recap da Trilha 1):'
+    },
+    {
+      tipo: 'lista', 
+      conteudo: [
+        'Crédito Presumido: R$ 300.000,00 (saldo devedor) * 90% = R$ 270.000,00.',
+        'ICMS a recolher (líquido do incentivo): R$300.000,00 - R$270.000,00 = R$30.000,00.'
+      ]
+    },
+    {
+      tipo: 'subtitulo',
+      conteudo: '2. Lançamento na Escrituração Fiscal:'
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'A empresa utiliza um conjunto de livros fiscais série B, subsérie 01, para seus produtos incentivados. No RAICMS (Registro de Apuração do ICMS) desta subsérie, o valor de R$270.000,00 é lançado no quadro "Deduções" com a descrição "Crédito presumido PRODEPE – indústria".'
+      ]
+    },
+    {
+      tipo: 'subtitulo',
+      conteudo: '3. Preenchimento da GIAF:'
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'A empresa preenche a GIAF (Anexo 1 da Portaria SF nº 239/2001), indicando o valor total de ICMS apurado, o valor do crédito presumido utilizado e o saldo de ICMS a recolher. A GIAF serve como um resumo do cálculo do incentivo.'
+      ]
+    },
+    {
+      tipo: 'subtitulo',
+      conteudo: '4. Preenchimento da GIAM e Recolhimento do DAE:'
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'A empresa gera a GIAM série B, subsérie 01, para o período de setembro/2024. O valor de R$270.000,00 é informado no campo "DEDUÇÃO PARA INVESTIMENTO". O ICMS a recolher de R$30.000,00 é apresentado.',
+        'A empresa gera o DAE com o código de receita 005-1 (ou outro pertinente, conforme Anexo 2 da Portaria), no valor de R$30.000,00, para o recolhimento do ICMS.'
+      ]
+    },
+    {
+      tipo: 'subtitulo',
+      conteudo: '5. Cálculo e Recolhimento da Taxa de Administração:'
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Com base no incentivo utilizado de R$ 270.000,00, a empresa deve calcular a taxa de administração de 2%: R$ 270.000,00 * 2% = R$ 5.400,00.',
+        'Este valor é recolhido por DAE até o último dia útil de outubro/2024.'
+      ]
+    },
+    {
+      tipo: 'subtitulo',
+      conteudo: '6. Situação de Irregularidade:'
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Suponha que, por um erro administrativo, a empresa não entregue a GIAF de setembro/2024. A falta de entrega da GIAF é uma obrigação acessória. A Secretaria da Fazenda, ao realizar um monitoramento, pode notificar a empresa. Se essa pendência não for regularizada, a empresa estará sujeita ao impedimento do benefício para o(s) período(s) em que a GIAF deveria ter sido entregue. Se essa irregularidade se prolongar por mais de 12 meses, a empresa poderia perder definitivamente o direito ao benefício, com a exigência retroativa do ICMS não recolhido (R$270.000,00 para setembro/2024), acrescido de multas e juros.'
+      ]
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Este exemplo demonstra a complexidade dos lançamentos e a criticidade do cumprimento das obrigações acessórias, ressaltando que o cálculo é apenas o primeiro passo para a efetivação do benefício.'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '6. Referências Oficiais'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'As informações desta trilha são fundamentadas nos seguintes documentos, conforme o "PRODEPE NORMAS E DECRETOS ATUAL":'
+    },
+  ]
+},
+
+  {
+    id: 'prodepe-controles-suplementares', 
+    programa: 'PRODEPE',
+    titulo: 'Trilha 3: Controles suplementares(PRODEPE)',
+    descricaoHeader: 'Entenda os controles, o monitoramento e as obrigações para a manutenção do benefício do PRODEPE.',
+    sobreTrilha: 'Esta trilha aborda os controles suplementares, o monitoramento da conformidade e as consequências do descumprimento das regras do PRODEPE.',
+    urlVideo: '', 
+    blocosDeConteudo: [
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '1. Introdução e Contextualização do Tema'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'A concessão de incentivos fiscais pelo PRODEPE não se encerra com a publicação do decreto autorizativo. Para garantir a efetividade do programa e a correta aplicação dos recursos públicos, o Estado de Pernambuco mantém um sistema de controles suplementares abrangente. Esses controles visam monitorar a conformidade da empresa beneficiária com as condições estabelecidas, assegurar a manutenção de certos patamares de desempenho econômico e fiscal, e prever as consequências em caso de descumprimento. A gestão rigorosa desses aspectos é crucial para a continuidade da fruição do incentivo e para a segurança jurídica do contribuinte. Ignorar ou falhar nesses controles pode levar à suspensão ou perda do benefício, com exigências fiscais retroativas.'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '2. Monitoramento da Conformidade e Desempenho'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'A administração do PRODEPE compreende um acompanhamento contínuo da implantação e operação do empreendimento beneficiário durante todo o período de fruição do incentivo (Decreto nº 21.959/1999, Art. 12, § 2º). Diversos órgãos do Estado compartilham responsabilidades nesse monitoramento:'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - AD-DIPER (Agência de Desenvolvimento Econômico de Pernambuco): Compete à AD-DIPER supervisionar a destinação dos recursos liberados e o desempenho das empresas beneficiárias. Isso inclui a verificação da capacidade instalada de produção, a realização do investimento previsto e o acompanhamento do impacto das atividades incentivadas no desempenho da economia estadual, com relatórios semestrais sobre a repercussão nos níveis de emprego e no fomento das cadeias produtivas (Decreto nº 21.959/1999, Art. 13, IV e V).',
+        'B - Secretaria da Fazenda: A Sefaz é responsável por estabelecer um controle cadastral específico das empresas beneficiárias do PRODEPE, com foco na regularidade fiscal. Implementa rotinas mensais de acompanhamento e apuração do recolhimento do ICMS, e informa trimestralmente o impacto dos benefícios na receita tributária estadual (Decreto nº 21.959/1999, Art. 14, II, III e IV).',
+        'C - Comunicação de Ampliação: Caso o empreendimento apoiado pelo PRODEPE seja ampliado, o contribuinte deve comunicar essa ampliação ao Comitê Diretor do PRODEPE, por intermédio da AD-DIPER, com antecedência mínima de 30 dias, mesmo que não seja objeto de um novo pleito de incentivo (Portaria SF nº 239/2001, Inciso XXII).'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '3. Manutenção do Nível Mínimo de Arrecadação (ICMS Mínimo Anual)'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'A concessão e fruição dos incentivos do PRODEPE estão condicionadas à manutenção de, no mínimo, o montante do ICMS já arrecadado pela empresa, atualizado anualmente. Esta regra aplica-se especialmente em projetos de ampliação e, no que couber, a Centrais de Distribuição e ao comércio importador atacadista (Lei nº 11.675/1999, Art. 23). A Lei Complementar nº 060/2004 detalha a sistemática de cálculo e aplicação desse montante mínimo.'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Cálculo do Montante Mínimo: Para projetos de ampliação, o valor mínimo corresponde ao ICMS nominal arrecadado nos 12 meses anteriores à publicação do primeiro decreto concessivo (Lei Complementar nº 060/2004, Art. 2º, II). A Portaria SF nº 239/2001 (Inciso XVIII) especifica os códigos de receita a serem considerados para esse cálculo, que incluem o ICMS normal, antecipação tributária de responsabilidade direta, parcela dos municípios e o ICMS incidente na importação.',
+        'B - Atualização Anual: O valor do montante mínimo do ICMS deve ser atualizado anualmente (Lei Complementar nº 060/2004, Art. 2º, III).',
+        'C - Aferição e Consequências do Não Atingimento: Caso o contribuinte não atinja o montante mínimo, a diferença entre o imposto pago e o valor mínimo anual (limitado ao total do incentivo utilizado no período) deve ser recolhida, com acréscimos legais, e o contribuinte fica impedido de usufruir o benefício enquanto a pendência não for regularizada (Lei Complementar nº 060/2004, Art. 2º, V).'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '4. Taxa de Administração'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Para fins de análise, avaliação e monitoramento dos projetos e da aplicação do incentivo, a empresa beneficiária deve recolher, a título de taxa de administração, um valor correspondente a 2% (dois por cento) do total do benefício efetivamente utilizado (Lei nº 11.675/1999, Art. 5º, § 7º; Decreto nº 21.959/1999, Art. 5º, § 9º).'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Prazo e Forma de Recolhimento: O recolhimento é mensal, por meio de Documento de Arrecadação Estadual (DAE) específico, até o último dia útil do mês subsequente ao período fiscal da efetiva utilização do benefício (Lei nº 11.675/1999, Art. 5º, § 7º).',
+        'B - Consequências do Não Pagamento: A falta de pagamento da taxa de administração no vencimento é uma das hipóteses de impedimento de utilizar os incentivos (Lei nº 11.675/1999, Art. 16, IV; Decreto nº 21.959/1999, Art. 21-A, IV).'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '5. Situações de Impedimento (Suspensão) do Incentivo'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'A empresa incentivada fica impedida de utilizar os incentivos concedidos nas seguintes hipóteses (Lei nº 11.675/1999, Art. 16; Decreto nº 21.959/1999, Art. 21-A):'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Não recolhimento do ICMS: Não efetuar o recolhimento integral do ICMS devido, a qualquer título, nos prazos legais. Há uma tolerância, sendo que o impedimento ocorre se o prazo legal for ultrapassado em 5 dias. Não se configura se o montante não recolhido for igual ou inferior a 5% do incentivo utilizado no mês (Lei nº 11.675/1999, Art. 16, I e § 3º, I e II).',
+        'B - Descumprimento de Requisitos de Habilitação: Deixar de cumprir, a qualquer tempo do período de fruição, os requisitos necessários à habilitação (Lei nº 11.675/1999, Art. 16, II).',
+        'C - Limite Mínimo de Recolhimento (Central de Distribuição): Para Central de Distribuição, não alcançar o limite mínimo de recolhimento previsto (Lei nº 11.675/1999, Art. 16, III).',
+        'D - Não Pagamento da Taxa de Administração: (Já mencionado no item 4).',
+        'E - Não Entrega de Documentos Fiscais e Arquivos Magnéticos: Não entregar à Secretaria da Fazenda, nos prazos previstos, os documentos de informações F - econômico-fiscais e os arquivos magnéticos, bem como livros e demais documentos fiscais ou contábeis quando solicitados (Lei nº 11.675/1999, Art. 16, V).',
+        'F - Opção pelo Simples Nacional: Optar pela sistemática do Simples Nacional enquanto durar a opção (Lei nº 11.675/1999, Art. 16, VI).',
+        'G - Alteração de Características do Produto/Processo: Alterar as características do produto, o processo produtivo ou as etapas de produção descritas no projeto econômico aprovado, sem prévia e expressa aprovação (Lei nº 11.675/1999, Art. 16, VII).',
+        'H - Redução de Capacidade Instalada/Paralisação: Reduzir a capacidade instalada (em projetos de ampliação) ou paralisar as atividades do empreendimento beneficiado (Lei nº 11.675/1999, Art. 16, VIII).',
+        'I - Terceirização de Atividades: Promover a terceirização de suas atividades sem prévia e expressa aprovação (Lei nº 11.675/1999, Art. 16, IX).',
+        'J - Efeito do Impedimento: O impedimento acarreta a impossibilidade de utilizar o benefício durante o período em que as causas persistirem, sem prejuízo da contagem do prazo de fruição do incentivo (Lei nº 11.675/1999, Art. 16, § 1º). No entanto, em algumas hipóteses, a regularização espontânea da situação pode afastar ou convalidar o impedimento.'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '6. Situações de Perda (Cancelamento) do Incentivo'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'A empresa perderá o direito ao incentivo concedido, resultando no seu cancelamento retroativo à data do fato que ensejou a perda, com a exigência do valor original do imposto corrigido e com acréscimos legais (Lei nº 11.675/1999, Art. 17 e § 1º; Decreto nº 21.959/1999, Art. 22 e § 1º). As hipóteses de perda incluem:'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Reincidência no Não Recolhimento do ICMS: Não efetuar o recolhimento integral do ICMS devido por mais de 12 vezes (consecutivas ou não), ou por mais de 12 operações no caso de importador atacadista (Lei nº 11.675/1999, Art. 17, I).',
+        'B - Alteração de Características do Produto (até 2013): Alterar as características do produto que fundamentou a concessão, sem aprovação (Lei nº 11.675/1999, Art. 17, II - redação com efeitos até 2013).',
+        'C - Redução de Capacidade/Paralisação (até 2013): Reduzir a capacidade instalada (em ampliação) ou paralisar as atividades (Lei nº 11.675/1999, Art. 17, III - redação com efeitos até 2013).',
+        'D - Não Início da Implantação do Projeto: Não iniciar a implantação do projeto no prazo máximo de 12 meses, contados da publicação do decreto concessivo (Lei nº 11.675/1999, Art. 17, IV).',
+        'E - Crime de Sonegação Fiscal: Praticar crime de sonegação fiscal (ou contra a ordem tributária a partir de 2014), após sentença transitada em julgado (Lei nº 11.675/1999, Art. 17, V).',
+        'F - Terceirização de Atividades (até 2013): Promover a terceirização de suas atividades sem aprovação (Lei nº 11.675/1999, Art. 17, VI - redação com efeitos até 2013).',
+        'G - Infração de Desvio de Destino: Praticar infração que se caracterize como desvio de destino de mercadorias (Lei nº 11.675/1999, Art. 17, VII - redação com efeitos até 2013).',
+        'H - Período Prolongado de Impedimento: Estar impedida de utilizar os incentivos (conforme Art. 16) por mais de 12 meses, consecutivos ou não (Lei nº 11.675/1999, Art. 17, VIII).',
+        'I - Não Realização Total dos Investimentos: Não realizar a totalidade dos investimentos previstos no prazo de até 36 meses, salvo autorização para exceder o limite temporal (Lei nº 11.675/1999, Art. 17, IX).',
+        'J - Inscrição CACEPE Cancelada/Bloqueada: Permanecer com a inscrição no CACEPE cancelada ou bloqueada por período superior a 3 meses consecutivos (Lei nº 11.675/1999, Art. 17, X).',
+        'L - Renúncia Formal: Formalizar à Secretaria da Fazenda a renúncia ao incentivo (Lei nº 11.675/1999, Art. 17, XI).',
+        'M - Efeito da Perda: O cancelamento do benefício retroage à data em que ocorreu o fato que ensejou a medida (Lei nº 11.675/1999, Art. 17, § 2º), implicando na cobrança do ICMS que deixou de ser recolhido, com os acréscimos legais cabíveis.'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '7. Exemplo Prático Detalhado'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Considere uma indústria eletroeletrônica incentivada pelo PRODEPE, que opera sob o regime de crédito presumido, e que teve seu decreto concessivo publicado em 2015. Em janeiro de 2024, a empresa utilizou R$100.000,00 de crédito presumido.'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: '1. Monitoramento da Regularidade Fiscal: A empresa possui um sistema interno que verifica mensalmente a emissão de suas Certidões Negativas de Débitos (CNDs). Em fevereiro de 2024, ao tentar emitir uma CND para um processo licitatório, é identificada uma pendência de recolhimento de um DAE de taxa judiciária de 2023, no valor de R$500,00, que estava em atraso.'
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Impacto no Incentivo: Se o ICMS normal de janeiro/2024 venceu em fevereiro/2024, e a empresa não estava regular naquele dia, ela estaria impedida de utilizar os R$100.000,00 de crédito presumido de janeiro. O valor do ICMS referente a janeiro deveria ser recolhido sem o benefício.',
+        'Solução: A empresa efetua o pagamento da taxa judiciária em atraso imediatamente. Após a regularização, ela pode solicitar a restituição do imposto pago a maior (caso já o tenha recolhido sem o benefício) ou reaver o direito de usar o benefício para o período, dependendo das regras específicas para convalidação. Se a pendência não fosse regularizada, o impedimento persistiria, e o benefício de R$100.000,00 para janeiro poderia ser glosado.'
+      ]
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: '2. Manutenção do Nível Mínimo de Arrecadação: Em dezembro de 2024, a empresa totaliza seus recolhimentos de ICMS. Seu montante mínimo anual de arrecadação (definido na Lei Complementar nº 060/2004 e atualizado) é de R$1.200.000,00. Ao final do ano, ela verifica que recolheu, somando todos os códigos de receita aplicáveis, R$1.150.000,00.'
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Cálculo da Diferença: R$1.200.000,00 (mínimo) - R$1.150.000,00 (recolhido) = R$50.000,00.',
+        'Impacto no Incentivo: A empresa deve recolher os R$50.000,00 de diferença, com acréscimos legais, conforme estabelecido pela Lei Complementar nº 060/2004, para não ter o benefício impedido ou questionado.'
+      ]
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: '3. Não Entrega de Arquivos Magnéticos: Durante 2024, o setor fiscal da empresa não entregou o arquivo magnético de informações econômico-fiscais referente ao período de abril.'
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Impacto no Incentivo: A não entrega de arquivos magnéticos é uma hipótese de impedimento do benefício (Lei nº 11.675/1999, Art. 16, V). Se essa falha não for corrigida, e se estender por mais de 12 meses (ou seja, até abril de 2025 sem a regularização do arquivo de abril/2024), a empresa corre o risco de perder definitivamente o incentivo (Lei nº 11.675/1999, Art. 17, VIII). A perda implicaria na cobrança retroativa de todo o benefício utilizado desde abril/2024, com multas e juros.'
+      ]
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Este exemplo demonstra a importância dos controles suplementares para a manutenção da conformidade e a garantia da fruição do incentivo.'
+    }, 
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '8. Referências Oficiais'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'As informações desta trilha são fundamentadas nos seguintes documentos, conforme o "PRODEPE NORMAS E DECRETOS ATUAL":'
+    },
+  ]
+},
+
+  {
+    id: 'prodepe-concessao-incentivo', 
+    programa: 'PRODEPE',
+    titulo: 'Trilha 4: Concessão do Incentivo (PRODEPE)',
+    descricaoHeader: 'Guia do processo formal de obtenção dos incentivos fiscais e financeiros do PRODEPE.',
+    sobreTrilha: 'Esta trilha abrange desde a definição dos tipos de incentivo e público-alvo até as etapas de solicitação e análise.',
+    urlVideo: '', 
+    blocosDeConteudo: [
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '1. Introdução e Contextualização do Tema'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Esta trilha tem como propósito guiar o usuário através do processo formal de obtenção dos incentivos fiscais e financeiros oferecidos pelo Programa de Desenvolvimento do Estado de Pernambuco (PRODEPE). O alcance desta trilha abrange desde a definição dos tipos de incentivo e público-alvo até as etapas de solicitação, análise, concessão formal e os mecanismos de monitoramento e avaliação que permeiam a vida útil do benefício. A implementação desta trilha se relaciona diretamente com as demais trilhas do PRODEPE: ela é a porta de entrada para que os conceitos de cálculo (Trilha 1), lançamentos (Trilha 2) e controles suplementares (Trilha 3) possam ser aplicados na prática, garantindo que o contribuinte compreenda o caminho para se tornar um beneficiário do programa.'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: 'PASSO 1: DEFINIR O OBJETO DO INCENTIVO'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '1.1. Especifique o tipo de incentivo (crédito, dedução, isenção, etc.)'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'O PRODEPE oferece principalmente incentivos na modalidade de crédito presumido do Imposto sobre Operações Relativas à Circulação de Mercadorias e sobre Prestações de Serviços de Transporte Interestadual e Intermunicipal e de Comunicação (ICMS), que atua como redutor do imposto normal devido. Para atividades específicas, como o comércio importador atacadista, há também a previsão de diferimento do ICMS (adiamento do recolhimento) e, em menor grau, o financiamento com recursos do Fundo-PRODEPE para investimentos e capital de giro, embora o foco atual seja no crédito presumido (Lei nº 11.675/1999, Art. 1º, 5º, 6º, 8º, 10º; Decreto nº 21.959/1999, Art. 1º, 5º, 6º, 8º, 10º; Portaria SF nº 239/2001, Inciso III).'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '1.2. Defina o público-alvo do incentivo'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'O público-alvo do PRODEPE são empresas que buscam investir no Estado de Pernambuco, enquadradas nas seguintes categorias, desde que possuam sede ou filial no território pernambucano e estejam inscritas no Cadastro de Contribuintes do Estado de Pernambuco (CACEPE):'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Empresas Industriais: Atuantes em diversos setores, com destaque para agrupamentos considerados prioritários ao desenvolvimento.',
+        'B - Empresas Comerciais Importadoras Atacadistas de Mercadorias do Exterior: Empresas que realizam importações visando a comercialização no mercado atacadista.',
+        'C - Centrais de Distribuição: Estabelecimentos que promovem operações de saída de mercadorias em grande volume, com função de distribuição (Lei nº 11.675/1999, Art. 1º, 13º; Decreto nº 21.959/1999, Art. 1º, 17º).'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '1.3. Estabeleça os critérios de elegibilidade'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'A elegibilidade para o PRODEPE é diferenciada por diversos aspectos, como a natureza da atividade, a especificação dos produtos fabricados ou comercializados, a localização geográfica do empreendimento e a relevância das atividades econômicas para o desenvolvimento do Estado (Lei nº 11.675/1999, Art. 1º, §1º; Decreto nº 21.959/1999, Art. 1º, §1º).'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Critérios Específicos por Tipo de Atividade:'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Empresas Industriais: Enquadramento em agrupamentos industriais prioritários (ex: agroindústria, metalmecânica, eletroeletrônica, farmoquímica, bebidas, minerais não-metálicos, têxtil) com produtos relacionados em decreto do Poder Executivo, ou em outras atividades industriais relevantes (Lei nº 11.675/1999, Art. 4º, 5º, 6º; Decreto nº 21.959/1999, Art. 4º, 5º, 6º).',
+        'Comércio Importador Atacadista: Requer comprovação de não-concorrência com produtos fabricados por empresa industrial do Estado e que não haja redução do ICMS pertencente ao Estado de Pernambuco em decorrência das importações (Lei nº 11.675/1999, Art. 13º, II; Decreto nº 21.959/1999, Art. 17º, II).',
+        'Centrais de Distribuição: Requer a comprovação de média mensal mínima de faturamento no semestre anterior à habilitação, e também não-concorrência com produtos fabricados por indústria local (Lei nº 11.675/1999, Art. 11º, 13º, III; Decreto nº 21.959/1999, Art. 11º, 17º, III).'
+      ]
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'B - Critérios por Projeto (Industrial):'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Ampliação: Exigência de aumento mínimo de 20% da capacidade instalada (Lei nº 11.675/1999, Art. 14º, I; Decreto nº 21.959/1999, Art. 18º, I).',
+        'Revitalização: Empreendimento paralisado por no mínimo 12 meses ininterruptos, ou declínio de pelo menos 60% no índice de utilização da capacidade instalada (Lei nº 11.675/1999, Art. 14º, II; Decreto nº 21.959/1999, Art. 18º, II).',
+        'Os projetos não podem provocar redução do ICMS devido e arrecadado pela empresa em decorrência da diversificação na linha de fabricação de mercadorias não incentivadas (Lei nº 11.675/1999, Art. 14º, III; Decreto nº 21.959/1999, Art. 18º, III).'
+      ]
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'C - Condições Cumulativas Gerais:'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Estar em situação regular perante a Fazenda Estadual em todas as obrigações tributárias (principal e acessórias).',
+        'Não estar usufruindo de incentivo financeiro ou fiscal similar (com regras específicas para cumulação a partir de 2014).',
+        'Não ter sócio que participe ou tenha participado de empresa em situação irregular perante a Fazenda Estadual (Lei nº 11.675/1999, Art. 15º; Decreto nº 21.959/1999, Art. 19º).'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: 'PASSO 2: ELABORAR O ROTEIRO DE CONCESSÃO'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '2.1. Identifique as etapas necessárias para solicitar o incentivo'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'O processo de solicitação e concessão do incentivo pelo PRODEPE segue um roteiro administrativo bem definido:'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Solicitação Formal: O contribuinte interessado formaliza um requerimento ao Comitê Diretor do PRODEPE, protocolizando-o junto à Agência de Desenvolvimento Econômico de Pernambuco (AD-DIPER) (Decreto nº 21.959/1999, Art. 13º, II, 20º).',
+        'B - Análise Técnica: A AD-DIPER, juntamente com a Secretaria da Fazenda, emite um parecer técnico conclusivo sobre a viabilidade do projeto, a situação fiscal da empresa e o impacto nos níveis de arrecadação estadual (Decreto nº 21.959/1999, Art. 13º, III, 14º, I).',
+        'C - Apreciação do Comitê Diretor: O parecer técnico é submetido ao Comitê Diretor do PRODEPE para apreciação (Decreto nº 21.959/1999, Art. 12º, I).',
+        'D - Decisão Final do CONDIC: O Comitê Diretor encaminha o pleito ao Conselho de Desenvolvimento Industrial, Comercial e de Serviços (CONDIC), que proferirá a decisão final sobre a concessão (Lei nº 11.675/1999, Art. 12º, II; Decreto nº 21.959/1999, Art. 12º, II).',
+        'E - Autorização por Decreto: A concessão do incentivo é autorizada por decreto do Poder Executivo (Lei nº 11.675/1999, Art. 1º, §2º; Decreto nº 21.959/1999, Art. 1º, §2º).'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '2.2. Descreva os documentos exigidos em cada etapa'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'A formalização do pedido junto à AD-DIPER deve ser instruída com a seguinte documentação essencial (Decreto nº 21.959/1999, Art. 20º):'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Requerimento: Em 03 (três) vias, direcionado ao Comitê Diretor do PRODEPE.',
+        'B - Atos Constitutivos: Comprobatórios da existência jurídica da empresa.',
+        'C - Projeto Técnico: Contendo dados econômicos e financeiros sobre o empreendimento, além de outras informações julgadas necessárias.',
+        'D - Certidão de Regularidade Fiscal: Da empresa em relação a débitos com a Fazenda Estadual.',
+        'E - Certidão de Regularidade Ambiental: Fornecida pela Companhia Pernambucana do Meio Ambiente (CPRH).',
+        'F - Declaração Formal: De que a empresa não usufrui de incentivo financeiro ou fiscal similar.',
+        'G - Outros Documentos: Que o Comitê Diretor possa considerar necessários.',
+        'H - Edital (para Importadores e Centrais de Distribuição): A empresa pleiteante deve publicar, no Diário Oficial do Estado e em jornal de grande circulação, edital específico discriminando os produtos objeto do pleito, a fim de viabilizar manifestação de fabricantes locais quanto à possível concorrência (Lei nº 11.675/1999, Art. 13º, §1º; Decreto nº 21.959/1999, Art. 17º, §1º).'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '2.3. Estabelece os prazos para cada etapa'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Parecer Técnico (AD-DIPER/SEFAZ): O parecer técnico conclusivo deve ser emitido no prazo de 30 dias, prorrogável por igual período (Decreto nº 21.959/1999, Art. 13º, III).',
+        'B - Início de Fruição do Benefício: A utilização do benefício ocorre a partir do mês subsequente ao da publicação do respectivo decreto concessivo (Lei nº 11.675/1999, Art. 5º, III, 7º, III, 9º, IV, 10º, III; Decreto nº 21.959/1999, Art. 5º, III, 7º, III, 9º, IV, 10º, III).',
+        'C - Prazo de Fruição: O PRODEPE concede prazos de fruição que variam de até 7 a 15 anos, dependendo da categoria da empresa e da relevância do projeto, com possibilidade de prorrogação ou renovação por igual período (Lei nº 11.675/1999, Art. 5º, III, 7º, III, 9º, IV, 10º, III).'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: 'PASSO 3: DEFINIR OS REQUISITOS'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '3.1. Liste os requisitos necessários para a concessão do incentivo'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Os requisitos para a concessão são os critérios de elegibilidade detalhados no item 1.3 desta trilha, abrangendo desde a regularidade fiscal e a natureza da atividade até o capital social mínimo e a ausência de sócios com histórico de irregularidades fiscais (Lei nº 11.675/1999, Art. 13º, 14º, 15º; Decreto nº 21.959/1999, Art. 17º, 18º, 19º).'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '3.2. Especifique as condições para a manutenção do incentivo'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'A manutenção do incentivo é condicionada ao cumprimento contínuo de diversas obrigações e metas por parte do beneficiário. As principais incluem:'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Regularidade Fiscal: Manter-se em situação regular perante a Fazenda Estadual, tanto em relação aos débitos tributários quanto às obrigações acessórias (Lei nº 11.675/1999, Art. 16º, I, II, V; Decreto nº 21.959/1999, Art. 21-A, I, II, V).',
+        'B - Manutenção do ICMS Mínimo: Para projetos de ampliação, e em outras hipóteses, manter o montante do ICMS já arrecadado pela empresa, atualizado, como base mínima de recolhimento (Lei nº 11.675/1999, Art. 23º; Lei Complementar nº 060/2004, Art. 1º, 2º).',
+        'C - Pagamento da Taxa de Administração: Recolher mensalmente a taxa de 2% sobre o benefício utilizado (Lei nº 11.675/1999, Art. 5º, §7º; Decreto nº 21.959/1999, Art. 5º, §9º).',
+        'D - Conformidade com o Projeto: Não alterar as características do produto ou o processo produtivo e as etapas de produção descritas no projeto aprovado sem prévia autorização. Não reduzir a capacidade instalada ou paralisar as atividades (Lei nº 11.675/1999, Art. 16º, VII, VIII; Decreto nº 21.959/1999, Art. 21-A, VII, VIII).',
+        'E - Não Terceirização Irregular: Não promover a terceirização das atividades sem aprovação prévia (Lei nº 11.675/1999, Art. 16º, IX; Decreto nº 21.959/1999, Art. 21-A, IX).',
+        'F - Cumprimento de Investimentos: Realizar a totalidade dos investimentos previstos no projeto (Lei nº 11.675/1999, Art. 17º, IX).'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '3.3. Estabeleça as penalidades por não cumprimento'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'O não cumprimento das condições de manutenção pode levar a duas principais consequências:'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Impedimento (Suspensão): O incentivo é temporariamente bloqueado, impedindo sua utilização enquanto a irregularidade persistir. O prazo de fruição do incentivo continua a contar (Lei nº 11.675/1999, Art. 16º; Decreto nº 21.959/1999, Art. 21-A).',
+        'B - Perda (Cancelamento): O direito ao incentivo é cancelado permanentemente, com efeitos retroativos à data da ocorrência do fato que gerou a perda. Isso implica na exigência do ICMS que deixou de ser recolhido devido ao benefício, com a aplicação de multas, juros e atualização monetária (Lei nº 11.675/1999, Art. 17º; Decreto nº 21.959/1999, Art. 22º).'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: 'PASSO 4: IMPLEMENTAR O PROCESSO DE CONCESSÃO'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '4.1. Descreva como o processo de concessão será iniciado'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'O processo é iniciado pela própria empresa interessada, mediante a protocolização do requerimento formal junto à AD-DIPER. Este requerimento deve estar acompanhado de toda a documentação comprobatória e do projeto técnico, conforme detalhado no item 2.2 desta trilha (Decreto nº 21.959/1999, Art. 13º, II, 20º).'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '4.2. Explique como as informações serão coletadas e verificadas'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'A coleta e verificação das informações envolvem uma atuação conjunta da AD-DIPER e da Secretaria da Fazenda:'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - A AD-DIPER protocoliza o pedido e remete cópias para a Sefaz e PERPART (Decreto nº 21.959/1999, Art. 13º, II).',
+        'B - A AD-DIPER e a Sefaz emitem conjuntamente o parecer técnico conclusivo, que analisa a viabilidade do projeto, a situação fiscal da empresa e o impacto na arrecadação. A Sefaz estabelece controle cadastral e rotinas de acompanhamento fiscal (Decreto nº 21.959/1999, Art. 13º, III, 14º, I, II, III).',
+        'C - A Secretaria de Ciência, Tecnologia e Meio Ambiente (SECTMA) pode elaborar parecer técnico sobre a similaridade de mercadorias, para subsidiar a análise, especialmente para importadores e centrais de distribuição (Decreto nº 21.959/1999, Art. 16º, II, 17º, §1º).'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '4.3. Detalhe como as decisões serão tomadas e comunicadas'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'As decisões são tomadas de forma colegiada e comunicadas formalmente:'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - O parecer técnico é submetido ao Comitê Diretor para apreciação, que pode solicitar a participação de outras Secretarias ou entidades (Decreto nº 21.959/1999, Art. 12º, I, §1º).',
+        'B - O Comitê Diretor encaminha o pleito ao CONDIC, que proferirá a decisão final sobre a concessão (Lei nº 11.65/1999, Art. 12º, II; Decreto nº 21.959/1999, Art. 12º, II).',
+        'C - A autorização é formalizada por meio de decreto do Poder Executivo, que é publicado no Diário Oficial do Estado (Lei nº 11.675/1999, Art. 1º, §2º; Decreto nº 21.959/1999, Art. 1º, §2º). A comunicação oficial da concessão se dá por essa publicação.'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: 'PASSO 5: MONITORAR E AVALIAR O INCENTIVO'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '5.1. Estabeleça métricas para avaliar a eficácia do incentivo'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'A eficácia do incentivo é avaliada por métricas que refletem os objetivos do programa:'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Manutenção do Nível de Arrecadação de ICMS: O programa visa garantir um montante mínimo de arrecadação mesmo com o benefício (Lei nº 11.675/1999, Art. 23º; Lei Complementar nº 060/2004).',
+        'B - Impacto na Receita Tributária: Monitorado pela Sefaz por meio de relatórios trimestrais sobre os benefícios concedidos (Decreto nº 21.959/1999, Art. 14º, IV).',
+        'C - Geração de Empregos: Avaliado semestralmente pela AD-DIPER (Decreto nº 21.959/1999, Art. 13º, V).',
+        'D - Fomento às Cadeias Produtivas: Acompanhado pela AD-DIPER (Decreto nº 21.959/1999, Art. 13º, V).',
+        'E - Realização de Investimentos: Acompanhado pela AD-DIPER, incluindo a verificação da capacidade instalada (Decreto nº 21.959/1999, Art. 13º, IV).',
+        'F - Conformidade Fiscal: A regularidade fiscal contínua da empresa é um indicador de sucesso do programa (Decreto nº 21.959/1999, Art. 14º, II).'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '5.2. Defina como os resultados serão medidos e reportados'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Os resultados são medidos por meio dos sistemas de acompanhamento dos órgãos envolvidos e reportados periodicamente:'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Relatórios Semestrais: A AD-DIPER acompanha o impacto das atividades incentivadas no desempenho da economia estadual, incluindo emprego e fomento de cadeias produtivas (Decreto nº 21.959/1999, Art. 13º, V).',
+        'B - Relatórios Trimestrais: A Secretaria da Fazenda informa o impacto dos benefícios concedidos na composição da receita tributária estadual (Decreto nº 21.959/1999, Art. 14º, IV).',
+        'C - Aferição Anual do ICMS Mínimo: A empresa é responsável por aferir anualmente o cumprimento da exigência do montante mínimo de ICMS, com regras claras para recolhimento de diferenças (Lei Complementar nº 060/2004, Art. 2º, V).',
+        'D - Monitoramento Contínuo: Os controles cadastrais e de apuração do ICMS permitem um monitoramento constante da situação do contribuinte (Decreto nº 21.959/1999, Art. 14º, II e III).'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '5.3. Identifique as ações corretivas para problemas identificados'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Diante de problemas ou não conformidades, o PRODEPE prevê ações corretivas que visam o restabelecimento da conformidade ou a penalização:'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Suspensão (Impedimento): Em caso de irregularidades sanáveis, o benefício é suspenso temporariamente, e o contribuinte é impedido de utilizá-lo até a regularização. A Lei incentiva a autorregularização (Lei nº 11.675/1999, Art. 16º; Decreto nº 21.959/1999, Art. 21-A).',
+        'B - Perda (Cancelamento): Em casos mais graves ou de reincidência, o benefício é cancelado definitivamente, com exigência retroativa do imposto não pago e aplicação de acréscimos legais (Lei nº 11.675/1999, Art. 17º; Decreto nº 21.959/1999, Art. 22º).',
+        'C - Prorrogação/Renovação: Em situações específicas, e a critério do Poder Executivo, pode haver prorrogação ou renovação do prazo de fruição, mas estas estão sujeitas a condições e podem resultar em redução do incentivo (Lei nº 11.675/1999, Art. 5º, III, §15, §16; Decreto nº 21.959/1999, Art. 5º, III, §14, §15).',
+        'D - Ajustes de Política: O Comitê Diretor pode decidir pela redução do incentivo em relação ao benefício original em face de mudanças na política econômica e fiscal do Estado (Lei nº 11.675/1999, Art. 5º, §16, III).'
+      ]
+    }
+  ]
+},
+
+{
+  id: 'prodeauto-calculo-incentivo', 
+  programa: 'PRODEAUTO',
+  titulo: 'Trilha 1: Cálculo do Incentivo (PRODEAUTO)',
+  descricaoHeader: 'Detalha os aspectos essenciais para a apuração dos valores incentivados pelo PRODEAUTO.',
+  sobreTrilha: 'Esta trilha aborda os critérios e parâmetros para o cálculo dos incentivos do PRODEAUTO, com base nas normas vigentes.',
+  urlVideo: '',
+  blocosDeConteudo: [
+    {
+      tipo: 'paragrafo',
+      conteudo: 'O Programa de Desenvolvimento do Setor Automotivo do Estado de Pernambuco, conhecido como PRODEAUTO, representa um esforço estratégico do Estado para atrair e fomentar investimentos na importante cadeia produtiva do setor automotivo. Este programa oferece uma série de incentivos fiscais, principalmente na área do ICMS, buscando estimular a instalação, a expansão e a competitividade das empresas que o integram. A correta compreensão dos critérios e parâmetros para o cálculo desses incentivos é fundamental para que os contribuintes possam usufruir plenamente dos benefícios concedidos, garantindo a conformidade com a legislação e a otimização de suas operações. Esta trilha detalha os aspectos essenciais para a apuração dos valores incentivados pelo PRODEAUTO, com base nas normas vigentes.'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '1. Fundamentação Legal do PRODEAUTO'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'O PRODEAUTO foi instituído pela Lei nº 13.484, de 29 de junho de 2008, que estabelece a finalidade do programa e os seus beneficiários. Esta Lei, ao longo do tempo, sofreu diversas alterações para se adaptar às dinâmicas do setor e às necessidades do Estado, sendo algumas delas por meio das Leis nº 15.166/2013, 15.183/2013, 15.505/2015 e 17.118/2020. A regulamentação da Lei é dada pelo Decreto nº 44.650, de 30 de junho de 2017, especificamente em seu Anexo 36, que detalha as disposições iniciais, credenciamento, prazos e obrigações acessórias. É importante notar que o Decreto nº 53.565, de 9 de setembro de 2022, também modificou o Decreto nº 44.650, de 2017, incorporando normas relativas ao PRODEAUTO, o que reforça a necessidade de consultar a legislação consolidada e atualizada.'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '2. Beneficiários e Tipos de Incentivo'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'O PRODEAUTO direciona seus incentivos a um conjunto específico de agentes do setor automotivo, com o objetivo de fomentar toda a cadeia produtiva no Estado de Pernambuco. A Lei nº 13.484/2008, em seu Art. 1º, define os contribuintes que podem ser beneficiados, e o Art. 2º elenca os incentivos fiscais aplicáveis a cada categoria.'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Estabelecimentos Industriais e Comerciais Atacadistas de Veículos Nacionais ou Importados (Art. 1º, I e IV):'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Crédito Presumido: Equivalente a 95% do saldo devedor do ICMS, apurado em cada período fiscal, aplicável às operações com veículos importados e mercadorias produzidas por esses estabelecimentos em Pernambuco.',
+        'Diferimento do Recolhimento do ICMS na Importação de Insumos: Até 30 de abril de 2015, para insumos (exceto energia elétrica) relacionados em decreto do Poder Executivo e destinados à fabricação de veículos. A partir de 1º de maio de 2015, o diferimento sobre a importação de produtos intermediários, embalagens, partes, peças, acessórios, componentes, matérias-primas e quaisquer outros insumos (exceto baterias automotivas e energia elétrica) pode ser de 100% (se não houver similar produzido no Estado) ou variar de 42,86% a 84% (se houver similar produzido no Estado, conforme alíquota interna).',
+        'Diferimento do Recolhimento do Saldo Devedor do ICMS: Para o último dia útil do centésimo mês subsequente ao do período de apuração, aplicável a mercadorias fabricadas pelos estabelecimentos em Pernambuco (a partir de 01.01.2014, alternativamente ao crédito presumido) e a veículos nacionais não fabricados pelos mencionados estabelecimentos no Estado (a partir de 01.05.2015).'
+      ]
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'B - Empresas Sistemistas do Setor Automotivo (Art. 1º, II):'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Diferimento do ICMS: Aplicável às saídas de componentes destinados ao estabelecimento industrial de veículos (até 31.12.2014). A partir de 1º de janeiro de 2015, o diferimento incide sobre as saídas de produtos intermediários, embalagens, partes, peças, acessórios, componentes, matérias-primas e quaisquer outros insumos destinados a estabelecimento industrial de veículos. A partir de 1º de maio de 2015, o diferimento é aplicado na aquisição interna, na importação e na saída interna de insumos (exceto energia elétrica) para estabelecimentos industriais de veículos, com percentuais variando de 42,86% a 84% (conforme alíquota interna).',
+        'Aproveitamento do Saldo Credor: Possibilidade de compensação com o saldo devedor de outro estabelecimento do mesmo titular em Pernambuco, ou transferência para o estabelecimento industrial de veículos.'
+      ]
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'C - Empresas que Produzam Bens Destinados a Integrar o Ativo Fixo do Estabelecimento Industrial de Veículos (Art. 1º, III):'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Diferimento do Recolhimento do ICMS: Na aquisição interna e na importação de componentes e outros insumos (exceto energia elétrica) para utilização no processo produtivo de bens destinados a compor o ativo fixo do estabelecimento industrial de veículos.',
+        'Aproveitamento do Saldo Credor: Possibilidade de aproveitamento do saldo credor porventura resultante da apuração do ICMS normal de responsabilidade direta, nos termos do benefício das sistemistas.'
+      ]
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'D - Trading Company (Art. 1º, V): Relativamente à importação de veículos realizada por conta e ordem ou encomenda do estabelecimento atacadista, a partir de 1º de maio de 2015.'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Diferimento do Recolhimento do ICMS: Incidente na respectiva importação.',
+        'Crédito Presumido: Equivalente a 80% do saldo devedor do ICMS, apurado em cada período fiscal, com condições específicas de recolhimento anual mínimo.',
+        'Diferimento do Recolhimento do ICMS Incidente na Saída: Em substituição ao crédito presumido.'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '3. Metodologia de Cálculo dos Incentivos'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'A metodologia de cálculo varia conforme o tipo de incentivo e o beneficiário, mas o foco está sempre na redução da carga do ICMS.'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Crédito Presumido:'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Fórmula Base: Valor do Incentivo = Saldo Devedor do ICMS (apurado no período fiscal) * Percentual de Crédito Presumido',
+        'Para industriais e comerciais atacadistas de veículos: 95%.',
+        'Para trading companies: 80%, mas com uma condição importante de recolhimento anual mínimo. O benefício não deve resultar em recolhimento anual do ICMS inferior a 2% sobre o somatório das bases de cálculo do ICMS das saídas de veículos novos (nacionais e importados) promovidas pelo atacadista contratante da importação (Lei nº 13.484/2008, Art. 2º, § 7º).'
+      ]
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'B - Diferimento (Parcial ou Total):'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'O diferimento, em vez de ser um crédito a ser deduzido, significa que o ICMS incidente na operação é transferido para uma etapa posterior da cadeia, ou que parte dele não é recolhida na origem.',
+        'Para diferimentos parciais na importação de insumos (industrial, sistemista) que têm similar em PE, os percentuais (42,86% a 84%) são aplicados sobre o valor do imposto devido na operação. Isso implica que apenas uma parte do imposto é diferida/reduzida, e a outra parte (complementar ao percentimento de diferimento) é recolhida no momento da importação.',
+        'Fórmula para Diferimento Parcial: Valor do Imposto a Recolher na Origem = Valor Total do Imposto Devido - (Valor Total do Imposto Devido * Percentual de Diferimento) ou Valor do Imposto a Recolher na Origem = Valor Total do Imposto Devido * (1 - Percentual de Diferimento).',
+        'O imposto diferido, em geral, será considerado incluído no imposto relativo à saída subsequente tributada, ou dispensado caso a saída subsequente não seja tributada, ou deverá ser recolhido se houver destinação diversa da mercadoria.'
+      ]
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'C - Transferência de Saldo Credor (Sistemistas e Produtores de Ativo Fixo):'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Permite o aproveitamento do saldo credor de ICMS (resultado de entradas maiores que saídas tributadas ou não, ou de ICMS sobre ativo fixo) através de compensação com débitos de outros estabelecimentos da mesma empresa no Estado ou transferência para o estabelecimento industrial de veículos. Não é um cálculo sobre um saldo devedor, mas sim uma forma de dar vazão a um saldo positivo.'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '4. Exemplos Práticos de Cálculo'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Para ilustrar a aplicação das regras de cálculo do PRODEAUTO, consideraremos alguns cenários.'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Exemplo 1: Indústria de Veículos (Crédito Presumido)'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Uma indústria de veículos em Pernambuco apurou, em determinado período fiscal, um saldo devedor de ICMS de R$ 10.000.000,00 referente às operações com veículos produzidos no Estado.',
+        'Cálculo do Crédito Presumido: R$ 10.000.000,00 * 95% = R$ 9.500.000,00.',
+        'ICMS a Recolher: R$ 10.000.000,00 (saldo devedor) - R$ 9.500.000,00 (crédito presumido) = R$ 500.000,00.',
+        'Neste caso, o incentivo resultou em uma redução de 95% do imposto a recolher sobre as operações incentivadas.'
+      ]
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'B - Exemplo 2: Empresa Sistemista (Diferimento de Insumos com Similar Nacional)'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Uma empresa sistemista (beneficiária do PRODEAUTO a partir de 01.05.2015) importa um insumo essencial para a indústria automotiva. O ICMS devido na importação deste insumo é de R$100.000,00, e este possui similar produzido em Pernambuco, estando sujeito à alíquota interna de 17%.',
+        'Percentual de Diferimento: Para alíquota interna de 17%, o diferimento é de 76,47% (Lei nº 13.484/2008, Art. 2º, III, d, 3).',
+        'Valor do Diferimento: R$ 100.000,00 * 76,47% = R$ 76.470,00.',
+        'Imposto a Recolher na Importação: R$ 100.000,00 - R$ 76.470,00 = R$ 23.530,00.',
+        'O remanescente de R$ 23.530,00 seria recolhido no momento da importação. O diferimento de R$ 76.470,00 seria realizado conforme as regras de pagamento do imposto diferido, geralmente na saída subsequente.'
+      ]
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'C - Exemplo 3: Trading Company (Crédito Presumido com Condição de Mínimo Anual)'
+      ]
+    },
+    {
+      tipo: 'lista-bullet',
+      conteudo: [
+        'Uma trading company, a partir de 01.05.2015, apurou um saldo devedor de ICMS de R$ 5.000.000,00 em um período fiscal, referente à importação e comercialização de veículos para um atacadista beneficiário.',
+        'Crédito Presumido Calculado: R$ 5.000.000,00 * 80% = R$ 4.000.000,00.',
+        'ICMS a Recolher (antes da verificação anual): R$ 5.000.000,00 - R$ 4.000.000,00 = R$ 1.000.000,00.'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        {
+          texto: 'Verificação da Condição de Recolhimento Anual Mínimo: No final do exercício, o somatório das bases de cálculo do ICMS das saídas de veículos novos (nacionais e importados) promovidas pelo atacadista contratante foi de R$ 200.000.000,00.',
+          subItens: [
+            'Recolhimento Mínimo Exigido: R$ 200.000.000,00 * 2% = R$ 4.000.000,00.',
+            'Se o total do ICMS recolhido pela trading company (somando todos os períodos fiscais do ano) for inferior a R$ 4.000.000,00, a trading terá que reduzir o crédito presumido nos períodos fiscais de janeiro a março do ano subsequente e/ou recolher a diferença em abril para atingir o mínimo exigido. Essa condição garante que o benefício não resulte em uma carga tributária inferior ao percentual mínimo estabelecido.'
+          ]
+        }
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '5. Considerações Importantes e Possíveis Impactos das Normas Anexas no Cálculo'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'A aplicação dos incentivos do PRODEAUTO possui nuances e condições que impactam diretamente o cálculo e a fruição. É crucial estar atento a elas:'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Períodos de Vigência das Alterações: O documento apresenta diversas redações anteriores para artigos da Lei nº 13.484/2008, indicando que os percentuais e as condições de cálculo podem ter variado ao longo do tempo. É essencial aplicar a regra correta para o período fiscal específico de interesse. Por exemplo, o diferimento de insumos para industriais e sistemistas sofreu mudanças significativas a partir de 01.05.2015.',
+        'B - Não Cumulatividade: O Art. 3º da Lei nº 13.484/2008 estabelece que a fruição do PRODEAUTO não pode ocorrer cumulativamente com outros benefícios fiscais previstos na legislação tributária, incluindo os relativos ao PRODEPE, sobre uma mesma operação incentivada. Isso significa que, ao calcular o PRODEAUTO, a empresa não pode aplicar outro incentivo sobre a mesma parcela do ICMS.',
+        'C - Conceito de Empresa Sistemista: A definição de empresa sistemista evoluiu ao longo do tempo (Art. 1º, § 1º, da Lei nº 13.484/2008), o que pode afetar a elegibilidade para certos incentivos. Antes de 31.12.2014, era limitada a fornecedores de conjuntos de componentes. A partir de 01.01.2015, expandiu-se para outros insumos, e a partir de 01.05.2015, incluiu empresas equiparadas a industrial pela legislação do IPI.',
+        'D - Ativo Fixo: Os bens destinados a integrar o ativo fixo devem ser utilizados na atividade industrial, excluindo-se aqueles relacionados a atividades administrativas (Art. 1º, § 2º, Lei nº 13.484/2008). Isso delimita o escopo do diferimento para bens de capital.',
+        'E - Similaridade Nacional/Estadual: Para diferimentos de 100% na importação de insumos ou veículos/peças, a inexistência de similar produzido no Estado deve ser declarada pelo importador, sob condição resolutória de comprovação posterior (Art. 2º, § 4º, Lei nº 13.484/2008). O cálculo presume a inexistência, mas a comprovação pode ser exigida.',
+        'F - Taxa de Administração: As empresas que utilizam o crédito presumido devem recolher uma taxa de administração de 2% sobre o valor do crédito presumido utilizado (Lei nº 13.484/2008, Art. 4º). Embora não seja um fator de cálculo do incentivo, é um custo associado à sua fruição que deve ser considerado na análise econômica do benefício.',
+        'G - Credenciamento: A fruição dos incentivos é condicionada ao credenciamento do contribuinte, conforme estabelecido em portaria do Secretário da Fazenda (Lei nº 13.484/2008, Art. 3º, I; regulamentado pelo Art. 4º do Anexo 36 do Decreto nº 44.650/2017). Sem o credenciamento, mesmo com o cálculo correto, o benefício não pode ser utilizado.'
+      ]
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'A complexidade da legislação do PRODEAUTO reside na multiplicidade de incentivos, percentuais e condições que se aplicam a diferentes beneficiários e ao longo do tempo. A análise cuidadosa do tipo de contribuinte, da natureza da operação e do período em que ela ocorre é indispensável para a correta apuração do benefício fiscal.'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: 'Referências Oficiais:'
+    },
+    {
+      tipo: 'lista-bullet',
+      conteudo: [
+        'PORTARIA SF Nº 012, de 21.01.2003',
+        'LEI Nº 13.484, DE 29 DE JUNHO DE 2008',
+        'DECRETO Nº 53.565, DE 9 DE SETEMBRO DE 2022',
+        'DECRETO Nº 44.650, DE 30 DE JUNHO DE 2017 – ANEXO 36 (DO PROGRAMA DE DESENVOLVIMENTO DO SETOR AUTOMOTIVO DO ESTADO DE PERNAMBUCO - PRODEAUTO)'
+      ]
+    }
+  ]
+},
+
+  {
+    id: 'prodeauto-lancamentos-incentivo', 
+    programa: 'PRODEAUTO',
+    titulo: 'Trilha 2: Lançamentos do Incentivo (PRODEAUTO)',
+    descricaoHeader: 'Explore os requisitos, procedimentos e prazos essenciais para a conformidade na fruição dos benefícios.',
+    sobreTrilha: 'Esta trilha aborda os procedimentos para documentar e comunicar ao Fisco a utilização dos incentivos do PRODEAUTO.',
+    urlVideo: '', 
+    blocosDeConteudo: [
+    {
+      tipo: 'paragrafo',
+      conteudo: 'A efetividade dos incentivos fiscais concedidos pelo Programa de Desenvolvimento do Setor Automotivo (PRODEAUTO) depende intrinsecamente da correta aplicação e registro desses benefícios na escrituração fiscal e nas obrigações acessórias do contribuinte. Os "lançamentos do incentivo" referem-se aos procedimentos detalhados que os beneficiários devem seguir para documentar e comunicar ao Fisco a utilização dos créditos presumidos, diferimentos e outras modalidades de incentivo. Esta trilha explora os requisitos, procedimentos e prazos essenciais para garantir a conformidade e a segurança na fruição dos benefícios do PRODEAUTO.'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '1. Definição e Objetivos dos Lançamentos do Incentivo'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Os lançamentos do incentivo no âmbito do PRODEAUTO são os registros formais das operações incentivadas e dos valores dos benefícios fiscais utilizados na apuração do ICMS. O principal objetivo desses lançamentos é:'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Materializar o Benefício: Transformar o direito ao incentivo (calculado na Trilha 1) em uma redução efetiva do imposto a recolher ou em uma postergação de seu pagamento.',
+        'B - Assegurar a Conformidade Fiscal: Garantir que a utilização dos incentivos esteja em estrita aderência às normas estabelecidas, permitindo que a Secretaria da Fazenda (Sefaz) audite e valide a aplicação dos benefícios.',
+        'C - Prover Transparência e Controle: Oferecer visibilidade sobre as operações incentivadas e o montante de ICMS desonerado, tanto para a empresa quanto para o órgão fiscalizador.',
+        'D - Manter a Elegibilidade: O correto cumprimento das obrigações acessórias e a precisão nos lançamentos são condições fundamentais para a manutenção e a continuidade da fruição do PRODEAUTO.'
+      ]
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'O Decreto nº 44.650/2017, em seu Anexo 36, Capítulo VIII, estabelece os procedimentos específicos relativos às obrigações acessórias a que estão submetidos os beneficiários do PRODEAUTO, ressaltando que, para situações não tratadas especificamente, aplicam-se as demais disposições da legislação tributária (Anexo 36, Art. 15).'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '2. Critérios e Requisitos para Elegibilidade dos Lançamentos'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'A capacidade de realizar os lançamentos dos incentivos do PRODEAUTO está intrinsecamente ligada à elegibilidade e credenciamento prévios da empresa no programa (conforme Trilha 4: Concessão do Incentivo). Além disso, a validade dos lançamentos depende da manutenção contínua de certas condições:'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Credenciamento Ativo: A empresa deve possuir credenciamento ativo no PRODEAUTO, cuja vigência é a partir da data da publicação do respectivo edital no Diário Oficial do Estado (DOE) (Anexo 36, Art. 4º, § 3º).',
+        'B - Regularidade Fiscal: A empresa não deve incorrer em situações que levem ao descredenciamento, como embaraço à ação fiscal, utilização irregular de benefício ou falta de emissão de documento fiscal (Anexo 36, Art. 5º). A ocorrência de tais infrações pode invalidar os lançamentos realizados.',
+        'C - Opção Formal pelo Diferimento do Saldo Devedor: Para empresas que optam pelo diferimento do recolhimento do saldo devedor do ICMS (alternativamente ao crédito presumido), a opção deve ser formalizada até o dia 15 do mês relativo à opção, por comunicação à Sefaz. Esta opção permanece válida para os períodos subsequentes até nova manifestação (Anexo 36, Art. 11).'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '3. Procedimentos para Inscrição e Acompanhamento nos Lançamentos'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'A inscrição para o PRODEAUTO é um processo de credenciamento (Trilha 4), mas os lançamentos do incentivo requerem um acompanhamento contínuo da apuração e registro das operações.'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Escrituração por EFD - ICMS/IPI: Os estabelecimentos industriais de veículos, os estabelecimentos comerciais atacadistas de veículos, o estabelecimento industrial pertencente à mesma pessoa jurídica do industrial de veículos, e a trading company (nas operações com veículos automotores importados por conta e ordem ou encomenda do atacadista) devem realizar a escrituração fiscal por meio da EFD - ICMS/IPI (Anexo 36, Art. 26, I).',
+        'B - Separação das Apurações: É obrigatório adotar controle adicional para separar a apuração do imposto em tantas apurações quantos forem os benefícios fiscais utilizados, especificamente em relação ao PRODEAUTO, bem como as operações não contempladas com o benefício (Anexo 36, Art. 26, I).',
+        'C - Relatório Específico de Controle: O contribuinte deve manter, durante o prazo decadencial, um relatório específico para o controle de cada hipótese de benefício (crédito presumido, diferimento), bem como de outras operações, quando aplicável (Anexo 36, Art. 26, II).'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '4. Detalhamento dos Lançamentos Específicos por Tipo de Benefício'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'O Anexo 36 do Decreto nº 44.650/2017, em sua Seção V do Capítulo VIII, detalha minuciosamente como os diferentes incentivos do PRODEAUTO devem ser registrados na EFD-ICMS/IPI.'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - 4.1. Lançamento do Crédito Presumido (Industrial, Comercial Atacadista, Trading Company):'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'O valor do crédito presumido utilizado deve ser lançado no Registro E111 (Ajuste/Benefício/Incentivo da Apuração do ICMS).',
+        'Deve-se utilizar o código de ajuste da apuração e dedução PE040015 (Anexo 36, Art. 26, III, b).',
+        'Apropriação do Crédito Fiscal: Em geral, o crédito fiscal (de entrada) deve ser apropriado rateando-o com base no consumo real dos insumos ou, na impossibilidade, na proporção do débito do imposto das saídas tributadas. Essa proporcionalidade também se aplica ao ativo permanente e aos créditos recebidos por transferência (Anexo 36, Art. 26, III, a).'
+      ]
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'B - 4.2. Lançamento do Diferimento do Recolhimento do Saldo Devedor (Industrial, Comercial Atacadista):'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Estorno do Débito: O contribuinte deve fazer o estorno do débito no Registro E111.',
+        'Utilizar os códigos de ajuste PE030099 (com a descrição complementar "Diferimento do recolhimento do saldo devedor do ICMS") e PE059999 (com a descrição complementar "Saldo devedor do ICMS diferido") (Anexo 36, Art. 26, III, c, 1).',
+        'Registro da Obrigação a Recolher: O valor estornado deve ser lançado no Registro E116 (Obrigações do ICMS Recolhido ou a Recolher - Operações Próprias).',
+        'Informar como código da obrigação a recolher o valor 000.',
+        'Como data de vencimento, o último dia útil do centésimo mês subsequente ao do respectivo período de apuração do imposto.',
+        'O código de receita a ser utilizado é 0434 ("ICMS - recolhimento especial").',
+        'O campo “TXT_COMPL” (texto complementar) deve ser preenchido com a expressão: “diferimento do recolhimento do saldo devedor 100 (cem) meses - Prodeauto” (Anexo 36, Art. 26, III, c, 2).'
+      ]
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'C - 4.3. Lançamento da Transferência de Saldo Credor (Sistemistas para Industrial de Veículos):'
+      ]
+    },
+    {
+      tipo: 'lista-bullet',
+      conteudo: [
+        'Pela Empresa Sistemista (Transferidora):'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Emitir NF-e de saída com item "transferência de saldo credor - Prodeauto" (Anexo 36, Art. 27, I, a).',
+        'Registrar a NF-e sem valores e informar o valor do saldo credor transferido nas observações do lançamento fiscal (registro C195) (Anexo 36, Art. 27, I, b, 1).',
+        'Registrar o saldo credor transferido no Registro E111, utilizando o código de ajuste PE000007, e informando na descrição complementar do ajuste o número da NF-e (Anexo 36, Art. 27, I, b, 2).'
+      ]
+    },
+    {
+      tipo: 'lista-bullet',
+      conteudo: [
+        'Pelo Estabelecimento Industrial de Veículos (Recebedor):'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Registrar a NF-e de transferência sem valores e informar o valor do saldo credor recebido nas observações do lançamento fiscal (registro C195) (Anexo 36, Art. 27, II, a).',
+        'Registrar o saldo credor recebido no Registro E111, utilizando o código de ajuste PE020015, e informando na descrição complementar do ajuste o número da NF-e (Anexo 36, Art. 27, II, b).'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '5. Outras Obrigações e Procedimentos de Documentação'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Taxa de Administração: O recolhimento da taxa de administração (2% sobre o crédito presumido utilizado) deve ser efetuado mensalmente, por meio de DAE modelo 20, sob o código de receita 476-2, até o último dia útil do mês subsequente ao do período fiscal da utilização do benefício (Anexo 36, Art. 12).'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        {
+          texto: 'B - Importação e Diferimento:',
+          subItens: [
+            'A dispensa da emissão da Declaração de Mercadoria Importada (DMI) e do documento fiscal de entrada para a quantidade total importada requer credenciamento (Anexo 36, Art. 16, I e II).',
+            'O contribuinte credenciado deve realizar o transporte da mercadoria acompanhado da DI e do documento fiscal de entrada parcial, indicando na NF-e o número e data da DI, e apresentar um relatório mensal das importações dispensadas da DMI (Anexo 36, Art. 16, § 2º).',
+            'Para transporte parcelado de mercadoria importada, a emissão de NF-e de entrada para cada parcela deve observar o conteúdo do container/unidade, indicar número/data da DI e valores dos tributos correspondentes à parcela (Anexo 36, Art. 17).'
+          ]
+        }
+      ]
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'C - Depósito Fechado Vinculado: Estabelecimentos industriais de veículos com depósito fechado dispensado de inscrição no Cacepe devem emitir documentos fiscais específicos para a circulação da mercadoria (do desembaraço ao depósito, remessa simbólica, e movimentações entre depósito e estabelecimento industrial) (Anexo 36, Art. 18).',
+        'D - Remessa e Retorno de Insumos/Ativo Fixo para Industrialização por Terceiros: A suspensão da exigência do imposto e o retorno de insumos/bens de ativo permanente devem ser acobertados por documento fiscal de entrada e conter indicação da base legal (Anexo 36, Art. 20).',
+        'E - Emissão de Documentos Fiscais para Correção de Lançamento: Autorizada a emissão de documento fiscal de saída para correção de registro de lançamento, com indicação do motivo e que a operação não gera crédito para o destinatário. DAE específico para diferença de imposto (Anexo 36, Art. 22). Também para devolução simbólica em caso de registro a maior (Anexo 36, Art. 23).'
+      ]
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'F - Dispensa de Emissão de Documento Fiscal (Remessas Diárias/Controle Interno):'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Para remessas diárias de partes/peças/componentes por fornecedores do parque, a emissão de NF-e pode ser dispensada, desde que o faturamento correspondente seja diário e uma NF-e que englobe as remessas seja emitida até o final do dia útil seguinte ao término da montagem do veículo (Anexo 36, Art. 25, I).',
+        'Pode ser dispensada a emissão de documento fiscal na remessa de embalagens que componham o ativo permanente, desde que não haja circulação em via pública (Anexo 36, Art. 25, II).',
+        'O controle de veículos para testes e provas de engenharia pode ser feito por documento de controle interno ("Controle de Remessa/Retorno de Veículos para Testes e Provas de Engenharia") em substituição à NF-e (Anexo 36, Art. 24).'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '6. Prazos e Vigências Importantes'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Os prazos são cruciais para a validade dos lançamentos:'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Opção pelo Diferimento do Saldo Devedor: Até o dia 15 do mês relativo à opção (Anexo 36, Art. 11).',
+        'B - Recolhimento da Taxa de Administração: Mensalmente, até o último dia útil do mês subsequente ao período fiscal da utilização do benefício (Anexo 36, Art. 12).',
+        'C - Transmissão da EFD-ICMS/IPI: Segue os prazos gerais da legislação (não especificados no Anexo 36, mas regidos por outras normas da Sefaz-PE).',
+        'D - Relatório Mensal de Importações Dispensa DMI: Até o dia 15 do mês subsequente ao da realização das importações (Anexo 36, Art. 16, § 2º, III).',
+        'E - Recolhimento de ICMS Antecipado (Anexo 37): Em geral, até o dia 9 do mês subsequente ao da saída da mercadoria do estabelecimento do contribuinte substituto, ou no momento da importação, conforme a operação (Anexo 37, Art. 12).'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: 'Exemplo Prático: Lançamento de Crédito Presumido e Diferimento na EFD-ICMS/IPI'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Uma indústria de veículos (CNPJ: XX.XXX.XXX/XXXX-XX) beneficiária do PRODEAUTO, apurou em um mês:'
+    },
+    {
+      tipo: 'lista-bullet',
+      conteudo: [
+        'Saldo Devedor de ICMS (apuração normal): R$ 8.000.000,00.',
+        'Crédito Presumido do PRODEAUTO (95% sobre o saldo devedor): R$ 7.600.000,00.',
+        'ICMS a recolher (líquido do crédito presumido): R$ 400.000,00.',
+        'Parte do saldo devedor de ICMS (referente a veículos nacionais não fabricados no Estado, onde optou pelo diferimento para 100 meses): R$ 1.000.000,00.'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: 'Procedimentos na EFD-ICMS/IPI:'
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        {
+          texto: '1. Registro do Crédito Presumido:',
+          subItens: [
+            'No Registro E111 (Ajuste/Benefício/Incentivo da Apuração do ICMS), será lançado:'
+          ]
+        }
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        {
+          texto: '', 
+          subItens: [
+            'COD_AJ_APUR: PE040015',
+            'DESCR_COMPL_AJ: Crédito Presumido PRODEAUTO - Art. 2, I, a) Lei 13.484/2008',
+            'VL_AJ_APUR: 7.600.000,00 (valor do crédito presumido)'
+          ]
+        }
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '2. Registro do Diferimento do Saldo Devedor:'
+    },
+    {
+      tipo: 'lista-bullet',
+      conteudo: [
+        'No Registro E111 (Ajuste/Benefício/Incentivo da Apuração do ICMS), será lançado:'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'COD_AJ_APUR: PE030099',
+        'DESCR_COMPL_AJ: Diferimento do recolhimento do saldo devedor do ICMS',
+        'VL_AJ_APUR: 1.000.000,00 (valor diferido)',
+        'COD_AJ_APUR: PE059999',
+        'DESCR_COMPL_AJ: Saldo devedor do ICMS diferido',
+        'VL_AJ_APUR: 1.000.000,00 (valor diferido)'
+      ]
+    },
+    {
+      tipo: 'lista-bullet',
+      conteudo: [
+        'No Registro E116 (Obrigações do ICMS Recolhido ou a Recolher - Operações Próprias), será detalhada a obrigação diferida:'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'COD_OR: 000 (código de obrigação padrão para diferimento)',
+        'VL_OR: 1.000.000,00 (valor diferido)',
+        'DT_VCTO: Último dia útil do 100º mês subsequente (ex: 31/01/2033 se a apuração foi em maio/2024)',
+        'COD_REC: 0434 (ICMS - recolhimento especial)',
+        'TXT_COMPL: diferimento do recolhimento do saldo devedor 100 (cem) meses - Prodeauto'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Resultado da Apuração: O total de ICMS a recolher na apuração do período será R$400.000,00, e a empresa terá uma obrigação de longo prazo registrada para o ICMS diferido.'
+      ]
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'A complexidade dos lançamentos do PRODEAUTO demanda sistemas fiscais robustos e equipes bem treinadas para garantir a exatidão e a conformidade, evitando assim futuras autuações e glosas.'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '7. Referências Oficiais'
+    },
+    {
+      tipo: 'lista-bullet',
+      conteudo: [
+        'LEI Nº 13.484, DE 29 DE JUNHO DE 2008',
+        'DECRETO Nº 44.650, DE 30 DE JUNHO DE 2017 – ANEXO 36 (especialmente Capítulo VIII: Das Obrigações Acessórias Específicas, Seção V: Das Demais Obrigações Acessórias Específicas, Art. 26 e Art. 27).',
+        'DECRETO Nº 44.650, DE 30 DE JUNHO DE 2017 – ANEXO 37 (especialmente Art. 12: Do Recolhimento do Imposto, e Art. 33: Da Escrituração Fiscal).',
+        'DECRETO Nº 53.565, DE 9 DE SETEMBRO DE 2022 (Modifica o Decreto nº 44.650, de 2017).'
+      ]
+    }
+  ]
+},
+  {
+    id: 'prodeauto-controles-suplementares', 
+    programa: 'PRODEAUTO',
+    titulo: 'Trilha 3: Controles suplementares(PRODEAUTO)',
+    descricaoHeader: 'Entenda os mecanismos de acompanhamento, fiscalização e avaliação do PRODEAUTO.',
+    sobreTrilha: 'Esta trilha detalha as responsabilidades do contribuinte e as prerrogativas do Fisco para a manutenção do benefício.',
+    urlVideo: '', 
+    blocosDeConteudo: [
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '1. Introdução aos Controles Suplementares no PRODEAUTO'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'A concessão de incentivos fiscais pelo Programa de Desenvolvimento do Setor Automotivo (PRODEAUTO) não se limita à sua autorização formal. Para assegurar a correta aplicação dos benefícios e o cumprimento dos objetivos do programa, o Estado de Pernambuco institui uma série de controles suplementares. Estes controles são mecanismos de acompanhamento contínuo, fiscalização e avaliação que visam garantir a conformidade fiscal do contribuinte, a aderência às condições específicas do benefício e a transparência das operações incentivadas. A importância desses controles reside na proteção da arrecadação estadual, na promoção da justiça fiscal e na manutenção da credibilidade do programa. Para o contribuinte, a atenção e a gestão eficaz desses controles são cruciais para a manutenção do benefício e para evitar sanções que podem variar desde o impedimento temporário da fruição até a perda definitiva do incentivo.'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'O Decreto nº 44.650, de 30 de junho de 2017, em seu Anexo 36, que regulamenta o PRODEAUTO, e a Lei nº 13.484, de 29 de junho de 2008, estabelecem as bases para esses controles, detalhando as responsabilidades do contribuinte e as prerrogativas do Fisco.'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '2. Tipos de Controles Suplementares Aplicáveis'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Os controles suplementares do PRODEAUTO abrangem diversas dimensões da operação do contribuinte, desde a conduta fiscal até a gestão operacional e a apresentação de informações.'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - 2.1. Controle de Conduta Fiscal e Compliance:'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Credenciamento e Descredenciamento: A fruição dos incentivos é condicionada ao credenciamento do contribuinte. O descredenciamento, por exemplo, ocorre quando há embaraço à ação fiscal, utilização irregular de qualquer benefício fiscal concedido, ou falta de emissão de documento fiscal (Anexo 36, Art. 5º). A manutenção do credenciamento ativo é um controle fundamental de compliance.',
+        'Recredenciamento: A possibilidade de recredenciamento exige a comprovação do saneamento das situações que motivaram o descredenciamento (Anexo 36, Art. 6º), funcionando como um controle de regularização.'
+      ]
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'B - 2.2. Controle de Desempenho Financeiro e Metas:'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Recolhimento Anual Mínimo (Trading Company): O crédito presumido concedido à trading company (80% do saldo deovedor) é condicionado a que o recolhimento anual do ICMS não seja inferior a 2% sobre o somatório dos valores das bases de cálculo do ICMS das saídas de veículos novos realizadas pelo estabelecimento atacadista contratante da importação. Caso o recolhimento seja inferior, a trading company deve reduzir o valor do crédito presumido nos primeiros meses do ano subsequente e/ou recolher a diferença em abril, a título de complementação (Lei nº 13.484/2008, Art. 2º, § 7º). Este é um controle de performance fiscal.',
+        'Comprovação de Inexistência de Similar: Para casos de diferimento de 100% na importação de insumos ou veículos/peças, a inexistência de similar produzido no Estado deve ser declarada pelo importador, sob condição resolutória de comprovação posterior, quando solicitada (Lei nº 13.484/2008, Art. 2º, § 4º).'
+      ]
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'C - 2.3. Controles Operacionais e de Medição:'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Aferição de Consumo por Medidores (Sistemista): A apropriação do crédito fiscal de ICMS sobre a aquisição de energia elétrica e gás natural por sistemistas localizadas em área contígua à indústria de veículos é condicionada à instalação de medidores que possibilitem a aferição do consumo de cada sistemista (Anexo 36, Art. 14, II).',
+        'Identificação de Espaço e Estoques em Parques de Fornecedores: A permissão para instalação de parques de fornecedores em área contígua à indústria de veículos exige que o espaço que ocupa cada estabelecimento da empresa fornecedora, bem como seu ativo permanente e estoques, sejam identificáveis (Anexo 36, Art. 21, II).'
+      ]
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'D - 2.4. Controles de Relatoria e Dados:'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Relatório Mensal de Importações com Dispensa de DMI: Contribuintes credenciados para dispensa de DMI e NF de entrada em importações devem apresentar, em meio eletrônico, um relatório referente às importações efetuadas no mês anterior, com informações detalhadas, até o dia 15 do mês subsequente (Anexo 36, Art. 16, § 2º, III).',
+        'Escrituração Segregada e Relatórios Específicos: A empresa deve realizar a escrituração por meio da EFD - ICMS/IPI e adotar controle adicional para separar a apuração do imposto por benefício fiscal e operações não incentivadas. Deve-se manter relatório específico para controle de cada hipótese de benefício (Anexo 36, Art. 26, I e II).',
+        'Comunicação Mensal de Opção por Diferimento: A opção pelo diferimento do recolhimento do saldo devedor do imposto deve ser manifestada mensalmente por comunicação à Sefaz (Anexo 36, Art. 11, I).'
+      ]
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'E - 2.5. Controles Documentais e Procedimentais:'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Correção de Lançamentos: Emissão de documento fiscal pelo industrial de veículos para correção de registro de lançamento, com indicação de motivo e de que não gera crédito ao destinatário, e recolhimento de DAE específico com acréscimos legais se for o caso (Anexo 36, Art. 22).',
+        'Devolução Simbólica: Emissão de documento fiscal de devolução simbólica para registro de documento fiscal com valor ou quantidade superior ao da efetiva operação (Anexo 36, Art. 23).',
+        'Controle Interno para Testes de Veículos: Utilização de documento de controle interno denominado “Controle de Remessa/Retorno de Veículos para Testes e Provas de Engenharia” em substituição à NF-e para essa finalidade (Anexo 36, Art. 24).',
+        'Consolidação de Remessas: Dispensa da emissão de documento fiscal a cada remessa de partes/peças por fornecedores contíguos, permitindo faturamento diário consolidado (Anexo 36, Art. 25, I).',
+        'Transferência de Saldo Credor: Detalhamento de emissão de NF-e e registros na EFD-ICMS/IPI para a transferência de saldo credor de sistemistas para o industrial de veículos (Anexo 36, Art. 27).'
+      ]
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'F - 2.6. Controle de Custos de Fiscalização:'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Taxa de Administração: O recolhimento da taxa de administração (2% do valor do crédito presumido utilizado) para o Fundo de Desenvolvimento do Estado de Pernambuco (FURPE) visa cobrir os custos de controle e acompanhamento dos incentivos (Lei nº 13.484/2008, Art. 4º; Anexo 36, Art. 12).'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '3. Normas e Regulamentações Relevantes'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Os controles suplementares no PRODEAUTO são fundamentados principalmente na:'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Lei nº 13.484, de 29 de junho de 2008: Que institui o PRODEAUTO e estabelece as diretrizes gerais, incluindo as condições de fruição, a taxa de administração e a base para os cálculos de mínimos anuais (Art. 2º, § 4º, § 7º; Art. 3º; Art. 4º).',
+        'B - Decreto nº 44.650, de 30 de junho de 2017 – Anexo 36 (DO PROGRAMA DE DESENVOLVIMENTO DO SETOR AUTOMOTIVO DO ESTADO DE PERNAMBUCO - PRODEAUTO): Este é o principal documento regulamentador dos controles, detalhando as condições para credenciamento e descredenciamento (Capítulo II), a contagem de prazos (Capítulo III), a prorrogação de incentivos (Capítulo IV), a opção pelo diferimento (Capítulo V), a taxa de administração (Capítulo VI), e, principalmente, as obrigações acessórias específicas (Capítulo VIII). Este último capítulo é a base para a maioria dos controles de relatoria, escrituração e documentação.'
+      ]
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Essas regulamentações impactam a implementação dos controles ao:'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Definir Obrigações: Clarificam o que o contribuinte deve fazer em termos de relatórios, registros e procedimentos.',
+        'B - Estabelecer Consequências: Associam o não cumprimento dos controles a penalidades (descredenciamento, exigência de recolhimentos complementares).',
+        'C - Fornecer Parâmetros de Avaliação: Indicam as métricas que serão utilizadas pelo Fisco para verificar a conformidade e a performance do beneficiário.'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '4. Implementação e Gestão dos Controles Suplementares'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'A implementação eficaz dos controles suplementares no contexto do PRODEAUTO requer uma abordagem sistêmica e proativa por parte do contribuinte.'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Passos Práticos para Implementação:'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Credenciamento Inicial: Assegurar que todos os requisitos do Anexo 36, Art. 4º para credenciamento sejam atendidos e mantidos continuamente.',
+        'B - Sistemas de Escrituração Fiscal: Utilizar sistemas ERP e fiscais capazes de realizar a escrituração por EFD - ICMS/IPI e, crucialmente, de separar as apurações por benefício fiscal e operações não incentivadas (Anexo 36, Art. 26, I).',
+        'C - Desenvolvimento de Relatórios Internos: Criar e manter relatórios específicos de controle para cada hipótese de benefício, detalhando os cálculos, saldos e bases para fiscalização (Anexo 36, Art. 26, II).',
+        'D - Processos de Medição e Aferição: Implementar rotinas para aferição de consumo (e.g., por medidores, para sistemistas - Anexo 36, Art. 14, II) e identificação de ativos e estoques em parques de fornecedores (Anexo 36, Art. 21, II).',
+        'E - Rotinas de Geração de Relatórios Periódicos: Estabelecer procedimentos para a geração e envio de relatórios mensais de importações com dispensa de DMI (Anexo 36, Art. 16, § 2º, III) e comunicação mensal de opção por diferimento (Anexo 36, Art. 11, I).',
+        'F - Gerenciamento da Taxa de Administração: Integrar o cálculo e o recolhimento da taxa de administração no fluxo mensal de obrigações fiscais (Anexo 36, Art. 12).',
+        'G - Controles de Documentação: Adotar procedimentos para emissão e registro de NF-e para correções de lançamento e devoluções simbólicas (Anexo 36, Art. 22 e 23), e para a transferência de saldo credor (Anexo 36, Art. 27).'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: 'Melhores Práticas para Gestão Contínua e Atualização:'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Auditorias Internas Periódicas: Realizar revisões regulares dos processos de cálculo e lançamento dos incentivos, verificando a conformidade com a legislação e as próprias normas internas da empresa.',
+        'B - Monitoramento da Legislação: Acompanhar ativamente as alterações nas leis, decretos e portarias que regem o PRODEAUTO, garantindo que os controles internos sejam atualizados.',
+        'C - Treinamento da Equipe: Assegurar que a equipe responsável pelos processos fiscais e contábeis esteja atualizada e bem treinada nas especificidades do PRODEAUTO e seus controles.',
+        'D - Conciliação Frequente: Realizar conciliações regulares entre os dados do ERP, os livros fiscais e as declarações enviadas (EFD-ICMS/IPI), bem como os relatórios específicos exigidos.'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '5. Desafios e Considerações na Aplicação dos Controles Suplementares'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'A implementação e gestão dos controles suplementares no PRODEAUTO podem apresentar desafios, mas o documento fornece insights sobre como abordá-los.'
+    },
+    {
+      tipo: 'lista-bullet',
+      conteudo: [
+        '5.1. Desafios Comuns:'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Complexidade da Segregação de Informações: A exigência de separar apurações por benefício fiscal e operações não incentivadas (Anexo 36, Art. 26, I) pode ser complexa para empresas com grande volume de operações e mix de produtos.',
+        'Controle de Condições Variáveis: A declaração e comprovação posterior da inexistência de similar (Lei nº 13.484/2008, Art. 2º, § 4º) impõe um risco de fiscalização posterior, exigindo um controle documental robusto.',
+        'Monitoramento de Mínimos Anuais: Para trading companies, o controle do recolhimento anual mínimo de 2% (Lei nº 13.484/2008, Art. 2º, § 7º) exige uma projeção e acompanhamento financeiro que vai além da apuração mensal, podendo exigir ajustes nos meses seguintes.',
+        'Manutenção da Regularidade: A exigência de não incorrer em embaraço à ação fiscal, utilização irregular de benefício ou falta de emissão de documento fiscal (Anexo 36, Art. 5º) demanda uma cultura de compliance e sistemas operacionais eficazes.',
+        'Precisão em Dados Operacionais: A necessidade de aferição de consumo por medidores e identificação de espaço/estoques (Anexo 36, Art. 14, II; Art. 21, II) exige integração entre o controle fiscal e as operações físicas da empresa.'
+      ]
+    },
+    {
+      tipo: 'lista-bullet',
+      conteudo: [
+        '5.2. Estratégias para Superar Desafios (Implícitas no Arquivo):'
+      ]
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Investimento em Tecnologia: Sistemas de gestão (ERP) e fiscais que permitam a segregação automática dos dados por operação incentivada/não incentivada, geração da EFD-ICMS/IPI com os ajustes corretos e produção dos relatórios específicos.',
+        'Padronização de Processos Internos: A definição de procedimentos claros para emissão e registro de NF-e, para correção de lançamentos ou devoluções simbólicas, ajuda a padronizar o comportamento fiscal (Anexo 36, Art. 22 e 23).',
+        'Engajamento Interdepartamental: A exigência de identificação de espaço, ativo permanente e estoques em parques de fornecedores (Anexo 36, Art. 21, II) e aferição de consumo (Anexo 36, Art. 14, II) sugere a necessidade de forte colaboração entre os departamentos fiscal, contábil, operacional e de engenharia.',
+        'Auditoria e Autocorreção: A permissão para correção de lançamentos e devoluções simbólicas (Anexo 36, Art. 22 e 23) incentiva a empresa a identificar e corrigir proativamente suas próprias inconsistências antes de uma ação fiscal.'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '6. Conclusão e Recomendações Finais'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Os controles suplementares do PRODEAUTO são o cerne da gestão do incentivo fiscal, indo muito além do cálculo e do lançamento inicial. Eles representam um conjunto robusto de mecanismos que visam garantir a conformidade do contribuinte com a política de desenvolvimento do Estado de Pernambuco e assegurar a sustentabilidade do programa. A legislação do PRODEAUTO, especialmente o Anexo 36 do Decreto nº 44.650/2017, detalha as exigências para o credenciamento, a escrituração, a relatoria de dados operacionais e o cumprimento de metas de performance.'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'A implementação e gestão eficazes desses controles são desafios complexos, exigindo do contribuinte um investimento contínuo em tecnologia, processos e capacitação de pessoal. Falhas na aplicação desses controles podem levar a penalidades severas, como o descredenciamento e a perda retroativa do incentivo, resultando em altos custos fiscais e jurídicos.'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Recomendações:'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Investir em Sistemas Fiscais Integrados: Para automatizar a segregação de apurações e a geração dos relatórios específicos, minimizando erros manuais.',
+        'B - Estabelecer um Programa de Compliance Fiscal: Que inclua treinamentos periódicos, auditorias internas, e monitoramento contínuo da regularidade fiscal e das condições do benefício.',
+        'C - Manter Diálogo Constante com a Sefaz: Para esclarecer dúvidas sobre a interpretação das normas e as expectativas de fiscalização.',
+        'D - Focar na Precisão dos Dados: Desde a entrada de insumos até a saída do produto final, a integridade e precisão dos dados são a base para a conformidade com os controles suplementares.'
+      ]
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'A gestão diligente dos controles suplementares do PRODEAUTO não é apenas uma obrigação legal, mas uma estratégia essencial para maximizar o valor do benefício fiscal e assegurar a longevidade e a previsibilidade das operações incentivadas.'
+    },
+  ]
+},
+
+  // Adicione este objeto ao seu array 'trilhas' em trilhasData.ts
+
+  {
+    id: 'prodeauto-concessao-incentivo', 
+    programa: 'PRODEAUTO',
+    titulo: 'Trilha 4: Concessão do Incentivo (PRODEAUTO)',
+    descricaoHeader: 'Detalha os critérios, procedimentos e a fundamentação legal que regem a concessão do incentivo.',
+    sobreTrilha: 'Esta trilha guia o usuário através do processo formal de obtenção dos incentivos fiscais do PRODEAUTO.',
+    urlVideo: '',
+    blocosDeConteudo: [
+    {
+      tipo: 'paragrafo',
+      conteudo: 'A concessão do incentivo fiscal pelo Programa de Desenvolvimento do Setor Automotivo (PRODEAUTO) é o ato formal que habilita uma empresa a usufruir dos benefícios fiscais previstos na Lei nº 13.484/2008 e em seus regulamentos. Este processo é fundamental para garantir que apenas os empreendimentos que atendam aos requisitos e objetivos de desenvolvimento do Estado sejam incentivados. Esta trilha detalha os critérios, procedimentos e a fundamentação legal que regem a concessão do incentivo no âmbito do PRODEAUTO, com base nas informações contidas no documento "PRODEAUTO NORMAS DECRETOS PORTARIAS ATUAL".'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '1. Critérios e Condições para a Concessão do Incentivo'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'A fruição dos incentivos do PRODEAUTO está condicionada ao atendimento de requisitos específicos, que garantem a elegibilidade do contribuinte. O principal critério formal para a concessão é o credenciamento, conforme previsto no Art. 3º, inciso I, da Lei nº 13.484/2008. O Anexo 36 do Decreto nº 44.650/2017 detalha as condições para esse credenciamento:'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '1.1. Cumprimento de Condições Gerais de Credenciamento (Art. 4º, I, Anexo 36):'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'O contribuinte deve cumprir as condições previstas no Art. 272 do Decreto (não detalhado no texto fornecido para o Anexo 36, mas implicado como requisito geral de regularidade), com exceções específicas:'
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Dispensa da condição de não possuir ação pendente de julgamento contra o recolhimento do ICMS, quando a sentença for favorável ao contribuinte.',
+        'Dispensa da condição de não ter sócio que participe de empresa em situação irregular perante a Fazenda.'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '1.2. Inscrição no CACEPE (Art. 4º, II, Anexo 36):'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'O contribuinte deve estar inscrito no Cadastro de Contribuintes do Estado de Pernambuco (CACEPE) no regime normal de apuração do imposto. A atividade econômica principal deve ser de indústria ou comércio atacadista de veículos nacionais ou importados.'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '1.3. Situação Judicial (Art. 4º, III, Anexo 36):'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'O contribuinte não deve possuir ação pendente de julgamento na esfera judicial contra o recolhimento do imposto devido por antecipação (com ou sem substituição tributária). Caso possua, deve comprovar a solicitação de desistência, se a sentença já proferida tiver sido favorável ao contribuinte.'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '1.4. Autorização de Importação (Art. 4º, IV, Anexo 36):'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Se houver comercialização de veículo importado e a importação tiver sido efetuada por terceiro, o contribuinte deve apresentar a autorização de importação contendo nome empresarial, endereço e inscrição no CNPJ do estabelecimento importador.'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '1.5. Informação sobre Atividades Específicas (Art. 4º, § 1º, Anexo 36):'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'No requerimento de credenciamento, deve ser informado se o estabelecimento exerce atividades adicionais, como:'
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'Empresa Sistemista: Nos termos do § 1º do Art. 1º da Lei nº 13.484/2008.',
+        'Industrial que Produza Bens para Ativo Permanente: Bens destinados a integrar o ativo permanente de estabelecimento industrial de veículos beneficiário do PRODEAUTO.'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '1.6. Credenciamento de Não Inscrito no CACEPE (Art. 4º, § 2º, Anexo 36):'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'É permitida a concessão de credenciamento a contribuinte não inscrito no CACEPE, desde que inscrito no CNPJ. A fruição dos incentivos fiscais, neste caso, fica condicionada ao atendimento dos requisitos previstos no caput.'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '2. Procedimentos e Documentação Necessários para Solicitar o Incentivo'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'O processo de concessão do incentivo fiscal pelo PRODEAUTO se inicia com a solicitação de credenciamento, conforme estabelecido no Art. 4º do Anexo 36 do Decreto nº 44.650/2017.'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '2.1. Requerimento de Credenciamento (Art. 4º, Anexo 36):'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'O contribuinte deve encaminhar um requerimento ao órgão da Sefaz responsável pelo controle e acompanhamento de benefícios fiscais.'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '2.2. Documentação e Informações para o Requerimento:'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'O requerimento deve conter as informações e documentações que comprovem o atendimento de todos os critérios e condições listados no item 1 desta trilha.'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '3. Legislação e Normas Aplicáveis'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'A base legal para a concessão do incentivo do PRODEAUTO é composta por:'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Lei nº 13.484, de 29 de junho de 2008: Institui o Programa de Desenvolvimento do Setor Automotivo do Estado de Pernambuco, define seus beneficiários e os tipos de incentivos, e estabelece a condição de credenciamento para a fruição (Art. 1º, 2º, 3º).',
+        'B - Decreto nº 44.650, de 30 de junho de 2017 – Anexo 36 (DO PROGRAMA DE DESENVOLVIMENTO DO SETOR AUTOMOTIVO DO ESTADO DE PERNAMBUCO - PRODEAUTO): Este anexo regulamenta detalhadamente o PRODEAUTO, especialmente no Capítulo II – Do Credenciamento, Descredenciamento e Recredenciamento para Fruição dos Incentivos Fiscais (Art. 4º ao 6º). Ele estabelece os critérios e os procedimentos para a obtenção do credenciamento.',
+        'C - Decreto nº 53.565, de 9 de setembro de 2022: Modifica o Decreto nº 44.650, de 2017, incorporando normas relativas ao PRODEAUTO, indicando a necessidade de sempre consultar a versão mais atualizada da legislação.'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '4. Outros Pontos Relevantes na Concessão'
+    },
+    {
+      tipo: 'lista-alfabetica',
+      conteudo: [
+        'A - Início da Vigência do Credenciamento (Art. 4º, § 3º, Anexo 36): A condição de credenciado vigora a partir da data da publicação do respectivo edital no Diário Oficial do Estado (DOE). Na hipótese de credenciamento de contribuinte não inscrito no CACEPE (apenas CNPJ), o edital pode indicar apenas o nome empresarial e o número-base de inscrição no CNPJ.',
+        'B - Convalidação de Atos Normativos (Art. 11, Decreto nº 53.565/2022): A legislação prevê a aplicação de atos normativos específicos que fazem referência a dispositivos revogados pelo Decreto nº 53.565/2022, desde que compatíveis. Isso reforça a complexidade na análise histórica da concessão.',
+        'C - Não Aplicação de Disposições Gerais de Credenciamento (Art. 4º, § 4º, Anexo 36): O credenciamento do PRODEAUTO possui regras específicas e, por isso, não se aplica a ele o disposto no Art. 273 do Decreto nº 44.650/2017 (não detalhado, mas indica uma excepcionalidade nas regras de credenciamento geral).'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: 'Exemplo Prático: Concessão de Credenciamento para uma Nova Indústria Sistemista'
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Uma nova indústria, a "Componentes Automotivos PE Ltda.", pretende instalar-se em Pernambuco para fornecer peças para uma montadora de veículos já incentivada pelo PRODEAUTO.'
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '1. Verificação de Critérios:'
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'A "Componentes Automotivos PE Ltda." assegura sua inscrição no CNPJ e se prepara para a inscrição no CACEPE (regime normal).',
+        'Verifica que sua atividade principal se enquadra como empresa sistemista, nos termos do § 1º do Art. 1º da Lei nº 13.484/2008.',
+        'Confirma que não possui pendências judiciais e que seus sócios estão regulares.'
+      ]
+    }, 
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '2. Preparação do Requerimento:'
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'A empresa elabora o requerimento de credenciamento ao órgão da Sefaz responsável, declarando que exercerá a atividade de sistemista e anexando a documentação societária, o projeto de instalação e as certidões de regularidade.'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: '3. Análise e Publicação:'
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'A Sefaz analisa o requerimento e, verificando o cumprimento dos requisitos, defere o pedido de credenciamento.',
+        'O edital de credenciamento da "Componentes Automotivos PE Ltda." é publicado no DOE em 15 de novembro de 2024.'
+      ]
+    },
+    {
+      tipo: 'subtitulo-bold',
+      conteudo: 'Início da Fruição do Incentivo:'
+    },
+    {
+      tipo: 'lista',
+      conteudo: [
+        'A partir de 15 de novembro de 2024, a "Componentes Automotivos PE Ltda." adquire a condição de credenciada no PRODEAUTO, podendo, a partir de então, usufruir dos incentivos fiscais previstos para as empresas sistemistas, como o diferimento do ICMS na aquisição interna de insumos (conforme Art. 2º, III da Lei nº 13.484/2008), sujeita à observância das condições e obrigações acessórias.'
+      ]
+    },
+    {
+      tipo: 'paragrafo',
+      conteudo: 'Este processo de concessão do credenciamento é a porta de entrada para a fruição dos incentivos do PRODEAUTO e requer atenção rigorosa aos detalhes e requisitos legais para garantir a segurança jurídica do benefício.'
+    }
+  ]
+}
 
 
 

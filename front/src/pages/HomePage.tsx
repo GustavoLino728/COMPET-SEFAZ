@@ -28,28 +28,28 @@ const DashboardCard = ({ title, description, buttonText, buttonLink, isLarge = f
   );
 };
 
-type TrailCardProps = {
-  imageSrc: string;
-  title: string;
-  description: string;
-}
+function HomePage() {
+  const [userName, setUserName] = useState('Carregando...');
 
-const TrailCard = ({ imageSrc, title, description }: TrailCardProps) => {
-  return (
-    <div className={styles.trailCard}>
-      <div 
-        className={styles.trailImage} 
-        style={{ backgroundImage: `url(${imageSrc})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
-      >
-        {/* A imagem é aplicada via CSS no background desta div */}
-      </div>
-      <div className={styles.trailContent}>
-        <h4 className={styles.trailTitle}>{title}</h4>
-        <p className={styles.trailDescription}>{description}</p>
-      </div>
-    </div>
-  );
-};
+  useEffect(() => {
+  async function fetchUser() {
+    try {
+      const user = await getCurrentUser();
+      console.log('Dados do usuário:', user);
+
+      if (user && user.full_name) {
+        const firstName = user.full_name.split(' ')[0];
+        setUserName(firstName);
+      } else {
+        setUserName('Usuário');
+      }
+    } catch (error) {
+      console.error('Erro ao buscar usuário:', error);
+      setUserName('Usuário');
+    }
+  }
+  fetchUser();
+}, []);
 
 function HomePage() {
   const [userName, setUserName] = useState('Carregando...');
@@ -89,6 +89,7 @@ function HomePage() {
         <section className={styles.quickAccessSection}>
           <h2 className={styles.sectionTitle}>Acesso Rápido</h2>
           <div className={styles.cardGrid}>
+
             <DashboardCard
               isLarge={true}
               title="Explore as Trilhas de Aprendizado"
@@ -119,19 +120,19 @@ function HomePage() {
               imageSrc={prodepeImage}
               title="PRODEPE"
               description="Descubra como o Programa de Desenvolvimento de Pernambuco estimula empresas com incentivos fiscais..."
-              //link="/trilhas/id-da-trilha-prodepe"
+              link="/trilha/id-da-trilha-prodepe"
             />
             <TrailCard 
               imageSrc={prodeautoImage}
               title="PRODEAUTO"
               description="Entenda os benefícios do programa voltado ao setor automotivo, que incentiva a instalação e expansão de indústrias..."
-              //link="/trilhas/id-da-trilha-prodeauto"
+              link="/trilha/id-da-trilha-prodeauto"
             />
             <TrailCard 
               imageSrc={proindImage}
               title="PROIND"
               description="Aprenda como esse programa de incentivos apoia empreendimentos industriais, promovendo inovação..."
-              //link="/trilhas/proind-calculo-incentivo"
+              link="/trilhas/proind"
             />
             
           </div>

@@ -10,6 +10,10 @@ import UserProfilePage from './pages/userProfile/UserProfilePage'
 import UserSetup from './pages/UserSetup';
 import ResetPassword from './pages/ResetPasswordPage';
 import ResetPasswordConfirm from './pages/ResetPasswordConfirmPage';
+import ProgramasPage from './pages/ProgramasPage'; 
+import ProgramaTrilhasPage from './pages/ProgramaTrilhasPage'; 
+import TrailsPanel from './pages/TrailsPanel';
+
 import './App.css';
 import './styles/global.css';
 import { createGlobalStyle } from 'styled-components';
