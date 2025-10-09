@@ -14,6 +14,32 @@ const RegisterPage = () => {
   const [rePassword, setRePassword] = useState("");
   const [error, setError] = useState("");
 
+  const splitFullName = (fullName: string) => {
+    const nameParts = fullName.trim().split(' ');
+    const firstName = nameParts[0] || '';
+    const lastName = nameParts.slice(1).join(' ') || '';
+    
+    return { firstName, lastName };
+  };
+
+  const formatCPF = (value: string) => {
+    return value
+      .replace(/\D/g, '')
+      .replace(/(\d{3})(\d)/, '$1.$2')
+      .replace(/(\d{3})(\d)/, '$1.$2')
+      .replace(/(\d{3})(\d{1,2})/, '$1-$2')
+      .replace(/(-\d{2})\d+?$/, '$1');
+  };
+
+  const cleanCPF = (formattedCPF: string) => {
+    return formattedCPF.replace(/[^\d]/g, '');
+  };
+
+  const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatCPF(e.target.value);
+    setCpf(formatted);
+  };
+
   const handleRegisterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -23,11 +49,58 @@ const RegisterPage = () => {
       return;
     }
 
+    const { firstName, lastName } = splitFullName(name);
+    if (!firstName || !lastName) {
+      setError("Por favor, digite seu nome completo (nome e sobrenome)");
+      return;
+    }
+
+    const dataToSend = {
+      first_name: firstName,
+      last_name: lastName,
+      email: email.trim(),
+      linkedin_url: linkedin.trim() || undefined,
+      cpf: cleanCPF(cpf),
+      password,
+      re_password: rePassword
+    };
+    
+    console.log("Dados sendo enviados:", dataToSend); // ✅ Debug
+
     try {
-      await registerUser({ name, email, linkedin, cpf, password, re_password: rePassword });
-      navigate("/setup"); // rota após cadastro
+      await registerUser(dataToSend);
+      navigate("/setup");
     } catch (err: any) {
-      setError("Erro ao cadastrar usuário");
+      // ... tratamento de erro
+    }
+
+    try {
+      await registerUser({
+        first_name: firstName,
+        last_name: lastName,
+        email: email.trim(),
+        linkedin_url: linkedin.trim() || undefined,
+        cpf: cleanCPF(cpf),
+        password,
+        re_password: rePassword
+      });
+      navigate("/setup");
+    } catch (err: any) {
+
+      if (err.response?.data) {
+        const backendErrors = err.response.data;
+        let errorMessage = "Erro ao cadastrar usuário:\n";
+        
+        Object.entries(backendErrors).forEach(([field, messages]: [string, any]) => {
+          if (Array.isArray(messages)) {
+            errorMessage += `${field}: ${messages.join(', ')}\n`;
+          }
+        });
+        
+        setError(errorMessage);
+      } else {
+        setError("Erro ao cadastrar usuário");
+      }
       console.error(err);
     }
   };
@@ -39,18 +112,62 @@ const RegisterPage = () => {
         <h2>Cadastro</h2>
         <p>Dados pessoais</p>
 
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        {error && <pre style={{ color: "red", whiteSpace: "pre-wrap" }}>{error}</pre>}
 
-        <input type="text" placeholder="Nome Completo" className={styles.inputField} value={name} onChange={e => setName(e.target.value)} required />
-        <input type="email" placeholder="Email" className={styles.inputField} value={email} onChange={e => setEmail(e.target.value)} required />
-        <input type="url" placeholder="LinkedIn (Opcional)" className={styles.inputField} value={linkedin} onChange={e => setLinkedin(e.target.value)} />
-        <input type="text" placeholder="CPF" className={styles.inputField} value={cpf} onChange={e => setCpf(e.target.value)} required />
-        <input type="password" placeholder="Senha" className={styles.inputField} value={password} onChange={e => setPassword(e.target.value)} required />
-        <input type="password" placeholder="Confirme sua Senha" className={styles.inputField} value={rePassword} onChange={e => setRePassword(e.target.value)} required />
+        <input 
+          type="text" 
+          placeholder="Nome Completo" 
+          className={styles.inputField} 
+          value={name} 
+          onChange={e => setName(e.target.value)} 
+          required 
+        />
+        <input 
+          type="email" 
+          placeholder="Email" 
+          className={styles.inputField} 
+          value={email} 
+          onChange={e => setEmail(e.target.value)} 
+          required 
+        />
+        <input 
+          type="url" 
+          placeholder="LinkedIn (Opcional)" 
+          className={styles.inputField} 
+          value={linkedin} 
+          onChange={e => setLinkedin(e.target.value)} 
+        />
+        <input 
+          type="text" 
+          placeholder="CPF" 
+          className={styles.inputField} 
+          value={cpf} 
+          onChange={handleCpfChange} 
+          maxLength={14}
+          required 
+        />
+        <input 
+          type="password" 
+          placeholder="Senha" 
+          className={styles.inputField} 
+          value={password} 
+          onChange={e => setPassword(e.target.value)} 
+          required 
+        />
+        <input 
+          type="password" 
+          placeholder="Confirme sua Senha" 
+          className={styles.inputField} 
+          value={rePassword} 
+          onChange={e => setRePassword(e.target.value)} 
+          required 
+        />
         
         <button type="submit" className={styles.submitButton}>Continuar...</button>
         
-        <p className={styles.termsText}>Li e concordo com os <a href="/terms">Termos de Serviço</a> e <a href="/privacy">Política de Privacidade</a>.</p>
+        <p className={styles.termsText}>
+          Li e concordo com os <a href="/terms">Termos de Serviço</a> e <a href="/privacy">Política de Privacidade</a>.
+        </p>
       </form>
     </div>
   );

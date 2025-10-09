@@ -111,3 +111,31 @@
 .submitButton:hover {
   background-color: #1a2a8a;
 }
+
+/* Container para o botão de pular */
+.skipContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.skipButton {
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 8px 16px;
+  transition: color 0.3s ease;
+}
+
+.skipButton:hover {
+  color: #999;
+}
+
+.skipButton:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+  text-decoration: none;
+}
