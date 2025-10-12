@@ -58,14 +58,12 @@ const OptionButton = styled.button<{
 `;
 
 const OptionLabel = styled.span`...`; 
-const optionLabels = ['A', 'B', 'C', 'D'];
+const optionLabels = ['A', 'B', 'C', 'D', 'E'];
 
-// Atualize a assinatura da função para receber as novas props
 const AnswerOptions: React.FC<AnswerOptionsProps> = ({ options, selectedAnswer, onSelectAnswer, isAnswered, correctAnswerIndex }) => {
   return (
     <OptionsContainer>
       {options.map((option, index) => {
-        // Calcule o estado de cada botão para passar para o estilo
         const isCorrect = index === correctAnswerIndex;
         const isSelected = selectedAnswer === index;
         const isIncorrect = isSelected && !isCorrect;

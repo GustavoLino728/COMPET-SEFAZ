@@ -1,4 +1,5 @@
 import axios from "axios";
+import { BackendChallenge, Challenge, QuizQuestion } from './types';
 
 const API_BASE_URL = "http://localhost:8000/api/auth";
 const CHATBOT_API_BASE_URL = "http://localhost:8000/api/chatbot";
@@ -410,4 +411,74 @@ export const updateChallengeStatus = async (id: number, status: 'APPROVED' | 'PE
 export const deleteChallenge = async (id: number) => {
   const response = await questionsApi.delete(`/api/challenges/${id}/`);
   return response.data;
+};
+
+// Transformar BackendChallenge para o formato atual do frontend
+export const transformChallengeForList = (backendChallenge: BackendChallenge): Challenge => {
+  const totalQuestions = 
+    (backendChallenge.multiple_choice_questions?.length || 0) +
+    (backendChallenge.discursive_questions?.length || 0) +
+    (backendChallenge.problem_questions?.length || 0);
+
+  return {
+    id: backendChallenge.id,
+    title: backendChallenge.title || `Desafio ${backendChallenge.id}`,
+    questions: totalQuestions,
+    description: `${backendChallenge.program_name} - ${backendChallenge.track_name}`
+  };
+};
+
+// Filtrar desafios por dificuldade
+export const getChallengesByDifficulty = async (difficulty: 'EASY' | 'MEDIUM' | 'HARD'): Promise<Challenge[]> => {
+  const approvedChallenges = await fetchApprovedChallenges();
+  const filtered = approvedChallenges.filter(challenge => challenge.difficulty === difficulty);
+  return filtered.map(transformChallengeForList);
+};
+
+// Transformar questões do backend para o formato do quiz
+export const transformQuestionsForQuiz = (backendChallenge: BackendChallenge): QuizQuestion[] => {
+  const quizQuestions: QuizQuestion[] = [];
+
+  // Múltipla escolha
+  if (backendChallenge.multiple_choice_questions) {
+    backendChallenge.multiple_choice_questions.forEach((mcq) => {
+      const options = [mcq.option_a, mcq.option_b, mcq.option_c, mcq.option_d, mcq.option_e];
+      const correctAnswerIndex = ['A', 'B', 'C', 'D', 'E'].indexOf(mcq.correct_option);
+
+      quizQuestions.push({
+        id: mcq.id,
+        type: 'multiple-choice',
+        question: mcq.statement,
+        options,
+        correctAnswerIndex,
+        justification: mcq.justification || 'Justificativa não disponível.'
+      });
+    });
+  }
+
+  // Dissertativas
+  if (backendChallenge.discursive_questions) {
+    backendChallenge.discursive_questions.forEach((dq) => {
+      quizQuestions.push({
+        id: dq.id,
+        type: 'essay',
+        question: dq.statement,
+        justification: dq.justification || dq.answer_text || 'Justificativa não disponível.'
+      });
+    });
+  }
+
+  // Problemas (como essay por enquanto)
+  if (backendChallenge.problem_questions) {
+    backendChallenge.problem_questions.forEach((pq) => {
+      quizQuestions.push({
+        id: pq.id,
+        type: 'essay', // Por enquanto, tratar como essay
+        question: pq.statement,
+        justification: pq.justification || `Resposta esperada: ${pq.correct_answer}`
+      });
+    });
+  }
+
+  return quizQuestions;
 };

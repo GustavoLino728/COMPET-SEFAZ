@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import UserHeader from '../components/user/UserHeader';
 import DifficultySelector from '../components/user/DifficultySelector';
@@ -6,7 +6,7 @@ import ChallengeList from '../components/user/ChallengeList';
 import { IoArrowBack } from 'react-icons/io5';
 
 import { type Challenge } from '../types';
-import { basicChallenges, intermediateChallenges, advancedChallenges } from '../challenges/challenges';
+import { getChallengesByDifficulty } from '../api';
 
 
 const PageWrapper = styled.div`
@@ -66,36 +66,53 @@ const Question = styled.h2`
 
 
 const ChallengeSelectionPage: React.FC = () => {
-    const [difficulty, setDifficulty] = useState('Básico');
-    
-    const getActiveChallenges = (): Challenge[] => {
-        switch (difficulty) {
-            case 'Básico':
-                return basicChallenges; 
-            case 'Intermediário':
-                return intermediateChallenges; 
-            case 'Avançado':
-                return advancedChallenges; 
-            default:
-                return [];
-        }
-    };
-    
-    return (
-        <PageWrapper>
-            {/* ... */}
-            {/* <UserHeader /> */}
-            <MainContainer>
-                {/* ... */}
-                <ContentBox>
-                    {/* ... */}
-                    <DifficultySelector selected={difficulty} onSelect={setDifficulty} />
-                </ContentBox>
+  const [difficulty, setDifficulty] = useState('Básico');
+  const [challenges, setChallenges] = useState<Challenge[]>([]);
+  const [loading, setLoading] = useState(false);
 
-                <ChallengeList challenges={getActiveChallenges()} />
-            </MainContainer>
-        </PageWrapper>
-    );
-}
+  const difficultyMap = {
+    'Básico': 'EASY' as const,
+    'Intermediário': 'MEDIUM' as const,  
+    'Avançado': 'HARD' as const
+  };
+
+  const loadChallenges = async (selectedDifficulty: string) => {
+    setLoading(true);
+    try {
+      const backendDifficulty = difficultyMap[selectedDifficulty as keyof typeof difficultyMap];
+      const challengesList = await getChallengesByDifficulty(backendDifficulty);
+      setChallenges(challengesList);
+    } catch (error) {
+      console.error('Erro ao carregar desafios:', error);
+      setChallenges([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadChallenges(difficulty);
+  }, [difficulty]);
+
+  return (
+    <PageWrapper>
+      <MainContainer>
+        <ContentBox>
+          <Subtitle>Selecione o nível de dificuldade</Subtitle>
+          <Title>Desafios Disponíveis</Title>
+          <DifficultySelector selected={difficulty} onSelect={setDifficulty} />
+        </ContentBox>
+
+        {loading ? (
+          <div style={{ textAlign: 'center', padding: '2rem', color: '#6c757d' }}>
+            Carregando desafios...
+          </div>
+        ) : (
+          <ChallengeList challenges={challenges} />
+        )}
+      </MainContainer>
+    </PageWrapper>
+  );
+};
 
 export default ChallengeSelectionPage;
