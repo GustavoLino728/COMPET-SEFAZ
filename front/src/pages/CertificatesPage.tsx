@@ -14,9 +14,24 @@ const CertificatesPage: React.FC = () => {
     searchCertificates,
     getCompletedCertificates,
     getAvailableCertificates,
-    groupCertificatesByProgram
+    groupCertificatesByProgram,
+    refreshCertificates
   } = useCertificates();
 
+  // Recarregar certificados quando a página for focada (usuário volta do quiz)
+  useEffect(() => {
+    const handleFocus = () => {
+      refreshCertificates();
+    };
+
+    window.addEventListener('focus', handleFocus);
+    return () => window.removeEventListener('focus', handleFocus);
+  }, []); // Removido refreshCertificates da dependência
+
+  // Recarregar certificados quando a página for montada
+  useEffect(() => {
+    refreshCertificates();
+  }, []); // Removido refreshCertificates da dependência
 
   const filteredCertificates = searchCertificates(searchTerm);
   const completedCertificates = getCompletedCertificates().filter(cert =>
@@ -25,6 +40,13 @@ const CertificatesPage: React.FC = () => {
   const availableCertificates = getAvailableCertificates().filter(cert =>
     filteredCertificates.some(f => f.id === cert.id)
   );
+
+  // Debug logs
+  console.log('🔍 Total certificados:', certificates.length);
+  console.log('🔍 Certificados completados:', completedCertificates.length);
+  console.log('🔍 Certificados disponíveis:', availableCertificates.length);
+  console.log('🔍 Lista de completados:', completedCertificates.map(c => c.id));
+  console.log('🔍 Lista de disponíveis:', availableCertificates.map(c => c.id));
 
   const handleDownload = (certificateId: string) => {
     // Implementar download do certificado

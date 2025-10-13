@@ -439,3 +439,46 @@ def get_user_certificates(request):
         'passed_certificates': len([c for c in certificates_data if c['passed']]),
         'failed_certificates': len([c for c in certificates_data if not c['passed']])
     })
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_completed_certificates(request):
+    """
+    Retorna apenas os certificados aprovados (completados) pelo usuário
+    """
+    user = request.user
+    print(f"🔍 Buscando certificados completados para usuário: {user.email}")
+    print(f"🔍 Headers da requisição: {dict(request.headers)}")
+    print(f"🔍 Authorization header: {request.headers.get('Authorization', 'Não encontrado')}")
+    
+    # Buscar todos os certificados do usuário (aprovados e reprovados)
+    all_certificates = CertificateTest.objects.filter(user=user).order_by('-completed_at')
+    print(f"🔍 Total de certificados do usuário: {all_certificates.count()}")
+    
+    for cert in all_certificates:
+        print(f"🔍 Certificado: {cert.program}-{cert.track}, passed: {cert.passed}, score: {cert.score}")
+    
+    # Buscar apenas os aprovados
+    completed_certificates = CertificateTest.objects.filter(
+        user=user, 
+        passed=True
+    ).order_by('-completed_at')
+    
+    print(f"🔍 Certificados aprovados: {completed_certificates.count()}")
+    
+    completed_data = []
+    for cert in completed_certificates:
+        completed_data.append({
+            'program': cert.program,
+            'track': cert.track,
+            'score': float(cert.score),
+            'completed_at': cert.completed_at,
+            'certificate_id': f"{cert.program}-{cert.track}"
+        })
+    
+    print(f"🔍 Dados retornados: {completed_data}")
+    
+    return Response({
+        'completed_certificates': completed_data,
+        'total_completed': len(completed_data)
+    })

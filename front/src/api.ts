@@ -211,8 +211,13 @@ const progressApi = axios.create({
 progressApi.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("accessToken");
+    console.log('🔍 progressApi interceptor: Token presente?', !!token);
+    console.log('🔍 progressApi interceptor: URL:', config.url);
     if (token) {
       config.headers.Authorization = `JWT ${token}`;
+      console.log('🔍 progressApi interceptor: Token adicionado ao header');
+    } else {
+      console.log('🔍 progressApi interceptor: Nenhum token encontrado');
     }
     return config;
   },
@@ -220,11 +225,16 @@ progressApi.interceptors.request.use(
 );
 
 progressApi.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    console.log('🔍 progressApi response interceptor - sucesso:', response.config.url, response.status);
+    return response;
+  },
   async (error) => {
+    console.log('🔍 progressApi response interceptor - erro:', error.config?.url, error.response?.status);
     const originalRequest = error.config;
     
     if (error.response?.status === 401 && !originalRequest._retry) {
+      console.log('🔍 progressApi response interceptor - tentando renovar token');
       originalRequest._retry = true;
       try {
         await refreshToken();
@@ -232,6 +242,7 @@ progressApi.interceptors.response.use(
         originalRequest.headers.Authorization = `JWT ${token}`;
         return progressApi(originalRequest);
       } catch (refreshError) {
+        console.log('🔍 progressApi response interceptor - erro ao renovar token');
         logoutUser();
         window.location.href = "/login";
       }
@@ -491,6 +502,50 @@ export const submitCertificateTest = async (data: {
 }) => {
   const response = await progressApi.post('/progress/certificates/submit/', data);
   return response.data;
+};
+
+// Get completed certificates for the user
+export interface CompletedCertificateData {
+  program: string;
+  track: string;
+  score: number;
+  completed_at: string;
+  certificate_id: string;
+}
+
+export interface CompletedCertificatesResponse {
+  completed_certificates: CompletedCertificateData[];
+  total_completed: number;
+}
+
+export const getCompletedCertificates = async (): Promise<CompletedCertificatesResponse> => {
+  console.log('🔍 API: Chamando getCompletedCertificates...');
+  
+  // Verificar se há token no localStorage
+  const token = localStorage.getItem("accessToken");
+  console.log('🔍 API: Token presente?', !!token);
+  console.log('🔍 API: Token (primeiros 20 chars):', token ? token.substring(0, 20) + '...' : 'null');
+  
+  // Verificar se o usuário está logado
+  if (!token) {
+    console.error('🔍 API: Nenhum token encontrado - usuário não está logado');
+    throw new Error('Usuário não está logado');
+  }
+  
+  try {
+    console.log('🔍 API: Fazendo requisição para /progress/certificates/completed/');
+    const response = await progressApi.get('/progress/certificates/completed/');
+    console.log('🔍 API: Resposta recebida:', response.data);
+    console.log('🔍 API: Status da resposta:', response.status);
+    console.log('🔍 API: Headers da resposta:', response.headers);
+    return response.data;
+  } catch (error) {
+    console.error('🔍 API: Erro ao buscar certificados completados:', error);
+    console.error('🔍 API: Status do erro:', error.response?.status);
+    console.error('🔍 API: Dados do erro:', error.response?.data);
+    console.error('🔍 API: Erro completo:', error);
+    throw error;
+  }
 };
 
 // Transformar BackendChallenge para o formato atual do frontend

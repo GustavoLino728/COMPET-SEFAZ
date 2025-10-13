@@ -40,7 +40,7 @@ user.save()
 
 print('✅ Usuário administrador criado/atualizado!')
 print(f'📧 Email: {user.email}')
-print(f'🔑 Senha: admin123')
+print(f'🔑 Senha: admin12345')
 print(f'👤 Staff: {user.is_staff}')
 print(f'🔧 Superuser: {user.is_superuser}')
 "
@@ -48,6 +48,6 @@ print(f'🔧 Superuser: {user.is_superuser}')
 echo ""
 echo "🎯 Agora você pode fazer login no frontend com:"
 echo "   Email: admin@sefaz.com"
-echo "   Senha: admin123"
+echo "   Senha: admin12345"
 echo ""
 echo "✨ O card 'Painel Administrativo' deve aparecer na página inicial!"
