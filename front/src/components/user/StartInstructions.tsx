@@ -53,7 +53,7 @@ const StartButton = styled.button`
 `;
 
 const StartInstructions: React.FC<InstructionsProps> = ({ description, questionCount }) => {
-  // 2. Use o hook useParams para capturar o ID da URL da página atual
+  // Capturar o ID da URL da página atual
   const { id } = useParams<{ id: string }>();
 
   return (
@@ -61,15 +61,19 @@ const StartInstructions: React.FC<InstructionsProps> = ({ description, questionC
       <Description>
         {description}
         <br />
-        <strong>São {questionCount} questões ao todo de múltipla escolha.</strong>
+        <strong>
+          {questionCount === 1 
+            ? 'É 1 questão ao todo.'
+            : `São ${questionCount} questões ao todo.`
+          }
+        </strong>
       </Description>
       <CallToAction>Clique no botão abaixo para começar</CallToAction>
       
-      {/* 3. Envolva o botão com o Link, apontando para a rota do quiz com o ID capturado */}
+      {/* Link para o quiz usando o ID capturado da URL */}
       <Link to={`/quiz/${id}`}>
         <StartButton>Iniciar quiz</StartButton>
       </Link>
-
     </InstructionsContainer>
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Challenge } from '../../types';
+import { type Challenge } from '../../types';
 import { Link } from 'react-router-dom';
 // Dados mocados para a lista de desafios
 

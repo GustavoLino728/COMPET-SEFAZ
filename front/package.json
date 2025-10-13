@@ -1,6 +1,5 @@
 {
-  "name": "front",
-  "version": "0.1.0",
+  "name": "front-vite",
   "private": true,
   
   "dependencies": {

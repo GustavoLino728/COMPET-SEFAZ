@@ -1,12 +1,5 @@
 // Você pode ter este tipo em um arquivo src/types/index.ts
-export interface QuizQuestion {
-    id: number;
-    type: 'multiple-choice' | 'essay';
-    question: string;
-    options?: string[];
-    correctAnswerIndex?: number;
-    justification: string;
-}
+import { QuizQuestion } from "../types";
 
 export const quizDesafio1: QuizQuestion[] = [
     {

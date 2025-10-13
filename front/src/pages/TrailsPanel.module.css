@@ -98,56 +98,27 @@
   padding-bottom: 0.5rem; 
 }
 
-.backButton {
-  background-color: #f3f4f6; 
-  color: #374151; 
-  border: 1px solid #e5e7eb;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%; 
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  margin-bottom: 1.5rem;
-  align-self: flex-start; 
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Em TrailsPanel.module.css */
-
-/* Estilo para o subtítulo em negrito */
 .contentTitleBold {
-  font-size: 16px; /* Ajuste o tamanho se for diferente */
-  font-weight: 700; /* 700 é o valor comum para bold */
+  font-size: 16px; 
+  font-weight: 700; 
   color: #1f2937;
   margin-bottom: 1rem;
+  margin-top: 2rem;
 }
 
-/* Container para a lista alfabética */
 .alphaList {
-  list-style: none; /* Remove os pontinhos */
-  padding-left: 1.5rem; /* Adiciona o recuo */
+  list-style: none; 
+  padding-left: 1.5rem; 
   margin-top: 1rem;
 }
 
-/* Cada item da lista */
 .alphaListItem {
   color: #374151;
   font-size: 16px;
   line-height: 1.6;
-  padding-bottom: 1rem; /* Espaço entre os itens */
+  padding-bottom: 1rem; 
 }
 
-/* Em TrailsPanel.module.css */
-
-/* --- ESTILOS PARA A LISTA ANINHADA (Bolinhas e Quadrados) --- */
-/* Em TrailsPanel.module.css */
-
-/* Lista Principal (Nível 1 - Bolinha vazia) */
 .mainList {
   list-style: none;
   padding-left: 0;
@@ -169,7 +140,6 @@
   line-height: 1.3;
 }
 
-/* Sub-Lista (Nível 2 - Quadrado) */
 .subList {
   list-style: none;
   padding-left: 0;
@@ -182,7 +152,6 @@
   margin-bottom: 0.5rem;
 }
 
-
 .subListItem::before {
   content: '■';
   position: absolute;
@@ -193,7 +162,6 @@
   line-height: 1.8;
 }
 
-/* --- ESTILOS PARA A LISTA ALFABÉTICA (Recuada, sem marcadores) --- */
 .alphaList {
   list-style: none;
   padding-left: 1.5rem;
@@ -205,4 +173,26 @@
   font-size: 16px;
   line-height: 1.6;
   padding-bottom: 1rem;
+}
+
+.backButton {
+  background-color: #f3f4f6;
+  color: #374151;
+  border: 1px solid #e5e7eb;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-bottom: 1.5rem; 
+  align-self: flex-start; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.backButton:hover {
+  background-color: #e5e7eb;
 }
