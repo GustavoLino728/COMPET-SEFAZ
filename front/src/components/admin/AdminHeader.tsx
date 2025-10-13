@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useAuth } from '../../contexts/AuthContext';
 
 const HeaderContainer = styled.header`
   background-color: #fff;
@@ -51,6 +52,12 @@ const ExitButton = styled.button`
 `;
 
 const AdminHeader: React.FC = () => {
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+  };
+
   return (
     <HeaderContainer>
       <Logo>fiscolab</Logo>
@@ -58,7 +65,7 @@ const AdminHeader: React.FC = () => {
         <NavLink>Página Inicial</NavLink>
         <NavLink>Cursos</NavLink>
         <NavLink>Sobre Nós</NavLink>
-        <ExitButton>Sair</ExitButton>
+        <ExitButton onClick={handleLogout}>Sair</ExitButton>
       </Nav>
     </HeaderContainer>
   );
