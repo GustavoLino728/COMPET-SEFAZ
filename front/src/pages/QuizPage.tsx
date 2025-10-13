@@ -161,7 +161,6 @@ const QuizPage: React.FC = () => {
       }
       
       try {
-        console.log(`🔄 Carregando desafio ${challengeId}...`);
         const challenge = await fetchChallenge(parseInt(challengeId));
         
         if (challenge.status !== 'APPROVED') {
@@ -177,9 +176,6 @@ const QuizPage: React.FC = () => {
           setLoading(false);
           return;
         }
-        
-        console.log(`✅ Desafio carregado: ${questions.length} questões`);
-        console.log(`📋 Tipos: ${questions.map(q => q.type).join(', ')}`);
         
         setQuizData(questions);
       } catch (error: any) {
@@ -198,6 +194,48 @@ const QuizPage: React.FC = () => {
   }, [challengeId]);
 
   const currentQuestion = quizData[currentQuestionIndex];
+
+    if (loading) {
+    return (
+      <QuizContainer>
+        <LoadingContainer>
+          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🔄</div>
+          <h3>Carregando desafio...</h3>
+          <p>Aguarde enquanto buscamos as questões</p>
+        </LoadingContainer>
+      </QuizContainer>
+    );
+  }
+
+  if (error || quizData.length === 0) {
+    return (
+      <QuizContainer>
+        <ErrorContainer>
+          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>❌</div>
+          <h3>Erro ao carregar desafio</h3>
+          <p>{error || 'Desafio não encontrado ou sem questões disponíveis'}</p>
+          <button onClick={() => navigate('/desafios')}>
+            Voltar aos desafios
+          </button>
+        </ErrorContainer>
+      </QuizContainer>
+    );
+  }
+
+  if (!currentQuestion) {
+    return (
+      <QuizContainer>
+        <ErrorContainer>
+          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>⚠️</div>
+          <h3>Questão não encontrada</h3>
+          <p>Índice da questão inválido</p>
+          <button onClick={() => navigate('/desafios')}>
+            Voltar aos desafios
+          </button>
+        </ErrorContainer>
+      </QuizContainer>
+    );
+  }
   
   const handleSelectAnswer = (index: number) => {
     if (!isAnswered) {
@@ -210,11 +248,55 @@ const QuizPage: React.FC = () => {
       if (selectedAnswer === null) return;
       const correct = selectedAnswer === currentQuestion.correctAnswerIndex;
       setIsCorrect(correct);
+    } else if (currentQuestion.type === 'problem') {
+      if (essayAnswer.trim() === '') return;
+      
+      const userAnswer = parseFloat(essayAnswer.replace(',', '.'));
+      const correctAnswer = currentQuestion.correctAnswer || 0;
+      
+      const tolerance = 0.01;
+      const correct = Math.abs(userAnswer - correctAnswer) <= tolerance;
+      
+      setIsCorrect(correct);
     } else {
       setIsCorrect(true);
     }
     setIsAnswered(true);
   };
+
+  {currentQuestion.type === 'multiple-choice' ? (
+    <AnswerOptions
+      options={currentQuestion.options!}
+      selectedAnswer={selectedAnswer}
+      onSelectAnswer={handleSelectAnswer}
+      isAnswered={isAnswered}
+      correctAnswerIndex={currentQuestion.correctAnswerIndex!}
+    />
+  ) : (
+    <EssayAnswer
+      userAnswer={essayAnswer}
+      setUserAnswer={setEssayAnswer}
+      isAnswered={isAnswered}
+    />
+  )}
+
+  {isAnswered && (
+    <FeedbackCard isCorrect={!!isCorrect}>
+      <h3>
+        {currentQuestion.type === 'multiple-choice' && (isCorrect ? '✅ Você acertou!' : '❌ Você errou!')}
+        {currentQuestion.type === 'problem' && (isCorrect ? '✅ Resposta correta!' : '❌ Resposta incorreta!')}
+        {currentQuestion.type === 'essay' && '📝 Justificativa'}
+      </h3>
+      <p>{currentQuestion.justification}</p>
+      {/* Se quiser mostrar a resposta correta quando errar em cálculo */}
+      {currentQuestion.type === 'problem' && !isCorrect && (
+        <p style={{ marginTop: '0.5rem', fontWeight: 'bold' }}>
+          Resposta correta: {currentQuestion.correctAnswer}
+        </p>
+      )}
+    </FeedbackCard>
+  )}
+
   
   const handleNavigation = (direction: 'next' | 'prev') => {
       const newIndex = direction === 'next' ? currentQuestionIndex + 1 : currentQuestionIndex - 1;

@@ -570,7 +570,6 @@ export const getChallengesByDifficulty = async (difficulty: 'EASY' | 'MEDIUM' | 
   return filtered.map(transformChallengeForList);
 };
 
-// Transformar questões do backend para o formato do quiz
 export const transformQuestionsForQuiz = (backendChallenge: BackendChallenge): QuizQuestion[] => {
   const quizQuestions: QuizQuestion[] = [];
 
@@ -590,8 +589,19 @@ export const transformQuestionsForQuiz = (backendChallenge: BackendChallenge): Q
       });
     });
   }
+  
+  if (backendChallenge.problem_questions) {
+    backendChallenge.problem_questions.forEach((pq) => {
+      quizQuestions.push({
+        id: pq.id,
+        type: 'problem', 
+        question: pq.statement,
+        correctAnswer: Number(pq.correct_answer),
+        justification: pq.justification || 'Justificativa não disponível.'
+      });
+    });
+  }
 
-  // Dissertativas
   if (backendChallenge.discursive_questions) {
     backendChallenge.discursive_questions.forEach((dq) => {
       quizQuestions.push({
@@ -603,17 +613,87 @@ export const transformQuestionsForQuiz = (backendChallenge: BackendChallenge): Q
     });
   }
 
-  // Problemas (como essay por enquanto)
-  if (backendChallenge.problem_questions) {
-    backendChallenge.problem_questions.forEach((pq) => {
-      quizQuestions.push({
-        id: pq.id,
-        type: 'essay', // Por enquanto, tratar como essay
-        question: pq.statement,
-        justification: pq.justification || `Resposta esperada: ${pq.correct_answer}`
-      });
-    });
+  return quizQuestions;
+};
+
+export const parseTrailId = (trailId: string): { program: string; trailNumber: number; trailName: string } => {
+  const trailMappings = {
+    // PROIND
+    'proind-calculo-incentivo': { program: 'PROIND', trailNumber: 1, trailName: 'Cálculo do Incentivo' },
+    'proind-lancamentos-incentivo': { program: 'PROIND', trailNumber: 2, trailName: 'Lançamentos do Incentivo' },
+    'proind-controles-suplementares': { program: 'PROIND', trailNumber: 3, trailName: 'Controles Suplementares' },
+    'proind-concessao-incentivo': { program: 'PROIND', trailNumber: 4, trailName: 'Concessão do Incentivo' },
+    
+    // PRODEPE
+    'prodepe-calculo-incentivo': { program: 'PRODEPE', trailNumber: 1, trailName: 'Cálculo do Incentivo' },
+    'prodepe-lancamentos-incentivo': { program: 'PRODEPE', trailNumber: 2, trailName: 'Lançamentos do Incentivo' },
+    'prodepe-controles-suplementares': { program: 'PRODEPE', trailNumber: 3, trailName: 'Controles Suplementares' },
+    'prodepe-concessao-incentivo': { program: 'PRODEPE', trailNumber: 4, trailName: 'Concessão do Incentivo' },
+    
+    // PRODEAUTO
+    'prodeauto-calculo-incentivo': { program: 'PRODEAUTO', trailNumber: 1, trailName: 'Cálculo do Incentivo' },
+    'prodeauto-lancamentos-incentivo': { program: 'PRODEAUTO', trailNumber: 2, trailName: 'Lançamentos do Incentivo' },
+    'prodeauto-controles-suplementares': { program: 'PRODEAUTO', trailNumber: 3, trailName: 'Controles Suplementares' },
+    'prodeauto-concessao-incentivo': { program: 'PRODEAUTO', trailNumber: 4, trailName: 'Concessão do Incentivo' },
+  };
+
+  const mapping = trailMappings[trailId as keyof typeof trailMappings];
+  if (!mapping) {
+    throw new Error(`Trail ID não encontrado: ${trailId}`);
   }
 
-  return quizQuestions;
+  return mapping;
+};
+
+export const getChallengesByTrailAndDifficulty = async (
+  trailId: string, 
+  difficulty: 'EASY' | 'MEDIUM' | 'HARD'
+): Promise<Challenge[]> => {
+  try {
+    const { program, trailName } = parseTrailId(trailId);
+    
+    const approvedChallenges = await fetchApprovedChallenges();
+    
+    // Filtrar por programa e dificuldade
+    const candidates = approvedChallenges.filter(challenge => 
+      challenge.program_name === program &&
+      challenge.difficulty === difficulty && 
+      challenge.status === 'APPROVED'
+    );
+    
+    // Filtrar por conteúdo da trilha (ignora numeração, usa palavras-chave)
+    const filtered = candidates.filter(challenge => {
+      const trackName = challenge.track_name?.toLowerCase() || '';
+      const title = challenge.title?.toLowerCase() || '';
+      
+      // Verificar tipo de trilha baseado no conteúdo
+      if (trailName.includes('Cálculo')) {
+        return trackName.includes('cálculo') || title.includes('cálculo') ||
+               trackName.includes('calculo') || title.includes('calculo');
+      }
+      
+      if (trailName.includes('Lançamentos')) {
+        return trackName.includes('lançamento') || title.includes('lançamento') ||
+               trackName.includes('lancamento') || title.includes('lancamento');
+      }
+      
+      if (trailName.includes('Controles')) {
+        return trackName.includes('controle') || title.includes('controle') ||
+               trackName.includes('suplementar') || title.includes('suplementar');
+      }
+      
+      if (trailName.includes('Concessão')) {
+        return trackName.includes('concessão') || title.includes('concessão') ||
+               trackName.includes('concessao') || title.includes('concessao');
+      }
+      
+      return false;
+    });
+    
+    return filtered.map(transformChallengeForList);
+    
+  } catch (error) {
+    console.error('Erro ao filtrar desafios por trilha:', error);
+    return [];
+  }
 };

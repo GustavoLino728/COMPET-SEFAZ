@@ -6,13 +6,15 @@ export interface Challenge {
 }
 
 export interface QuizQuestion {
-    id: number;
-    type: 'multiple-choice' | 'essay';
-    question: string;
-    options?: string[];
-    correctAnswerIndex?: number;
-    justification: string;
+  id: number;
+  type: 'multiple-choice' | 'essay' | 'problem';
+  question: string;
+  options?: string[];
+  correctAnswerIndex?: number;
+  correctAnswer?: number;
+  justification: string;
 }
+
 
 export interface BackendChallenge {
   id: number;

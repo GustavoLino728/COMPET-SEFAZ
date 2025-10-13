@@ -8,8 +8,7 @@ from django.db import models
 
 from .models import (
     TrailAccess, UserProgramProgress, UserOverallProgress,
-    ChallengeCompletion, UserBadge, UserBadgeStats, BadgeDefinition,
-    CertificateTest
+    ChallengeCompletion, UserBadge, BadgeDefinition
 )
 from .serializers import (
     TrackTrailAccessSerializer, 
@@ -23,9 +22,7 @@ from .serializers import (
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def track_trail_access(request):
-    """
-    Registra o acesso do usuário a uma trilha
-    """
+    """Registra o acesso do usuário a uma trilha"""
     serializer = TrackTrailAccessSerializer(data=request.data)
     if not serializer.is_valid():
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -35,14 +32,10 @@ def track_trail_access(request):
     
     try:
         with transaction.atomic():
-            # 1. Registrar/atualizar acesso à trilha
             trail_access, created = TrailAccess.objects.get_or_create(
                 user=user,
-                trail_id=data['trail_id'],
-                defaults={
-                    'program': data['program'],
-                    'trail_number': data['trail_number'],
-                }
+                program=data['program'],
+                trail_number=data['trail_number'],
             )
             
             if not created:
@@ -50,37 +43,17 @@ def track_trail_access(request):
                 trail_access.last_access = timezone.now()
                 trail_access.save()
             
-            # 2. Atualizar progresso do programa
             program_progress, _ = UserProgramProgress.objects.get_or_create(
                 user=user,
                 program=data['program'],
             )
             
-            # Adicionar trilha se não estiver na lista
             if data['trail_number'] not in program_progress.trails_accessed:
                 program_progress.trails_accessed.append(data['trail_number'])
                 program_progress.trails_accessed.sort()
+                program_progress.save()
             
-            # Atualizar última trilha acessada
-            program_progress.last_accessed_trail = max(
-                program_progress.last_accessed_trail, 
-                data['trail_number']
-            )
-            
-            # Recalcular total de acessos do programa
-            program_progress.total_access_count = TrailAccess.objects.filter(
-                user=user, program=data['program']
-            ).aggregate(
-                total=models.Sum('access_count')
-            )['total'] or 0
-            
-            program_progress.save()
-            
-            # 3. Atualizar/criar progresso geral
-            overall_progress, _ = UserOverallProgress.objects.get_or_create(
-                user=user
-            )
-            overall_progress.update_stats()
+            UserOverallProgress.objects.get_or_create(user=user)
             
             return Response({
                 'status': 'success',
@@ -107,23 +80,17 @@ def track_trail_access(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_user_progress(request):
-    """
-    Retorna o progresso completo do usuário
-    """
+    """Retorna o progresso completo do usuário"""
     user = request.user
     
-    # Progresso por programa
     program_progresses = UserProgramProgress.objects.filter(user=user)
     program_data = UserProgramProgressSerializer(program_progresses, many=True).data
     
-    # Progresso geral
     overall_progress, _ = UserOverallProgress.objects.get_or_create(user=user)
-    overall_progress.update_stats()  # Garantir dados atualizados
     overall_data = UserOverallProgressSerializer(overall_progress).data
     
     total_challenges = ChallengeCompletion.objects.filter(user=user).count()
     
-    # Acessos recentes (últimos 10)
     recent_accesses = TrailAccess.objects.filter(
         user=user
     ).order_by('-last_access')[:10]
@@ -139,9 +106,7 @@ def get_user_progress(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_program_progress(request, program):
-    """
-    Retorna progresso específico de um programa
-    """
+    """Retorna progresso específico de um programa"""
     try:
         progress = UserProgramProgress.objects.get(
             user=request.user, 
@@ -156,15 +121,15 @@ def get_program_progress(request, program):
             'progress_percentage': 0.0,
             'trails_accessed': [],
             'is_completed': False,
-            'next_trail': 1
+            'next_trail': 1,
+            'last_accessed_trail': 0,
+            'total_access_count': 0
         })
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def complete_challenge(request):
-    """
-    Registra a conclusão de um desafio e concede badge se aplicável
-    """
+    """Registra a conclusão de um desafio e concede badge se aplicável"""
     serializer_data = request.data
     user = request.user
     
@@ -176,7 +141,6 @@ def complete_challenge(request):
     
     try:
         with transaction.atomic():
-            # Verificar se já completou este desafio
             completion, created = ChallengeCompletion.objects.get_or_create(
                 user=user,
                 program=serializer_data['program'],
@@ -190,8 +154,7 @@ def complete_challenge(request):
             )
             
             badge_earned = None
-            if created:  # Primeira conclusão
-                # Buscar definição do badge correspondente
+            if created:
                 try:
                     badge_def = BadgeDefinition.objects.get(
                         program=serializer_data['program'],
@@ -199,17 +162,11 @@ def complete_challenge(request):
                         difficulty=serializer_data['difficulty'],
                         is_active=True
                     )
-                    
-                    # Criar badge para o usuário
                     user_badge = UserBadge.objects.create(
                         user=user,
                         badge_definition=badge_def,
                         challenge_completion=completion
                     )
-                    
-                    # Atualizar estatísticas de badges
-                    badge_stats, _ = UserBadgeStats.objects.get_or_create(user=user)
-                    badge_stats.update_stats()
                     
                     badge_earned = {
                         'id': user_badge.id,
@@ -221,10 +178,8 @@ def complete_challenge(request):
                     }
                     
                 except BadgeDefinition.DoesNotExist:
-                    # Badge definition não existe - pode acontecer se não rodou o command
                     pass
             else:
-                # Atualizar tentativas se não é primeira vez
                 completion.attempts += 1
                 completion.save()
             
@@ -246,9 +201,7 @@ def complete_challenge(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_user_badges(request):
-    """
-    Retorna todos os badges do usuário com URLs de imagem
-    """
+    """Retorna todos os badges do usuário com URLs de imagem"""
     user_badges = UserBadge.objects.filter(user=request.user).select_related(
         'badge_definition', 'challenge_completion'
     ).order_by('-earned_at')
@@ -259,8 +212,8 @@ def get_user_badges(request):
             'id': badge.id,
             'name': badge.badge_definition.name,
             'description': badge.badge_definition.description,
-            'image_url': badge.badge_definition.badge_image_url,  # URL da imagem
-            'image_path': badge.badge_definition.badge_image,     # Caminho relativo
+            'image_url': badge.badge_definition.badge_image_url,
+            'image_path': badge.badge_definition.badge_image,
             'type': badge.badge_definition.badge_type,
             'program': badge.badge_definition.program,
             'trail_number': badge.badge_definition.trail_number,
@@ -269,95 +222,67 @@ def get_user_badges(request):
             'score': float(badge.challenge_completion.score) if badge.challenge_completion.score else None,
         })
     
-    # Estatísticas
-    badge_stats, _ = UserBadgeStats.objects.get_or_create(user=request.user)
-    badge_stats.update_stats()
+    total_badges = len(badges_data)
+    bronze_badges = sum(1 for b in badges_data if b['type'] == 'BRONZE')
+    silver_badges = sum(1 for b in badges_data if b['type'] == 'SILVER')
+    gold_badges = sum(1 for b in badges_data if b['type'] == 'GOLD')
+    
+    proind_badges = sum(1 for b in badges_data if b['program'] == 'PROIND')
+    prodepe_badges = sum(1 for b in badges_data if b['program'] == 'PRODEPE')
+    prodeauto_badges = sum(1 for b in badges_data if b['program'] == 'PRODEAUTO')
+    
+    first_badge = badges_data[-1] if badges_data else None
+    last_badge = badges_data[0] if badges_data else None
     
     return Response({
         'badges': badges_data,
         'stats': {
-            'total_badges': badge_stats.total_badges,
-            'bronze_badges': badge_stats.bronze_badges,
-            'silver_badges': badge_stats.silver_badges,
-            'gold_badges': badge_stats.gold_badges,
-            'completion_percentage': float(badge_stats.completion_percentage),
-            'proind_badges': badge_stats.proind_badges,
-            'prodepe_badges': badge_stats.prodepe_badges,
-            'prodeauto_badges': badge_stats.prodeauto_badges,
-            'first_badge_earned': badge_stats.first_badge_earned,
-            'last_badge_earned': badge_stats.last_badge_earned,
+            'total_badges': total_badges,
+            'bronze_badges': bronze_badges,
+            'silver_badges': silver_badges,
+            'gold_badges': gold_badges,
+            'completion_percentage': round((total_badges / 36) * 100, 2),
+            'proind_badges': proind_badges,
+            'prodepe_badges': prodepe_badges,
+            'prodeauto_badges': prodeauto_badges,
+            'first_badge_earned': first_badge['earned_at'] if first_badge else None,
+            'last_badge_earned': last_badge['earned_at'] if last_badge else None,
         }
     })
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def get_available_badges(request):
-    """
-    Retorna badges disponíveis com URLs de imagem
-    """
-    # Badges já conquistados
-    earned_badge_ids = UserBadge.objects.filter(user=request.user).values_list(
-        'badge_definition_id', flat=True
-    )
-    
-    # Badges disponíveis
-    available_badges = BadgeDefinition.objects.filter(
-        is_active=True
-    ).exclude(id__in=earned_badge_ids).order_by('program', 'trail_number', 'difficulty')
-    
-    available_data = []
-    for badge in available_badges:
-        available_data.append({
-            'id': badge.id,
-            'name': badge.name,
-            'description': badge.description,
-            'image_url': badge.badge_image_url,  # URL da imagem
-            'image_path': badge.badge_image,     # Caminho relativo
-            'type': badge.badge_type,
-            'program': badge.program,
-            'trail_number': badge.trail_number,
-            'difficulty': badge.difficulty,
-        })
-    
-    return Response({
-        'available_badges': available_data,
-        'total_available': len(available_data),
-        'total_possible': BadgeDefinition.objects.filter(is_active=True).count()
-    })
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
 def get_badge_stats(request):
-    """
-    Retorna estatísticas detalhadas de badges do usuário
-    """
-    badge_stats, _ = UserBadgeStats.objects.get_or_create(user=request.user)
-    badge_stats.update_stats()
+    """Retorna estatísticas detalhadas de badges do usuário"""
+    user_badges = UserBadge.objects.filter(user=request.user).select_related('badge_definition')
+    total_badges = user_badges.count()
+    bronze_badges = user_badges.filter(badge_definition__badge_type='BRONZE').count()
+    silver_badges = user_badges.filter(badge_definition__badge_type='SILVER').count()
+    gold_badges = user_badges.filter(badge_definition__badge_type='GOLD').count()
     
-    # Progresso por programa
     program_stats = []
     for program in ['PROIND', 'PRODEPE', 'PRODEAUTO']:
-        program_badges = UserBadge.objects.filter(
-            user=request.user,
-            badge_definition__program=program
-        ).count()
+        program_badges = user_badges.filter(badge_definition__program=program).count()
         
         program_stats.append({
             'program': program,
             'badges_earned': program_badges,
-            'total_possible': 12,  # 4 trilhas x 3 níveis
+            'total_possible': 12,
             'percentage': round((program_badges / 12) * 100, 1)
         })
     
+    first_badge = user_badges.order_by('earned_at').first()
+    last_badge = user_badges.order_by('-earned_at').first()
+    
     return Response({
         'overall_stats': {
-            'total_badges': badge_stats.total_badges,
-            'bronze_badges': badge_stats.bronze_badges,
-            'silver_badges': badge_stats.silver_badges,
-            'gold_badges': badge_stats.gold_badges,
-            'completion_percentage': float(badge_stats.completion_percentage),
-            'first_badge_earned': badge_stats.first_badge_earned,
-            'last_badge_earned': badge_stats.last_badge_earned,
+            'total_badges': total_badges,
+            'bronze_badges': bronze_badges,
+            'silver_badges': silver_badges,
+            'gold_badges': gold_badges,
+            'completion_percentage': round((total_badges / 36) * 100, 2),
+            'first_badge_earned': first_badge.earned_at if first_badge else None,
+            'last_badge_earned': last_badge.earned_at if last_badge else None,
         },
         'program_stats': program_stats
     })

@@ -11,8 +11,8 @@ import UserSetup from './pages/UserSetup';
 import ResetPassword from './pages/ResetPasswordPage';
 import ResetPasswordConfirm from './pages/ResetPasswordConfirmPage';
 import ProgramasPage from './pages/ProgramasPage'; 
-import ProgramaTrilhasPage from './pages/ProgramaTrilhasPage'; 
-
+import ProgramaTrilhasPage from './pages/ProgramaTrilhasPage';
+import TrailChallengePage from './pages/TrailChallengePage'
 import './App.css';
 import './styles/global.css';
 import { createGlobalStyle } from 'styled-components';
@@ -87,6 +87,7 @@ function App() {
             <Route path="/reset-password/:uid/:token" element={<ResetPasswordConfirm/>}/>
             <Route path="/perfil" element={<UserProfilePage/>}/>
             <Route path="/trilhas/:trilhaId" element={<TrailsPanel />} />
+            <Route path="/desafios/:trailId" element={<TrailChallengePage />} />
             <Route path="/certificados" element={<CertificatesPage />} />
             <Route path="/certificados/quiz/:program/:track" element={<CertificateQuizPage />} />
             <Route path="/certificados/resultado/:program/:track" element={<CertificateResultPage />} />

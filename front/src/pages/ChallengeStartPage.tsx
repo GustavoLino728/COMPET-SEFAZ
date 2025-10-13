@@ -114,8 +114,6 @@ const ChallengeStartPage: React.FC = () => {
           setLoading(false);
           return;
         }
-        
-        console.log('✅ Dados do desafio carregados:', challenge);
         setChallengeData(challenge);
         
       } catch (err: any) {
