@@ -351,6 +351,41 @@ const questionsApi = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
+// Interceptor para adicionar token automaticamente ao questionsApi
+questionsApi.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      config.headers.Authorization = `JWT ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+// Interceptor para renovar token automaticamente quando expira no questionsApi
+questionsApi.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+    
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        await refreshToken();
+        const token = localStorage.getItem("accessToken");
+        originalRequest.headers.Authorization = `JWT ${token}`;
+        return questionsApi(originalRequest);
+      } catch (refreshError) {
+        logoutUser();
+        window.location.href = "/login";
+      }
+    }
+    
+    return Promise.reject(error);
+  }
+);
+
 export const fetchChallenge = async (id: number) => {
   const response = await questionsApi.get(`/api/challenges/${id}/`);
   return response.data;
@@ -409,5 +444,50 @@ export const updateChallengeStatus = async (id: number, status: 'APPROVED' | 'PE
 // Delete challenge
 export const deleteChallenge = async (id: number) => {
   const response = await questionsApi.delete(`/api/challenges/${id}/`);
+  return response.data;
+};
+
+// === CERTIFICATE APIs ===
+export interface CertificateQuestion {
+  id: number;
+  statement: string;
+  correct_answer: number;
+  justification: string;
+  challenge: {
+    id: number;
+    title: string;
+    track: {
+      name: string;
+      program: {
+        name: string;
+      };
+    };
+  };
+}
+
+export interface CertificateQuestionsResponse {
+  questions: CertificateQuestion[];
+  total_questions: number;
+  program: string;
+  track: string;
+}
+
+// Get certificate questions for a specific program and track
+export const getCertificateQuestions = async (program: string, track: string): Promise<CertificateQuestionsResponse> => {
+  const response = await questionsApi.get('/api/certificate-questions/', {
+    params: { program, track }
+  });
+  return response.data;
+};
+
+// Submit certificate test results
+export const submitCertificateTest = async (data: {
+  program: string;
+  track: string;
+  answers: { question_id: number; user_answer: number }[];
+  score: number;
+  passed: boolean;
+}) => {
+  const response = await progressApi.post('/progress/certificates/submit/', data);
   return response.data;
 };

@@ -32,8 +32,11 @@ const CertificatesPage: React.FC = () => {
   };
 
   const handleTakeTest = (certificateId: string) => {
-    // Implementar navegação para o teste
-    console.log('Taking test for certificate:', certificateId);
+    // Navegar para o quiz de certificado
+    const certificate = certificates.find(cert => cert.id === certificateId);
+    if (certificate) {
+      window.location.href = `/certificados/quiz/${certificate.program}/${certificate.level}`;
+    }
   };
 
   const availableByProgram = groupCertificatesByProgram(availableCertificates);
@@ -61,7 +64,7 @@ const CertificatesPage: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h1 className={styles.title}>Acesse os seus certificados</h1>
+        <h1 className={styles.title}>Certificações</h1>
         <div className={styles.searchContainer}>
           <div className={styles.searchInput}>
             <svg className={styles.searchIcon} viewBox="0 0 24 24" fill="currentColor">

@@ -42,7 +42,7 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
     if (certificate.isCompleted) {
       return 'Aprovado';
     } else {
-      return 'Bloqueado';
+      return 'Disponível';
     }
   };
 
@@ -50,7 +50,7 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
     if (certificate.isCompleted) {
       return styles.statusApproved;
     } else {
-      return styles.statusBlocked;
+      return styles.statusAvailable;
     }
   };
 
@@ -99,6 +99,9 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
       <div className={styles.cardBody}>
         <div className={styles.programTag}>
           {certificate.program}
+        </div>
+        <div className={styles.trackTag}>
+          {certificate.level}
         </div>
       </div>
       

@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import QuestionViewSet, PendingChallengeListView, AllChallengesListView, ChallengeDetailView, ProblemQuestionDetailView, DiscursiveQuestionDetailView, MultipleChoiceQuestionDetailView
+from .views import QuestionViewSet, PendingChallengeListView, AllChallengesListView, ChallengeDetailView, ProblemQuestionDetailView, DiscursiveQuestionDetailView, MultipleChoiceQuestionDetailView, CertificateQuestionsView
 
 # Create a router and register our viewsets with it
 router = DefaultRouter()
@@ -15,4 +15,5 @@ urlpatterns = [
     path('api/problem-questions/<int:pk>/', ProblemQuestionDetailView.as_view(), name='problem-question-detail'),
     path('api/discursive-questions/<int:pk>/', DiscursiveQuestionDetailView.as_view(), name='discursive-question-detail'),
     path('api/mc-questions/<int:pk>/', MultipleChoiceQuestionDetailView.as_view(), name='mc-question-detail'),
+    path('api/certificate-questions/', CertificateQuestionsView.as_view(), name='certificate-questions'),
 ]

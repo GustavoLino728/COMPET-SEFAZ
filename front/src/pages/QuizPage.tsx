@@ -136,7 +136,6 @@ const QuizPage: React.FC = () => {
 
   return (
     <QuizContainer>
-      <Logo>fiscolab</Logo>
       <QuizProgress
         totalSteps={quizDesafio1.length}
         currentStep={currentQuestionIndex + 1}

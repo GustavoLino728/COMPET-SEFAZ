@@ -35,6 +35,8 @@ import ChallengeGeneratorPage from './pages/ChallengeGeneratorPage';
 import ChallengeGeneratedPage from './pages/ChallengeGeneratedPage';
 import Dashboard from './pages/Dashboard';
 import CertificatesPage from './pages/CertificatesPage';
+import CertificateQuizPage from './pages/CertificateQuizPage';
+import CertificateResultPage from './pages/CertificateResultPage';
 
 
 const GlobalStyle = createGlobalStyle`
@@ -85,6 +87,8 @@ function App() {
             <Route path="/perfil" element={<UserProfilePage/>}/>
             <Route path="/trilhas/:trilhaId" element={<TrailsPanel />} />
             <Route path="/certificados" element={<CertificatesPage />} />
+            <Route path="/certificados/quiz/:program/:track" element={<CertificateQuizPage />} />
+            <Route path="/certificados/resultado/:program/:track" element={<CertificateResultPage />} />
 
             {/* Add other routes as needed */}
           </Routes>
