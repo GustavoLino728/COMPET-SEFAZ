@@ -230,3 +230,41 @@ class UserBadge(models.Model):
     
     def __str__(self):
         return f"{self.user.email} - {self.badge_definition.name}"
+
+class CertificateTest(models.Model):
+    """Registra testes de certificado realizados pelos usuários"""
+    PROGRAMS = [
+        ('PROIND', 'PROIND'),
+        ('PRODEPE', 'PRODEPE'), 
+        ('PRODEAUTO', 'PRODEAUTO'),
+    ]
+    
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='certificate_tests')
+    program = models.CharField(max_length=10, choices=PROGRAMS)
+    track = models.CharField(max_length=100)  # Nome da trilha
+    
+    # Resultados do teste
+    score = models.DecimalField(max_digits=5, decimal_places=2)  # 0-100
+    correct_answers = models.PositiveIntegerField()
+    total_questions = models.PositiveIntegerField()
+    passed = models.BooleanField()  # True se acertou 4 ou mais de 5
+    
+    # Dados das respostas
+    answers = models.JSONField()  # Lista de respostas do usuário
+    
+    # Timestamps
+    started_at = models.DateTimeField(auto_now_add=True)
+    completed_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        indexes = [
+            models.Index(fields=['user', 'completed_at']),
+            models.Index(fields=['program', 'track']),
+            models.Index(fields=['passed']),
+        ]
+        verbose_name = 'Teste de Certificado'
+        verbose_name_plural = 'Testes de Certificados'
+    
+    def __str__(self):
+        status = "Aprovado" if self.passed else "Reprovado"
+        return f"{self.user.email} - {self.program} {self.track} ({status})"
