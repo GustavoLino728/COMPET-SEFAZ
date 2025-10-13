@@ -12,7 +12,8 @@ class CustomUserSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = [
             'id', 'email', 'first_name', 'last_name', 'full_name', 
-            'cpf', 'linkedin_url', 'interest_area', 'field_of_work', 'is_auditor'
+            'cpf', 'linkedin_url', 'interest_area', 'field_of_work', 'is_auditor',
+            'is_staff', 'is_superuser'
         ]
 
         extra_kwargs = {

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 
 
 const HeaderContainer = styled.header`
@@ -48,7 +49,29 @@ const ProfileButton = styled.button`
   }
 `;
 
+const LogoutButton = styled.button`
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: #c82333;
+  }
+`;
+
 const UserHeader: React.FC = () => {
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+  };
+
   return (
     <HeaderContainer>
       <Logo>fiscolab</Logo>
@@ -60,6 +83,7 @@ const UserHeader: React.FC = () => {
         <Link to="/perfil">
             <ProfileButton>Acessar perfil</ProfileButton>
         </Link>
+        <LogoutButton onClick={handleLogout}>Sair</LogoutButton>
       </Nav>
     </HeaderContainer>
   );

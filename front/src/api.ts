@@ -491,6 +491,8 @@ export const submitCertificateTest = async (data: {
 }) => {
   const response = await progressApi.post('/progress/certificates/submit/', data);
   return response.data;
+};
+
 // Transformar BackendChallenge para o formato atual do frontend
 export const transformChallengeForList = (backendChallenge: BackendChallenge): Challenge => {
   const totalQuestions = 

@@ -159,6 +159,11 @@ const CertificateQuizPage: React.FC = () => {
       user_answer: numericAnswer,
       is_correct: isAnswerCorrect
     }]);
+
+    // Avançar automaticamente para a próxima pergunta após um pequeno delay
+    setTimeout(() => {
+      handleNext();
+    }, 1000); // 1 segundo de delay para mostrar o feedback
   };
   
   const handleNext = () => {
@@ -265,18 +270,12 @@ const CertificateQuizPage: React.FC = () => {
         disabled={isAnswered}
       />
 
-      {!isAnswered ? (
-        <ActionButton 
-          onClick={handleConfirmAnswer}
-          disabled={!userAnswer.trim()}
-        >
-          Confirmar resposta
-        </ActionButton>
-      ) : (
-        <ActionButton onClick={handleNext}>
-          {currentQuestionIndex === questions.length - 1 ? 'Finalizar Certificado' : 'Próxima pergunta'}
-        </ActionButton>
-      )}
+      <ActionButton 
+        onClick={handleConfirmAnswer}
+        disabled={!userAnswer.trim() || isAnswered}
+      >
+        {currentQuestionIndex === questions.length - 1 ? 'Finalizar Certificado' : 'Confirmar resposta'}
+      </ActionButton>
     </QuizContainer>
   );
 };
