@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { fetchApprovedChallenges } from '../api';
+import { fetchApprovedChallenges, getCertificateQuestions } from '../api';
 
 export interface Certificate {
   id: string;
@@ -33,16 +33,60 @@ export const useCertificates = () => {
           challenge.difficulty === 'HARD'
         );
 
-        // Mapear para o formato Certificate
-        const certificates: Certificate[] = hardChallenges.map((challenge: any) => ({
-          id: challenge.id.toString(),
-          title: challenge.title,
-          program: challenge.program_name || 'PROIND',
-          level: challenge.track_name || 'T1',
-          status: 'available',
-          isCompleted: false,
-          difficulty: 'HARD'
-        }));
+        // Agrupar por Program + Track para criar apenas um certificado por par
+        const programTrackMap = new Map<string, any>();
+        
+        // Agrupar desafios por Program + Track
+        const challengesByProgramTrack = new Map<string, any[]>();
+        
+        hardChallenges.forEach((challenge: any) => {
+          const program = challenge.program_name || 'PROIND';
+          const track = challenge.track_name || 'T1';
+          const key = `${program}-${track}`;
+          
+          if (!challengesByProgramTrack.has(key)) {
+            challengesByProgramTrack.set(key, []);
+          }
+          challengesByProgramTrack.get(key)!.push(challenge);
+        });
+        
+        // Para cada grupo, verificar se tem questões suficientes fazendo uma chamada à API
+        const certificatePromises = Array.from(challengesByProgramTrack.entries()).map(async ([key, challenges]) => {
+          const [program, track] = key.split('-');
+          
+          try {
+            // Fazer uma chamada de teste para verificar se há questões suficientes
+            await getCertificateQuestions(program, track);
+            
+            // Se chegou até aqui, significa que há pelo menos 5 questões
+            return {
+              id: key,
+              title: `${program} - ${track}`,
+              program: program,
+              level: track,
+              status: 'available',
+              isCompleted: false,
+              difficulty: 'HARD'
+            };
+          } catch (error) {
+            // Se a API retornou erro, significa que não há questões suficientes
+            console.warn(`Not enough questions for ${program}-${track}:`, error);
+            return null;
+          }
+        });
+        
+        // Aguardar todas as verificações
+        const certificateResults = await Promise.all(certificatePromises);
+        
+        // Adicionar apenas os certificados válidos
+        certificateResults.forEach(certificate => {
+          if (certificate) {
+            programTrackMap.set(certificate.id, certificate);
+          }
+        });
+
+        // Converter Map para array de certificados
+        const certificates: Certificate[] = Array.from(programTrackMap.values());
 
         setCertificates(certificates);
       } catch (err) {

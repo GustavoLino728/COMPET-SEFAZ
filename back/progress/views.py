@@ -8,13 +8,16 @@ from django.db import models
 
 from .models import (
     TrailAccess, UserProgramProgress, UserOverallProgress,
-    ChallengeCompletion, UserBadge, UserBadgeStats, BadgeDefinition
+    ChallengeCompletion, UserBadge, UserBadgeStats, BadgeDefinition,
+    CertificateTest
 )
 from .serializers import (
     TrackTrailAccessSerializer, 
     UserProgramProgressSerializer,
     UserOverallProgressSerializer,
-    TrailAccessSerializer
+    TrailAccessSerializer,
+    CertificateTestSubmissionSerializer,
+    CertificateTestSerializer
 )
 
 @api_view(['POST'])
@@ -357,4 +360,82 @@ def get_badge_stats(request):
             'last_badge_earned': badge_stats.last_badge_earned,
         },
         'program_stats': program_stats
+    })
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def submit_certificate_test(request):
+    """
+    Registra o resultado de um teste de certificado
+    """
+    serializer = CertificateTestSubmissionSerializer(data=request.data)
+    if not serializer.is_valid():
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    data = serializer.validated_data
+    user = request.user
+    
+    try:
+        with transaction.atomic():
+            # Calcular estatísticas das respostas
+            answers = data['answers']
+            correct_answers = sum(1 for answer in answers if answer.get('is_correct', False))
+            total_questions = len(answers)
+            
+            # Criar registro do teste
+            certificate_test = CertificateTest.objects.create(
+                user=user,
+                program=data['program'],
+                track=data['track'],
+                score=data['score'],
+                correct_answers=correct_answers,
+                total_questions=total_questions,
+                passed=data['passed'],
+                answers=answers
+            )
+            
+            return Response({
+                'status': 'success',
+                'message': 'Teste de certificado registrado com sucesso',
+                'test_id': certificate_test.id,
+                'score': float(certificate_test.score),
+                'correct_answers': certificate_test.correct_answers,
+                'total_questions': certificate_test.total_questions,
+                'passed': certificate_test.passed
+            }, status=status.HTTP_201_CREATED)
+    
+    except Exception as e:
+        return Response({
+            'error': 'Erro interno do servidor',
+            'message': str(e)
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_user_certificates(request):
+    """
+    Retorna todos os certificados do usuário
+    """
+    user = request.user
+    certificates = CertificateTest.objects.filter(user=user).order_by('-completed_at')
+    
+    certificates_data = []
+    for cert in certificates:
+        certificates_data.append({
+            'id': cert.id,
+            'program': cert.program,
+            'track': cert.track,
+            'score': float(cert.score),
+            'correct_answers': cert.correct_answers,
+            'total_questions': cert.total_questions,
+            'passed': cert.passed,
+            'completed_at': cert.completed_at,
+            'status': 'Aprovado' if cert.passed else 'Reprovado'
+        })
+    
+    return Response({
+        'certificates': certificates_data,
+        'total_certificates': len(certificates_data),
+        'passed_certificates': len([c for c in certificates_data if c['passed']]),
+        'failed_certificates': len([c for c in certificates_data if not c['passed']])
     })

@@ -67,7 +67,7 @@ const ChallengeGeneratorPage: React.FC = () => {
     program: 'PROIND',
     track: 'Cálculo de Incentivo',
     topic: '',
-    type: 'Discursiva'
+    type: 'Cálculo'
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -172,7 +172,9 @@ const ChallengeGeneratorPage: React.FC = () => {
                   value={formData.type}
                   onChange={(e) => handleInputChange('type', e.target.value)}
                 >
-                  <option value="Discursiva">Discursiva</option>
+                  <option value="Discursiva" disabled style={{ color: '#999', fontStyle: 'italic' }}>
+                    Discursiva (Em breve)
+                  </option>
                   <option value="Cálculo">Cálculo</option>
                 </select>
               </FormGroup>

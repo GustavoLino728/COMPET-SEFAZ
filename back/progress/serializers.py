@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import TrailAccess, UserProgramProgress, UserOverallProgress
+from .models import TrailAccess, UserProgramProgress, UserOverallProgress, CertificateTest
 
 class TrailAccessSerializer(serializers.ModelSerializer):
     class Meta:
@@ -37,3 +37,21 @@ class TrackTrailAccessSerializer(serializers.Serializer):
     trail_id = serializers.CharField(max_length=100)
     program = serializers.ChoiceField(choices=TrailAccess.PROGRAMS)
     trail_number = serializers.IntegerField(min_value=1, max_value=4)
+
+class CertificateTestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CertificateTest
+        fields = ['id', 'program', 'track', 'score', 'correct_answers', 
+                 'total_questions', 'passed', 'answers', 'started_at', 'completed_at']
+        read_only_fields = ['id', 'started_at', 'completed_at']
+
+class CertificateTestSubmissionSerializer(serializers.Serializer):
+    """Serializer para submissão de teste de certificado"""
+    program = serializers.ChoiceField(choices=CertificateTest.PROGRAMS)
+    track = serializers.CharField(max_length=100)
+    answers = serializers.ListField(
+        child=serializers.DictField(),
+        min_length=1
+    )
+    score = serializers.DecimalField(max_digits=5, decimal_places=2, min_value=0, max_value=100)
+    passed = serializers.BooleanField()
