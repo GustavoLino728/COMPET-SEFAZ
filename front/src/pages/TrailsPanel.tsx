@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { trilhas, type Trilha, type ItemDaListaAninhada } from '../data/trilhasData';
 import { useProgress } from '../hooks/useProgress';
 import TrackDetailHeader from '../components/common/TrackDetailHeader';
+import VideoSection from '../components/common/VideoSection';
+import videoDaTrilha from '../assets/images/PROIND/Vídeo Compet Superior.mp4';
 import DesafiosCard from '../components/common/DesafiosCard';
 import TesteCertificacaoCard from '../components/common/TesteCertificacaoCard';
 import styles from './TrailsPanel.module.css';
@@ -41,6 +43,10 @@ const TrailsPanel = () => {
   const { trackAccess } = useProgress();
   const [hasTracked, setHasTracked] = useState(false);
 
+   const videosDasTrilhas: { [key: string]: string } = {
+    'proind-calculo-incentivo': videoDaTrilha,
+  };
+
   const trilhaAtual = trilhas.find((trilha: Trilha) => trilha.id === trilhaId);
 
   useEffect(() => {
@@ -78,6 +84,8 @@ const TrailsPanel = () => {
     return <div>Trilha não encontrada!</div>;
   }
 
+  const videoAtual = videosDasTrilhas[trilhaAtual.id];
+
   const handleChallengeClick = (challengeType: string) => {
     console.log(`Iniciando desafio: ${challengeType}`);
   };
@@ -111,6 +119,7 @@ const TrailsPanel = () => {
             >
               Conteúdo
             </button>
+            
             <button
               className={`${styles.tabButton} ${activeTab === 'material' ? styles.tabActive : ''}`}
               onClick={() => setActiveTab('material')}
@@ -121,6 +130,10 @@ const TrailsPanel = () => {
           
           {activeTab === 'conteudo' && (
             <div>
+
+              {videoAtual && <VideoSection videoUrl={videoAtual} />}
+              
+              {/* --- Loop Inteligente para Renderizar o Conteúdo Dinâmico --- */}
               {trilhaAtual.blocosDeConteudo.map((bloco, index) => {
                 if (bloco.tipo === 'subtitulo' || bloco.tipo === 'subtitulo-bold') {
                   const className = bloco.tipo === 'subtitulo-bold' ? styles.contentTitleBold : styles.contentTitle;
@@ -155,13 +168,30 @@ const TrailsPanel = () => {
           )}
 
           {activeTab === 'material' && (
-            <div className={styles.contentBlock}>
-              <h3 className={styles.contentTitle}>Material Complementar</h3>
-              <p className={styles.contentText}>
-                Aqui estarão os links e documentos para download.
-              </p>
+          <div className={styles.contentBlock}>
+            <h3 className={styles.contentTitle}>Material Complementar</h3>
+            
+          {trilhaAtual.materiaisComplementares && trilhaAtual.materiaisComplementares.length > 0 ? (
+            <div className={styles.materialList}>
+              {trilhaAtual.materiaisComplementares.map((material, index) => (
+                <a 
+                  key={index} 
+                  href={material.url} 
+                  className={styles.materialLink}
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                >
+                  {material.texto}
+                </a>
+              ))}
             </div>
+          ) : (
+            <p className={styles.contentText}>
+              Nenhum material complementar disponível para esta trilha.
+            </p>
           )}
+        </div>
+    )}
           
         </main>
 

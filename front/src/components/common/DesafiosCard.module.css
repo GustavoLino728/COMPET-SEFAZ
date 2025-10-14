@@ -1,26 +1,21 @@
-/* src/components/common/DesafiosCard.module.css */
-
 .cardContainer {
-  /* Propriedades passadas do Figma */
-  width: 321px; /* Largura fixa */
-  height: 223px; /* Altura fixa */
+  width: 321px;
+  height: 223px; 
   padding: 24px;
   border-radius: 12px;
-  border: 2px solid rgba(66, 44, 135, 0.20); /* Bordar 20% roxa */
-  background: #DFE9FF; /* Cor de fundo do Figma */
+  border: 2px solid rgba(66, 44, 135, 0.20); 
+  background: #DFE9FF; 
 
-  /* Para o layout interno: título/descrição em cima, botão embaixo à direita */
   display: flex;
-  flex-direction: column; /* Organiza os filhos em coluna */
-  justify-content: space-between; /* Empurra o botão para baixo */
-  /* align-items: flex-start;  Isso pode ser usado para alinhar todo o conteúdo ao topo se necessário */
+  flex-direction: column; 
+  justify-content: space-between; 
 }
 
 .header {
   display: flex;
-  justify-content: space-between; /* Título à esquerda, número à direita */
-  align-items: center; /* Alinha verticalmente */
-  margin-bottom: 12px; /* Espaço entre o header e a descrição */
+  justify-content: space-between; 
+  align-items: center; 
+  margin-bottom: 12px; /
 }
 
 .title {

@@ -196,3 +196,26 @@
 .backButton:hover {
   background-color: #e5e7eb;
 }
+
+.materialList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; 
+}
+
+.materialLink {
+  display: block; 
+  padding: 16px;
+  background-color: #f9fafb; 
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  text-decoration: none; 
+  color: #020F59; 
+  font-weight: 500;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.materialLink:hover {
+  background-color: #f3f4f6;
+  border-color: #d1d5db;
+}

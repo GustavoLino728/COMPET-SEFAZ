@@ -33,6 +33,9 @@ export type Trilha = {
   sobreTrilha: string;
   urlVideo: string;
   blocosDeConteudo: BlocoDeConteudo[];
+  materiaisComplementares?: {
+  texto: string;
+  url: string; }[];
 };
 
 export const trilhas: Trilha[] = [
@@ -45,12 +48,8 @@ export const trilhas: Trilha[] = [
     urlVideo: '',
     blocosDeConteudo: [
       {
-        tipo: 'subtitulo',
-        conteudo: 'Conteúdo da Trilha de Introdução ao PROIND'
-      },
-      {
         tipo: 'subtitulo-bold',
-        conteudo: '1. Introdução e Contextualização do Tema:' 
+        conteudo: '1. Introdução e Contextualização do Tema' 
       },
       {
         tipo: 'paragrafo',
@@ -219,26 +218,30 @@ export const trilhas: Trilha[] = [
         conteudo: 'Referências Oficiais:'
       },
       {
-      tipo: 'lista-alfabetica',
-      conteudo: [
+        tipo: 'lista-alfabetica',
+        conteudo: [
         'A - Decreto 44.650.2017 - Anexo 33 (com as alterações mais recentes, como o Dec. 52.632/2022, que consolidou e atualizou diversas disposições). É fundamental consultar a versão mais atualizada da legislação.'
       ]
      }
+    ],
+
+    materiaisComplementares: [
+      {
+        texto: 'DO PROGRAMA DE ESTÍMULO À INDÚSTRIA DO ESTADO DE PERNAMBUCO - PROIND',
+        url: 'https://drive.google.com/file/d/1tSY57GXSjpKXKDNoKElOnPfgERyyGsKV/view?usp=sharing'
+      },
     ]
+
   },
 
 {
     id: 'proind-lançamentos-incentivo',
     programa: 'PROIND',
-    titulo: 'T2:  Lançamentos do Incentivo',
+    titulo: 'T2: Lançamentos do Incentivo',
     descricaoHeader: 'Conheça os fundamentos do PROIND e como ele pode transformar sua carreira.',
     sobreTrilha: 'Aqui você vai aprender como calcular o incentivo fiscal do PROIND, entendendo o que é o crédito presumido, como aplicá-lo e registrá-lo corretamente. Ao final, estará capacitado a identificar operações elegíveis, realizar cálculos precisos e compreender as regras para manter o benefício.',
     urlVideo: '',
     blocosDeConteudo: [
-      {
-        tipo: 'subtitulo-bold',
-        conteudo:'1. Introdução e Contextualização do Tema'
-      }, 
        {
         tipo: 'subtitulo-bold',
         conteudo: '1. Introdução e Contextualização do Tema'
@@ -423,6 +426,13 @@ export const trilhas: Trilha[] = [
         tipo: 'paragrafo',
         conteudo: 'É crucial que o contribuinte sempre consulte as versões mais recentes da legislação e os comunicados oficiais da SEFAZ-PE, pois as normas podem sofrer alterações.'
       },
+    ],
+
+    materiaisComplementares: [
+      {
+        texto: 'DO PROGRAMA DE ESTÍMULO À INDÚSTRIA DO ESTADO DE PERNAMBUCO - PROIND',
+        url: 'https://drive.google.com/file/d/1tSY57GXSjpKXKDNoKElOnPfgERyyGsKV/view?usp=sharing'
+      },
     ]
   },
 
@@ -591,13 +601,20 @@ export const trilhas: Trilha[] = [
           'E - Manuais e Guias de Preenchimento da EFD-ICMS/IPI (Bloco E – Apuração do ICMS e IPI).'
         ]
       },
+    ],
+
+    materiaisComplementares: [
+      {
+        texto: 'DO PROGRAMA DE ESTÍMULO À INDÚSTRIA DO ESTADO DE PERNAMBUCO - PROIND',
+        url: 'https://drive.google.com/file/d/1tSY57GXSjpKXKDNoKElOnPfgERyyGsKV/view?usp=sharing'
+      },
     ]
   },
 
 {
     id: 'proind-concessao-incentivo',
     programa: 'PROIND',
-    titulo: 'Trilha 4: Concessão do Incentivo',
+    titulo: 'T4: Concessão do Incentivo',
     descricaoHeader: 'Entenda o processo de concessão e os requisitos para a fruição do benefício fiscal.', 
     sobreTrilha: 'Esta trilha detalha as etapas e critérios para a concessão formal do incentivo PROIND, desde a solicitação até a publicação do decreto.', 
     urlVideo: '', 
@@ -812,13 +829,20 @@ export const trilhas: Trilha[] = [
           'C - Legislação específica da ADEPE e da SEFAZ-PE sobre o trâmite de processos de incentivos fiscais.'
         ]
       },
+    ],
+
+    materiaisComplementares: [
+      {
+        texto: 'DO PROGRAMA DE ESTÍMULO À INDÚSTRIA DO ESTADO DE PERNAMBUCO - PROIND',
+        url: 'https://drive.google.com/file/d/1tSY57GXSjpKXKDNoKElOnPfgERyyGsKV/view?usp=sharing'
+      },
     ]
   },
   
   {
     id: 'prodepe-calculo-incentivo',
     programa: 'PRODEPE',
-    titulo: 'Trilha 1: Cálculo do Incentivo',
+    titulo: 'T1: Cálculo do Incentivo',
     descricaoHeader: 'Detalha os passos e critérios essenciais para a apuração do valor do incentivo do PRODEPE.',
     sobreTrilha: 'O Programa de Desenvolvimento do Estado de Pernambuco (PRODEPE) é uma das principais ferramentas de incentivo fiscal do Estado...',
     urlVideo: '',
@@ -1106,7 +1130,7 @@ export const trilhas: Trilha[] = [
   {
     id: 'prodepe-lancamentos-incentivo', 
     programa: 'PRODEPE',
-    titulo: 'Trilha 2: Lançamentos do Incentivo (PRODEPE)',
+    titulo: 'T2: Lançamentos do Incentivo',
     descricaoHeader: 'Aprenda a refletir os valores apurados nos documentos e livros fiscais.',
     sobreTrilha: 'Esta trilha abordará como os valores do incentivo devem ser refletidos nos documentos e livros fiscais, além das obrigações acessórias.',
     urlVideo: '', 
@@ -1374,7 +1398,7 @@ export const trilhas: Trilha[] = [
   {
     id: 'prodepe-controles-suplementares', 
     programa: 'PRODEPE',
-    titulo: 'Trilha 3: Controles suplementares(PRODEPE)',
+    titulo: 'T3: Controles suplementares',
     descricaoHeader: 'Entenda os controles, o monitoramento e as obrigações para a manutenção do benefício do PRODEPE.',
     sobreTrilha: 'Esta trilha aborda os controles suplementares, o monitoramento da conformidade e as consequências do descumprimento das regras do PRODEPE.',
     urlVideo: '', 
@@ -1540,7 +1564,7 @@ export const trilhas: Trilha[] = [
   {
     id: 'prodepe-concessao-incentivo', 
     programa: 'PRODEPE',
-    titulo: 'Trilha 4: Concessão do Incentivo (PRODEPE)',
+    titulo: 'T4: Concessão do Incentivo',
     descricaoHeader: 'Guia do processo formal de obtenção dos incentivos fiscais e financeiros do PRODEPE.',
     sobreTrilha: 'Esta trilha abrange desde a definição dos tipos de incentivo e público-alvo até as etapas de solicitação e análise.',
     urlVideo: '', 
@@ -1839,7 +1863,7 @@ export const trilhas: Trilha[] = [
 {
   id: 'prodeauto-calculo-incentivo', 
   programa: 'PRODEAUTO',
-  titulo: 'Trilha 1: Cálculo do Incentivo (PRODEAUTO)',
+  titulo: 'T1: Cálculo do Incentivo',
   descricaoHeader: 'Detalha os aspectos essenciais para a apuração dos valores incentivados pelo PRODEAUTO.',
   sobreTrilha: 'Esta trilha aborda os critérios e parâmetros para o cálculo dos incentivos do PRODEAUTO, com base nas normas vigentes.',
   urlVideo: '',
@@ -2075,7 +2099,7 @@ export const trilhas: Trilha[] = [
   {
     id: 'prodeauto-lancamentos-incentivo', 
     programa: 'PRODEAUTO',
-    titulo: 'Trilha 2: Lançamentos do Incentivo (PRODEAUTO)',
+    titulo: 'T2: Lançamentos do Incentivo',
     descricaoHeader: 'Explore os requisitos, procedimentos e prazos essenciais para a conformidade na fruição dos benefícios.',
     sobreTrilha: 'Esta trilha aborda os procedimentos para documentar e comunicar ao Fisco a utilização dos incentivos do PRODEAUTO.',
     urlVideo: '', 
@@ -2383,7 +2407,7 @@ export const trilhas: Trilha[] = [
   {
     id: 'prodeauto-controles-suplementares', 
     programa: 'PRODEAUTO',
-    titulo: 'Trilha 3: Controles suplementares(PRODEAUTO)',
+    titulo: 'T3: Controles suplementare',
     descricaoHeader: 'Entenda os mecanismos de acompanhamento, fiscalização e avaliação do PRODEAUTO.',
     sobreTrilha: 'Esta trilha detalha as responsabilidades do contribuinte e as prerrogativas do Fisco para a manutenção do benefício.',
     urlVideo: '', 
@@ -2624,12 +2648,10 @@ export const trilhas: Trilha[] = [
   ]
 },
 
-  // Adicione este objeto ao seu array 'trilhas' em trilhasData.ts
-
   {
     id: 'prodeauto-concessao-incentivo', 
     programa: 'PRODEAUTO',
-    titulo: 'Trilha 4: Concessão do Incentivo (PRODEAUTO)',
+    titulo: 'T4: Concessão do Incentivo',
     descricaoHeader: 'Detalha os critérios, procedimentos e a fundamentação legal que regem a concessão do incentivo.',
     sobreTrilha: 'Esta trilha guia o usuário através do processo formal de obtenção dos incentivos fiscais do PRODEAUTO.',
     urlVideo: '',

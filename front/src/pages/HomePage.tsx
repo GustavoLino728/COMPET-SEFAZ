@@ -115,13 +115,13 @@ function HomePage() {
               imageSrc={prodepeImage}
               title="PRODEPE"
               description="Descubra como o Programa de Desenvolvimento de Pernambuco estimula empresas com incentivos fiscais..."
-              link="/trilha/id-da-trilha-prodepe"
+              link="/trilhas/prodepe"
             />
             <TrailCard 
               imageSrc={prodeautoImage}
               title="PRODEAUTO"
               description="Entenda os benefícios do programa voltado ao setor automotivo, que incentiva a instalação e expansão de indústrias..."
-              link="/trilha/id-da-trilha-prodeauto"
+              link="/trilhas/prodeauto"
             />
             <TrailCard 
               imageSrc={proindImage}
