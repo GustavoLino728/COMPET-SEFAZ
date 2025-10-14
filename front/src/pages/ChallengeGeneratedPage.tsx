@@ -28,9 +28,22 @@ const Button = styled.button<{ primary?: boolean }>`
   border-radius: 6px;
   font-weight: 600;
   cursor: pointer;
-  background-color: ${props => props.primary ? '#fff' : '#ffebee'};
-  color: ${props => props.primary ? '#6c757d' : '#c62828'};
-  border: 1px solid ${props => props.primary ? '#ced4da' : '#ef9a9a'};
+  background-color: ${props => props.primary ? '#2f3a7d' : '#ffebee'};
+  color: ${props => props.primary ? '#fff' : '#c62828'};
+  border: 1px solid ${props => props.primary ? '#2f3a7d' : '#ef9a9a'};
+  transition: all 0.2s ease-in-out;
+  
+  &:hover {
+    background-color: ${props => props.primary ? '#212529' : '#ffcdd2'};
+    border-color: ${props => props.primary ? '#212529' : '#e57373'};
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
 `;
 const EditorContainer = styled.div`
   background: #fff;
@@ -140,14 +153,14 @@ const ChallengeGeneratedPage: React.FC = () => {
     return (
         <PageWrapper>
             <MainContent>
-                <BackLink to="/admin/gerador"><IoIosArrowBack /> Voltar</BackLink>
+                <BackLink to="/admin"><IoIosArrowBack /> Voltar</BackLink>
                 <HeaderActions>
                     <div>
                         <PageTitle>Desafio {challenge?.id || 'N/A'}</PageTitle>
                     </div>
                     <ActionButtons>
-                        <Button primary onClick={handleSave}>Salvar Alterações</Button>
                         <Button>Excluir Desafio</Button>
+                        <Button primary onClick={handleSave}>Salvar Alterações</Button>
                     </ActionButtons>
                 </HeaderActions>
                 {grouped && (
@@ -213,10 +226,6 @@ const ChallengeGeneratedPage: React.FC = () => {
                     ))}
                   </>
                 )}
-                <FooterButtons>
-                    <CancelButton>Cancelar</CancelButton>
-                    <ApproveButton>Aprovar desafio</ApproveButton>
-                </FooterButtons>
             </MainContent>
         </PageWrapper>
     );

@@ -1,4 +1,4 @@
-import { type Challenge } from '../types'; // Verifique se o caminho para seu arquivo de tipos está correto
+import { Challenge } from '../types'; // Verifique se o caminho para seu arquivo de tipos está correto
 
 // Adicione "export" aqui
 export const basicChallenges: Challenge[] = [

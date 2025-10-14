@@ -84,7 +84,7 @@ const ChallengeSelectionPage: React.FC = () => {
     return (
         <PageWrapper>
             {/* ... */}
-            <UserHeader />
+            {/* <UserHeader /> */}
             <MainContainer>
                 {/* ... */}
                 <ContentBox>

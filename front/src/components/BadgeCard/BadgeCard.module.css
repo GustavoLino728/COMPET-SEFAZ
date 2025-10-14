@@ -1,0 +1,253 @@
+.badgeCard {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 2px solid #e9ecef;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-height: 280px;
+}
+
+.badgeCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.earned {
+  border-color: #28a745;
+  background: linear-gradient(135deg, #f8fff9 0%, #ffffff 100%);
+}
+
+.available {
+  border-color: #dee2e6;
+  background: #f8f9fa;
+}
+
+.badgeImageContainer {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.badgeImage {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.grayscale {
+  filter: grayscale(100%) opacity(0.6);
+}
+
+.badgeTypeBadge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #FFD700;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 0.2rem 0.4rem;
+  border-radius: 8px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.badgeInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.badgeName {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.3;
+}
+
+.badgeDescription {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0 0 1rem 0;
+  line-height: 1.4;
+  flex: 1;
+}
+
+.badgeDetails {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem;
+  background: rgba(0, 123, 255, 0.05);
+  border-radius: 6px;
+}
+
+.badgeProgram {
+  font-weight: 600;
+  color: #007bff;
+  font-size: 0.9rem;
+}
+
+.badgeTrail {
+  background: #007bff;
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.earnedInfo {
+  border-top: 1px solid #e9ecef;
+  padding-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.earnedDate {
+  font-size: 0.85rem;
+  color: #28a745;
+  font-weight: 500;
+}
+
+.earnedScore {
+  font-size: 0.85rem;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+/* Grid de badges no topo */
+.badgesGridTop {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin: 2rem 0;
+  max-width: 320px; /* 4 badges de 64px + gaps */
+}
+
+.badgeMini {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.badgeMiniImage {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.badgeMiniImage:hover {
+  transform: scale(1.1);
+}
+
+/* Seção da badge recente */
+.recentBadgeSection {
+  margin-top: 3rem;
+}
+
+.recentBadgeTitle {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.recentBadgeCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+  max-width: 400px;
+}
+
+.recentBadgeImage {
+  margin-bottom: 1.5rem;
+}
+
+.recentBadgeImage img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.recentBadgeInfo {
+  text-align: center;
+}
+
+.recentBadgeName {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 0.5rem 0;
+}
+
+.recentBadgeDescription {
+  font-size: 1rem;
+  color: #666;
+  margin: 0 0 1rem 0;
+  line-height: 1.4;
+}
+
+.recentBadgeDate {
+  font-size: 0.9rem;
+  color: #999;
+  margin: 0;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .badgesGridTop {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 240px;
+  }
+  
+  .badgeMiniImage {
+    width: 56px;
+    height: 56px;
+  }
+  
+  .recentBadgeCard {
+    padding: 1.5rem;
+  }
+  
+  .recentBadgeImage img {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .badgeCard {
+    min-height: 260px;
+    padding: 1rem;
+  }
+  
+  .badgeImage {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .badgeName {
+    font-size: 1rem;
+  }
+}

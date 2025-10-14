@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import styles from './HomePage.module.css';
-import TrailCard from '../components/cards/TrailCard';
 import { getCurrentUser } from '../api';
 
 import prodepeImage from '../assets/images/PRODEPE/PRODEPE-card-programa.png'; 
@@ -37,6 +36,29 @@ function HomePage() {
     try {
       const user = await getCurrentUser();
       console.log('Dados do usuário:', user);
+
+      if (user && user.full_name) {
+        const firstName = user.full_name.split(' ')[0];
+        setUserName(firstName);
+      } else {
+        setUserName('Usuário');
+      }
+    } catch (error) {
+      console.error('Erro ao buscar usuário:', error);
+      setUserName('Usuário');
+    }
+  }
+  fetchUser();
+}, []);
+}
+
+function HomePage() {
+  const [userName, setUserName] = useState('Carregando...');
+
+  useEffect(() => {
+  async function fetchUser() {
+    try {
+      const user = await getCurrentUser();
 
       if (user && user.full_name) {
         const firstName = user.full_name.split(' ')[0];
@@ -90,8 +112,8 @@ function HomePage() {
             />
           </div>
         </section>
-
-          <section className={styles.trailsSection}>
+        
+        <section className={styles.trailsSection}>
           <h2 className={styles.sectionTitle}>Trilhas Sugeridas</h2>
           <div className={styles.trailsGrid}>
             
