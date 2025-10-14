@@ -287,8 +287,7 @@
 
 /* --- Badges Insignia (Novo Layout) --- */
 .badgesGridTop {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
   gap: 0.75rem;
   margin: 1.5rem 0;
   max-width: 280px;

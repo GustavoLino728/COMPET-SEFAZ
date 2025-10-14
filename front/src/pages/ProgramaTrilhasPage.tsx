@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { trilhas } from '../data/trilhasData';
 import TrailCard from '../components/cards/TrailCard';
 import styles from './ProgramaTrilhasPage.module.css';
-import { FaSearch } from 'react-icons/fa';
+// import { IoSearch } from 'react-icons/io5';
 
 import proindBannerImg from '../assets/images/PROIND/PROIND-card-programa.png'; 
 import prodepeBannerImg from '../assets/images/PRODEPE/PRODEPE-card-programa.png';
@@ -78,7 +78,10 @@ const ProgramaTrilhasPage = () => {
       <h1 className={styles.title}>Explore nossas Trilhas</h1>
 
       <div className={styles.searchBarContainer}>
-        <FaSearch className={styles.searchIcon} />
+        <svg className={styles.searchIcon} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
         <input type="text" placeholder={`Procurar em ${nomeDoPrograma}...`}
         className={styles.searchInput}
         value={termoDeBusca}

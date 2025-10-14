@@ -4,7 +4,9 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.shortcuts import get_object_or_404
-from .models import Question, Option, Challenge, ProblemQuestion, DiscursiveQuestion, MultipleChoiceQuestion
+from django.db.models import Q
+import random
+from .models import Question, Option, Challenge, ProblemQuestion, DiscursiveQuestion, MultipleChoiceQuestion, Program, Track
 from .serializers import (
     QuestionSerializer, 
     QuestionCreateSerializer, 
@@ -175,3 +177,79 @@ class MultipleChoiceQuestionDetailView(generics.RetrieveUpdateAPIView):
             {"error": "Only challenges with PENDING status can be rejected."},
             status=status.HTTP_400_BAD_REQUEST
         )
+
+class CertificateQuestionsView(generics.GenericAPIView):
+    """
+    API endpoint to get 5 random problem questions for certificate tests
+    """
+    permission_classes = [AllowAny]
+    
+    def get(self, request):
+        program_name = request.query_params.get('program', '')
+        track_name = request.query_params.get('track', '')
+        
+        if not program_name or not track_name:
+            return Response(
+                {"error": "Both 'program' and 'track' parameters are required"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        try:
+            # Find the program and track
+            program = Program.objects.get(name__iexact=program_name)
+            track = Track.objects.get(program=program, name__iexact=track_name)
+            
+            # Get approved challenges for this track with HARD difficulty only
+            challenges = Challenge.objects.filter(
+                track=track,
+                status=Challenge.ChallengeStatus.APPROVED,
+                difficulty='HARD'  # Only HARD difficulty for certificates
+            )
+            
+            # Get all problem questions from these challenges
+            problem_questions = ProblemQuestion.objects.filter(
+                challenge__in=challenges
+            ).select_related('challenge')
+            
+            # Check if there are at least 5 problem questions available
+            total_questions = problem_questions.count()
+            if total_questions < 5:
+                return Response(
+                    {
+                        "error": f"Not enough problem questions available for certificate. Found {total_questions} questions, need at least 5. Please create more challenges with calculation questions for this program and track.",
+                        "total_available": total_questions,
+                        "required": 5,
+                        "program": program_name,
+                        "track": track_name
+                    },
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            
+            # Randomly select 5 questions
+            selected_questions = random.sample(list(problem_questions), 5)
+            
+            # Serialize the questions
+            serializer = ProblemQuestionSerializer(selected_questions, many=True)
+            
+            return Response({
+                "questions": serializer.data,
+                "total_questions": len(selected_questions),
+                "program": program_name,
+                "track": track_name
+            })
+            
+        except Program.DoesNotExist:
+            return Response(
+                {"error": f"Program '{program_name}' not found"},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Track.DoesNotExist:
+            return Response(
+                {"error": f"Track '{track_name}' not found for program '{program_name}'"},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Exception as e:
+            return Response(
+                {"error": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )

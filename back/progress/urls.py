@@ -12,6 +12,10 @@ urlpatterns = [
     # Badge system
     path('challenges/complete/', views.complete_challenge, name='complete_challenge'),
     path('badges/', views.get_user_badges, name='get_user_badges'),
-    path('badges/available/', views.get_available_badges, name='get_available_badges'),
     path('badges/stats/', views.get_badge_stats, name='get_badge_stats'),
+    
+    # Certificate system
+    path('certificates/submit/', views.submit_certificate_test, name='submit_certificate_test'),
+    path('certificates/', views.get_user_certificates, name='get_user_certificates'),
+    path('certificates/completed/', views.get_completed_certificates, name='get_completed_certificates'),
 ]

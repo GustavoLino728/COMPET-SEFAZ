@@ -25,6 +25,38 @@
   gap: 16px; 
 }
 
+/* Grid com 2 linhas quando há card de admin */
+.cardGridWithAdmin {
+  display: grid; 
+  grid-template-columns: 2fr 1fr; 
+  grid-template-rows: auto auto;
+  gap: 16px; 
+}
+
+/* Primeira linha: Explore Trilhas (grande) + Admin (pequeno) */
+.cardGridWithAdmin .card:first-child {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.cardGridWithAdmin .adminCard {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+/* Segunda linha: Certificados + Teste de perfil */
+.cardGridWithAdmin .card:nth-child(3) {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.cardGridWithAdmin .card:nth-child(4) {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+/* Card de admin usa as mesmas classes padrão do .card */
+
 
 .welcomeTitle {
   color: #020f59;

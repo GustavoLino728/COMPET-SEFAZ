@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FaRegLightbulb } from 'react-icons/fa';
 
 interface QuestionCardProps {
   questionNumber: number;
@@ -36,20 +35,6 @@ const QuestionNumberCircle = styled.div`
   border: 4px solid #f8f9fa;
 `;
 
-const HintButton = styled.button`
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.2);
-  color: #fff;
-  border-radius: 20px;
-  padding: 0.5rem 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-`;
 
 const Title = styled.h2`
   margin: 1rem 0;
@@ -66,7 +51,6 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ questionNumber, questionTex
   return (
     <CardContainer>
       <QuestionNumberCircle>{questionNumber}</QuestionNumberCircle>
-      <HintButton>DICA <FaRegLightbulb /></HintButton>
       <Title>Pergunta {questionNumber}</Title>
       <QuestionText>{questionText}</QuestionText>
     </CardContainer>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './HomePage.module.css';
 import { getCurrentUser } from '../api';
+import TrailCard from '../components/cards/TrailCard';
 
 import prodepeImage from '../assets/images/PRODEPE/PRODEPE-card-programa.png'; 
 import prodeautoImage from '../assets/images/PRODEAUTO/PRODEAUTO-card-programa.png'; 
@@ -12,10 +13,11 @@ type DashboardCardProps = {
   buttonText: string;
   buttonLink: string;
   isLarge?: boolean;
+  customClass?: string;
 };
 
-const DashboardCard = ({ title, description, buttonText, buttonLink, isLarge = false }: DashboardCardProps) => {
-  const cardClasses = `${styles.card} ${isLarge ? styles.largeCard : ''}`;
+const DashboardCard = ({ title, description, buttonText, buttonLink, isLarge = false, customClass }: DashboardCardProps) => {
+  const cardClasses = `${styles.card} ${isLarge ? styles.largeCard : ''} ${customClass ? styles[customClass] : ''}`;
   
   return (
     <div className={cardClasses}>
@@ -30,6 +32,7 @@ const DashboardCard = ({ title, description, buttonText, buttonLink, isLarge = f
 
 function HomePage() {
   const [userName, setUserName] = useState('Carregando...');
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
   async function fetchUser() {
@@ -43,28 +46,10 @@ function HomePage() {
       } else {
         setUserName('Usuário');
       }
-    } catch (error) {
-      console.error('Erro ao buscar usuário:', error);
-      setUserName('Usuário');
-    }
-  }
-  fetchUser();
-}, []);
-}
 
-function HomePage() {
-  const [userName, setUserName] = useState('Carregando...');
-
-  useEffect(() => {
-  async function fetchUser() {
-    try {
-      const user = await getCurrentUser();
-
-      if (user && user.full_name) {
-        const firstName = user.full_name.split(' ')[0];
-        setUserName(firstName);
-      } else {
-        setUserName('Usuário');
+      // Verificar se o usuário é administrador
+      if (user && (user.is_staff || user.is_superuser)) {
+        setIsAdmin(true);
       }
     } catch (error) {
       console.error('Erro ao buscar usuário:', error);
@@ -89,7 +74,7 @@ function HomePage() {
         {/* Seção de Acesso Rápido (Já existente - NÃO MEXA) */}
         <section className={styles.quickAccessSection}>
           <h2 className={styles.sectionTitle}>Acesso Rápido</h2>
-          <div className={styles.cardGrid}>
+          <div className={isAdmin ? styles.cardGridWithAdmin : styles.cardGrid}>
 
             <DashboardCard
               isLarge={true}
@@ -98,6 +83,15 @@ function HomePage() {
               buttonText="Visualizar Trilhas"
               buttonLink="/trilhas"
             />
+            {isAdmin && (
+              <DashboardCard
+                title="Painel Administrativo"
+                description="Gerencie desafios, usuários e configurações do sistema."
+                buttonText="Acessar Admin"
+                buttonLink="/admin"
+                customClass="adminCard"
+              />
+            )}
             <DashboardCard
               title="Consiga Certificados"
               description="Valide sua expertise com certificações reconhecidas pelo setor."

@@ -14,9 +14,24 @@ const CertificatesPage: React.FC = () => {
     searchCertificates,
     getCompletedCertificates,
     getAvailableCertificates,
-    groupCertificatesByProgram
+    groupCertificatesByProgram,
+    refreshCertificates
   } = useCertificates();
 
+  // Recarregar certificados quando a página for focada (usuário volta do quiz)
+  useEffect(() => {
+    const handleFocus = () => {
+      refreshCertificates();
+    };
+
+    window.addEventListener('focus', handleFocus);
+    return () => window.removeEventListener('focus', handleFocus);
+  }, []); // Removido refreshCertificates da dependência
+
+  // Recarregar certificados quando a página for montada
+  useEffect(() => {
+    refreshCertificates();
+  }, []); // Removido refreshCertificates da dependência
 
   const filteredCertificates = searchCertificates(searchTerm);
   const completedCertificates = getCompletedCertificates().filter(cert =>
@@ -26,14 +41,24 @@ const CertificatesPage: React.FC = () => {
     filteredCertificates.some(f => f.id === cert.id)
   );
 
+  // Debug logs
+  console.log('🔍 Total certificados:', certificates.length);
+  console.log('🔍 Certificados completados:', completedCertificates.length);
+  console.log('🔍 Certificados disponíveis:', availableCertificates.length);
+  console.log('🔍 Lista de completados:', completedCertificates.map(c => c.id));
+  console.log('🔍 Lista de disponíveis:', availableCertificates.map(c => c.id));
+
   const handleDownload = (certificateId: string) => {
     // Implementar download do certificado
     console.log('Downloading certificate:', certificateId);
   };
 
   const handleTakeTest = (certificateId: string) => {
-    // Implementar navegação para o teste
-    console.log('Taking test for certificate:', certificateId);
+    // Navegar para o quiz de certificado
+    const certificate = certificates.find(cert => cert.id === certificateId);
+    if (certificate) {
+      window.location.href = `/certificados/quiz/${certificate.program}/${certificate.level}`;
+    }
   };
 
   const availableByProgram = groupCertificatesByProgram(availableCertificates);
@@ -61,7 +86,7 @@ const CertificatesPage: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h1 className={styles.title}>Acesse os seus certificados</h1>
+        <h1 className={styles.title}>Certificações</h1>
         <div className={styles.searchContainer}>
           <div className={styles.searchInput}>
             <svg className={styles.searchIcon} viewBox="0 0 24 24" fill="currentColor">

@@ -11,9 +11,8 @@ import UserSetup from './pages/UserSetup';
 import ResetPassword from './pages/ResetPasswordPage';
 import ResetPasswordConfirm from './pages/ResetPasswordConfirmPage';
 import ProgramasPage from './pages/ProgramasPage'; 
-import ProgramaTrilhasPage from './pages/ProgramaTrilhasPage'; 
-import TrailsPanel from './pages/TrailsPanel';
-
+import ProgramaTrilhasPage from './pages/ProgramaTrilhasPage';
+import TrailChallengePage from './pages/TrailChallengePage'
 import './App.css';
 import './styles/global.css';
 import { createGlobalStyle } from 'styled-components';
@@ -29,7 +28,6 @@ import ChallengeSelectionPage from './pages/ChallengeSelectionPage';
 import ChallengeStartPage from './pages/ChallengeStartPage';
 import QuizPage from './pages/QuizPage';
 import QuizCompletionPage from './pages/QuizCompletionPage';
-import QuizCompletionPage2 from './pages/QuizCompletionPage2';
 import ProfilePage from './pages/ProfilePage';
 import ProgressTab from './components/profile/tabs/ProgressTab';
 import PersonalInfoTab from './components/profile/tabs/PersonalInfoTab';
@@ -39,6 +37,8 @@ import ChallengeGeneratorPage from './pages/ChallengeGeneratorPage';
 import ChallengeGeneratedPage from './pages/ChallengeGeneratedPage';
 import Dashboard from './pages/Dashboard';
 import CertificatesPage from './pages/CertificatesPage';
+import CertificateQuizPage from './pages/CertificateQuizPage';
+import CertificateResultPage from './pages/CertificateResultPage';
 
 
 const GlobalStyle = createGlobalStyle`
@@ -74,7 +74,6 @@ function App() {
             <Route path="/desafio/:id" element={<ChallengeStartPage />} />
             <Route path="/quiz/:id" element={<QuizPage />} />
             <Route path="/quiz/resultado/:id" element={<QuizCompletionPage />} />
-            <Route path="/quiz/resultado2/:id" element={<QuizCompletionPage2 />} />
             <Route path="/admin/gerador" element={<ChallengeGeneratorPage />} />
             <Route path="/admin/desafio-gerado" element={<ChallengeGeneratedPage />} />
             {/* Fim rotas Victor */}
@@ -88,7 +87,10 @@ function App() {
             <Route path="/reset-password/:uid/:token" element={<ResetPasswordConfirm/>}/>
             <Route path="/perfil" element={<UserProfilePage/>}/>
             <Route path="/trilhas/:trilhaId" element={<TrailsPanel />} />
+            <Route path="/desafios/:trailId" element={<TrailChallengePage />} />
             <Route path="/certificados" element={<CertificatesPage />} />
+            <Route path="/certificados/quiz/:program/:track" element={<CertificateQuizPage />} />
+            <Route path="/certificados/resultado/:program/:track" element={<CertificateResultPage />} />
 
             {/* Add other routes as needed */}
           </Routes>

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { BackendChallenge, Challenge, QuizQuestion } from './types';
 
 const API_BASE_URL = "http://localhost:8000/api/auth";
 const CHATBOT_API_BASE_URL = "http://localhost:8000/api/chatbot";
@@ -210,8 +211,13 @@ const progressApi = axios.create({
 progressApi.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("accessToken");
+    console.log('🔍 progressApi interceptor: Token presente?', !!token);
+    console.log('🔍 progressApi interceptor: URL:', config.url);
     if (token) {
       config.headers.Authorization = `JWT ${token}`;
+      console.log('🔍 progressApi interceptor: Token adicionado ao header');
+    } else {
+      console.log('🔍 progressApi interceptor: Nenhum token encontrado');
     }
     return config;
   },
@@ -219,11 +225,16 @@ progressApi.interceptors.request.use(
 );
 
 progressApi.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    console.log('🔍 progressApi response interceptor - sucesso:', response.config.url, response.status);
+    return response;
+  },
   async (error) => {
+    console.log('🔍 progressApi response interceptor - erro:', error.config?.url, error.response?.status);
     const originalRequest = error.config;
     
     if (error.response?.status === 401 && !originalRequest._retry) {
+      console.log('🔍 progressApi response interceptor - tentando renovar token');
       originalRequest._retry = true;
       try {
         await refreshToken();
@@ -231,6 +242,7 @@ progressApi.interceptors.response.use(
         originalRequest.headers.Authorization = `JWT ${token}`;
         return progressApi(originalRequest);
       } catch (refreshError) {
+        console.log('🔍 progressApi response interceptor - erro ao renovar token');
         logoutUser();
         window.location.href = "/login";
       }
@@ -351,6 +363,41 @@ const questionsApi = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
+// Interceptor para adicionar token automaticamente ao questionsApi
+questionsApi.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      config.headers.Authorization = `JWT ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+// Interceptor para renovar token automaticamente quando expira no questionsApi
+questionsApi.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+    
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        await refreshToken();
+        const token = localStorage.getItem("accessToken");
+        originalRequest.headers.Authorization = `JWT ${token}`;
+        return questionsApi(originalRequest);
+      } catch (refreshError) {
+        logoutUser();
+        window.location.href = "/login";
+      }
+    }
+    
+    return Promise.reject(error);
+  }
+);
+
 export const fetchChallenge = async (id: number) => {
   const response = await questionsApi.get(`/api/challenges/${id}/`);
   return response.data;
@@ -410,4 +457,243 @@ export const updateChallengeStatus = async (id: number, status: 'APPROVED' | 'PE
 export const deleteChallenge = async (id: number) => {
   const response = await questionsApi.delete(`/api/challenges/${id}/`);
   return response.data;
+};
+
+// === CERTIFICATE APIs ===
+export interface CertificateQuestion {
+  id: number;
+  statement: string;
+  correct_answer: number;
+  justification: string;
+  challenge: {
+    id: number;
+    title: string;
+    track: {
+      name: string;
+      program: {
+        name: string;
+      };
+    };
+  };
+}
+
+export interface CertificateQuestionsResponse {
+  questions: CertificateQuestion[];
+  total_questions: number;
+  program: string;
+  track: string;
+}
+
+// Get certificate questions for a specific program and track
+export const getCertificateQuestions = async (program: string, track: string): Promise<CertificateQuestionsResponse> => {
+  const response = await questionsApi.get('/api/certificate-questions/', {
+    params: { program, track }
+  });
+  return response.data;
+};
+
+// Submit certificate test results
+export const submitCertificateTest = async (data: {
+  program: string;
+  track: string;
+  answers: { question_id: number; user_answer: number }[];
+  score: number;
+  passed: boolean;
+}) => {
+  const response = await progressApi.post('/progress/certificates/submit/', data);
+  return response.data;
+};
+
+// Get completed certificates for the user
+export interface CompletedCertificateData {
+  program: string;
+  track: string;
+  score: number;
+  completed_at: string;
+  certificate_id: string;
+}
+
+export interface CompletedCertificatesResponse {
+  completed_certificates: CompletedCertificateData[];
+  total_completed: number;
+}
+
+export const getCompletedCertificates = async (): Promise<CompletedCertificatesResponse> => {
+  console.log('🔍 API: Chamando getCompletedCertificates...');
+  
+  // Verificar se há token no localStorage
+  const token = localStorage.getItem("accessToken");
+  console.log('🔍 API: Token presente?', !!token);
+  console.log('🔍 API: Token (primeiros 20 chars):', token ? token.substring(0, 20) + '...' : 'null');
+  
+  // Verificar se o usuário está logado
+  if (!token) {
+    console.error('🔍 API: Nenhum token encontrado - usuário não está logado');
+    throw new Error('Usuário não está logado');
+  }
+  
+  try {
+    console.log('🔍 API: Fazendo requisição para /progress/certificates/completed/');
+    const response = await progressApi.get('/progress/certificates/completed/');
+    console.log('🔍 API: Resposta recebida:', response.data);
+    console.log('🔍 API: Status da resposta:', response.status);
+    console.log('🔍 API: Headers da resposta:', response.headers);
+    return response.data;
+  } catch (error) {
+    console.error('🔍 API: Erro ao buscar certificados completados:', error);
+    console.error('🔍 API: Status do erro:', error.response?.status);
+    console.error('🔍 API: Dados do erro:', error.response?.data);
+    console.error('🔍 API: Erro completo:', error);
+    throw error;
+  }
+};
+
+// Transformar BackendChallenge para o formato atual do frontend
+export const transformChallengeForList = (backendChallenge: BackendChallenge): Challenge => {
+  const totalQuestions = 
+    (backendChallenge.multiple_choice_questions?.length || 0) +
+    (backendChallenge.discursive_questions?.length || 0) +
+    (backendChallenge.problem_questions?.length || 0);
+
+  return {
+    id: backendChallenge.id,
+    title: backendChallenge.title || `Desafio ${backendChallenge.id}`,
+    questions: totalQuestions,
+    description: `${backendChallenge.program_name} - ${backendChallenge.track_name}`
+  };
+};
+
+// Filtrar desafios por dificuldade
+export const getChallengesByDifficulty = async (difficulty: 'EASY' | 'MEDIUM' | 'HARD'): Promise<Challenge[]> => {
+  const approvedChallenges = await fetchApprovedChallenges();
+  const filtered = approvedChallenges.filter(challenge => challenge.difficulty === difficulty);
+  return filtered.map(transformChallengeForList);
+};
+
+export const transformQuestionsForQuiz = (backendChallenge: BackendChallenge): QuizQuestion[] => {
+  const quizQuestions: QuizQuestion[] = [];
+
+  // Múltipla escolha
+  if (backendChallenge.multiple_choice_questions) {
+    backendChallenge.multiple_choice_questions.forEach((mcq) => {
+      const options = [mcq.option_a, mcq.option_b, mcq.option_c, mcq.option_d, mcq.option_e];
+      const correctAnswerIndex = ['A', 'B', 'C', 'D', 'E'].indexOf(mcq.correct_option);
+
+      quizQuestions.push({
+        id: mcq.id,
+        type: 'multiple-choice',
+        question: mcq.statement,
+        options,
+        correctAnswerIndex,
+        justification: mcq.justification || 'Justificativa não disponível.'
+      });
+    });
+  }
+  
+  if (backendChallenge.problem_questions) {
+    backendChallenge.problem_questions.forEach((pq) => {
+      quizQuestions.push({
+        id: pq.id,
+        type: 'problem', 
+        question: pq.statement,
+        correctAnswer: Number(pq.correct_answer),
+        justification: pq.justification || 'Justificativa não disponível.'
+      });
+    });
+  }
+
+  if (backendChallenge.discursive_questions) {
+    backendChallenge.discursive_questions.forEach((dq) => {
+      quizQuestions.push({
+        id: dq.id,
+        type: 'essay',
+        question: dq.statement,
+        justification: dq.justification || dq.answer_text || 'Justificativa não disponível.'
+      });
+    });
+  }
+
+  return quizQuestions;
+};
+
+export const parseTrailId = (trailId: string): { program: string; trailNumber: number; trailName: string } => {
+  const trailMappings = {
+    // PROIND
+    'proind-calculo-incentivo': { program: 'PROIND', trailNumber: 1, trailName: 'Cálculo do Incentivo' },
+    'proind-lancamentos-incentivo': { program: 'PROIND', trailNumber: 2, trailName: 'Lançamentos do Incentivo' },
+    'proind-controles-suplementares': { program: 'PROIND', trailNumber: 3, trailName: 'Controles Suplementares' },
+    'proind-concessao-incentivo': { program: 'PROIND', trailNumber: 4, trailName: 'Concessão do Incentivo' },
+    
+    // PRODEPE
+    'prodepe-calculo-incentivo': { program: 'PRODEPE', trailNumber: 1, trailName: 'Cálculo do Incentivo' },
+    'prodepe-lancamentos-incentivo': { program: 'PRODEPE', trailNumber: 2, trailName: 'Lançamentos do Incentivo' },
+    'prodepe-controles-suplementares': { program: 'PRODEPE', trailNumber: 3, trailName: 'Controles Suplementares' },
+    'prodepe-concessao-incentivo': { program: 'PRODEPE', trailNumber: 4, trailName: 'Concessão do Incentivo' },
+    
+    // PRODEAUTO
+    'prodeauto-calculo-incentivo': { program: 'PRODEAUTO', trailNumber: 1, trailName: 'Cálculo do Incentivo' },
+    'prodeauto-lancamentos-incentivo': { program: 'PRODEAUTO', trailNumber: 2, trailName: 'Lançamentos do Incentivo' },
+    'prodeauto-controles-suplementares': { program: 'PRODEAUTO', trailNumber: 3, trailName: 'Controles Suplementares' },
+    'prodeauto-concessao-incentivo': { program: 'PRODEAUTO', trailNumber: 4, trailName: 'Concessão do Incentivo' },
+  };
+
+  const mapping = trailMappings[trailId as keyof typeof trailMappings];
+  if (!mapping) {
+    throw new Error(`Trail ID não encontrado: ${trailId}`);
+  }
+
+  return mapping;
+};
+
+export const getChallengesByTrailAndDifficulty = async (
+  trailId: string, 
+  difficulty: 'EASY' | 'MEDIUM' | 'HARD'
+): Promise<Challenge[]> => {
+  try {
+    const { program, trailName } = parseTrailId(trailId);
+    
+    const approvedChallenges = await fetchApprovedChallenges();
+    
+    // Filtrar por programa e dificuldade
+    const candidates = approvedChallenges.filter(challenge => 
+      challenge.program_name === program &&
+      challenge.difficulty === difficulty && 
+      challenge.status === 'APPROVED'
+    );
+    
+    // Filtrar por conteúdo da trilha (ignora numeração, usa palavras-chave)
+    const filtered = candidates.filter(challenge => {
+      const trackName = challenge.track_name?.toLowerCase() || '';
+      const title = challenge.title?.toLowerCase() || '';
+      
+      // Verificar tipo de trilha baseado no conteúdo
+      if (trailName.includes('Cálculo')) {
+        return trackName.includes('cálculo') || title.includes('cálculo') ||
+               trackName.includes('calculo') || title.includes('calculo');
+      }
+      
+      if (trailName.includes('Lançamentos')) {
+        return trackName.includes('lançamento') || title.includes('lançamento') ||
+               trackName.includes('lancamento') || title.includes('lancamento');
+      }
+      
+      if (trailName.includes('Controles')) {
+        return trackName.includes('controle') || title.includes('controle') ||
+               trackName.includes('suplementar') || title.includes('suplementar');
+      }
+      
+      if (trailName.includes('Concessão')) {
+        return trackName.includes('concessão') || title.includes('concessão') ||
+               trackName.includes('concessao') || title.includes('concessao');
+      }
+      
+      return false;
+    });
+    
+    return filtered.map(transformChallengeForList);
+    
+  } catch (error) {
+    console.error('Erro ao filtrar desafios por trilha:', error);
+    return [];
+  }
 };
