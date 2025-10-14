@@ -3,7 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { trilhas, type Trilha, type ItemDaListaAninhada } from '../data/trilhasData';
 
 import TrackDetailHeader from '../components/common/TrackDetailHeader';
-// import VideoSection from '../components/common/VideoSection';
+import VideoSection from '../components/common/VideoSection';
+import videoDaTrilha from '../assets/images/PROIND/Vídeo Compet Superior.mp4';
 import DesafiosCard from '../components/common/DesafiosCard';
 import TesteCertificacaoCard from '../components/common/TesteCertificacaoCard';
 import styles from './TrailsPanel.module.css';
@@ -36,11 +37,17 @@ const TrailsPanel = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('conteudo');
 
+   const videosDasTrilhas: { [key: string]: string } = {
+    'proind-calculo-incentivo': videoDaTrilha,
+  };
+
   const trilhaAtual = trilhas.find((trilha: Trilha) => trilha.id === trilhaId);
 
   if (!trilhaAtual) {
     return <div>Trilha não encontrada!</div>;
   }
+
+  const videoAtual = videosDasTrilhas[trilhaAtual.id];
 
   const handleChallengeClick = (challengeType: string) => {
     console.log(`Iniciando desafio: ${challengeType}`);
@@ -75,6 +82,7 @@ const TrailsPanel = () => {
             >
               Conteúdo
             </button>
+            
             <button
               className={`${styles.tabButton} ${activeTab === 'material' ? styles.tabActive : ''}`}
               onClick={() => setActiveTab('material')}
@@ -85,7 +93,8 @@ const TrailsPanel = () => {
           
           {activeTab === 'conteudo' && (
             <div>
-              {/* <VideoSection videoUrl={trilhaAtual.urlVideo} /> */}
+
+              {videoAtual && <VideoSection videoUrl={videoAtual} />}
               
               {/* --- Loop Inteligente para Renderizar o Conteúdo Dinâmico --- */}
               {trilhaAtual.blocosDeConteudo.map((bloco, index) => {
@@ -123,13 +132,33 @@ const TrailsPanel = () => {
           )}
 
           {activeTab === 'material' && (
-            <div className={styles.contentBlock}>
-              <h3 className={styles.contentTitle}>Material Complementar</h3>
-              <p className={styles.contentText}>
-                Aqui estarão os links e documentos para download.
-              </p>
+          <div className={styles.contentBlock}>
+            <h3 className={styles.contentTitle}>Material Complementar</h3>
+            
+          {/* Verificamos se a trilha atual tem materiais e se a lista não está vazia */}
+          {trilhaAtual.materiaisComplementares && trilhaAtual.materiaisComplementares.length > 0 ? (
+            <div className={styles.materialList}>
+              {/* Usamos .map() para criar um link para cada item na nossa lista de dados */}
+              {trilhaAtual.materiaisComplementares.map((material, index) => (
+                <a 
+                  key={index} 
+                  href={material.url} 
+                  className={styles.materialLink}
+                  target="_blank" // Abre o link numa nova aba
+                  rel="noopener noreferrer" // Boa prática de segurança para links externos
+                >
+                  {material.texto}
+                </a>
+              ))}
             </div>
+          ) : (
+            // Se não houver links, mostramos uma mensagem padrão
+            <p className={styles.contentText}>
+              Nenhum material complementar disponível para esta trilha.
+            </p>
           )}
+        </div>
+    )}
           
         </main>
 

@@ -12,8 +12,17 @@ import prodeautoBannerImg from '../assets/images/PRODEAUTO/PRODEAUTO-card-progra
 import proindTrilha1Img from '../assets/images/PROIND/Cards das trilhas/PROIND-card-trilha01.png';
 import proindTrilha2Img from '../assets/images/PROIND/Cards das trilhas/PROIND-card-trilha02.png';
 import proindTrilha3Img from '../assets/images/PROIND/Cards das trilhas/PROIND-card-trilha03.png';
-import proindTrilha4Img from '../assets/images/PROIND/Cards das trilhas/PROIND-card-trilha04.png'
+import proindTrilha4Img from '../assets/images/PROIND/Cards das trilhas/PROIND-card-trilha04.png';
 
+import prodepeTrilha1Img from '../assets/images/PRODEPE/Cards das trilhas/PRODEPE-card-trilha01.png';
+import prodepeTrilha2Img from '../assets/images/PRODEPE/Cards das trilhas/PRODEPE-card-trilha02.png';
+import prodepeTrilha3Img from '../assets/images/PRODEPE/Cards das trilhas/PRODEPE-card-trilha03.png';
+import prodepeTrilha4Img from '../assets/images/PRODEPE/Cards das trilhas/PRODEPE-card-trilha04.png';
+
+import prodeautoTrilha1Img from '../assets/images/PRODEAUTO/Cards das trilhas/PRODEAUTO-card-trilha01.png';
+import prodeautoTrilha2Img from '../assets/images/PRODEAUTO/Cards das trilhas/PRODEAUTO-card-trilha02.png';
+import prodeautoTrilha3Img from '../assets/images/PRODEAUTO/Cards das trilhas/PRODEAUTO-card-trilha03.png';
+import prodeautoTrilha4Img from '../assets/images/PRODEAUTO/Cards das trilhas/PRODEAUTO-card-trilha04.png';
 
 const ProgramaTrilhasPage = () => {
   const { programaId } = useParams();
@@ -26,11 +35,27 @@ const ProgramaTrilhasPage = () => {
     prodeauto: prodeautoBannerImg,
   };
 
+  const bannerColorClasses: { [key: string]: string } = {
+      proind: styles.proindBanner,
+      prodepe: styles.prodepeBanner,
+      prodeauto: styles.prodeautoBanner,
+  };
+  
   const imagensDosCards: { [key: string]: string } = {
     'proind-calculo-incentivo': proindTrilha1Img,
-    'proind-lançamentos-incentivo': proindTrilha2Img, // Use o ID correto da sua trilha 2
+    'proind-lançamentos-incentivo': proindTrilha2Img, 
     'proind-controle-suplementar': proindTrilha3Img,
     'proind-concessao-incentivo': proindTrilha4Img,
+
+    'prodepe-calculo-incentivo': prodepeTrilha1Img,
+    'prodepe-lancamentos-incentivo': prodepeTrilha2Img,
+    'prodepe-controles-suplementares': prodepeTrilha3Img,
+    'prodepe-concessao-incentivo': prodepeTrilha4Img,
+
+    'prodeauto-calculo-incentivo': prodeautoTrilha1Img,
+    'prodeauto-lancamentos-incentivo': prodeautoTrilha2Img,
+    'prodeauto-controles-suplementares': prodeautoTrilha3Img,
+    'prodeauto-concessao-incentivo': prodeautoTrilha4Img,
   };
 
   const trilhasDoPrograma = trilhas
@@ -41,6 +66,7 @@ const ProgramaTrilhasPage = () => {
 
   const nomeDoPrograma = programaId ? programaId.toUpperCase() : '';
   const imagemDoBanner = bannerImages[programaId?.toLowerCase() || ''];
+  const corDoBanner = bannerColorClasses[programaId?.toLowerCase() || ''];
 
   return (
     <div className={styles.pageContainer}>
@@ -59,16 +85,13 @@ const ProgramaTrilhasPage = () => {
         onChange={e => setTermoDeBusca(e.target.value)}/>
         </div>
 
-         {/* Banner específico do programa */}
-
-        <div className={styles.programBanner}>
-           <div className={styles.bannerText}>
+        <div className={`${styles.programBanner} ${corDoBanner}`}>
+          <div className={styles.bannerText}>
             <h2>{nomeDoPrograma}</h2>
             <p>Conheça o {nomeDoPrograma} e aprofunde seu entendimento sobre esse programa de incentivo à indústria pernambucana. Desenvolva seu conhecimento tributário com conteúdos claros e focados na prática.
             </p>
             </div>
-        
-        {/* Usamos a imagem que selecionamos dinamicamente */}
+    
         {imagemDoBanner && <img src={imagemDoBanner} alt={`Ilustração do ${nomeDoPrograma}`} className={styles.bannerImage} />}
         </div>
 
@@ -77,7 +100,6 @@ const ProgramaTrilhasPage = () => {
           <TrailCard
             key={trilha.id}
             link={`/trilha/${trilha.id}`}
-            // 👇 3. USE O MAPA DE IMAGENS DOS CARDS AQUI 👇
             imageSrc={imagensDosCards[trilha.id] || 'https://via.placeholder.com/400x220'}
             title={trilha.titulo}
           />

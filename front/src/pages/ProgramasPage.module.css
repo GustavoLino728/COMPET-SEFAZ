@@ -13,14 +13,14 @@
 }
 
 .searchBarContainer {
-  position: relative; /* Essencial para posicionar o ícone */
+  position: relative; 
   width: 100%;
   margin-bottom: 40px;
 }
 
 .searchInput {
   width: 100%;
-  padding: 14px 20px 14px 48px; /* Aumentamos o padding esquerdo */
+  padding: 14px 20px 14px 48px;
   border-radius: 8px;
   border: 1px solid #e5e7eb;
   font-size: 16px;
@@ -32,7 +32,7 @@
   left: 20px;
   top: 50%;
   transform: translateY(-50%);
-  color: #61758A; /* Cor cinza para o ícone */
+  color: #61758A; 
   font-size: 16px;
 }
 
@@ -56,7 +56,7 @@
   color: inherit;
   display: flex;
   flex-direction: column;
-  gap: 16px; /* Espaço entre a imagem e o título */
+  gap: 16px; 
 }
 
 .cardLinkWrapper:hover .visualCard {
@@ -68,8 +68,8 @@
   border-radius: 8px;
   background: #ffffff;
   border: 1px solid #e5e7eb;
-  overflow: hidden; /* Essencial para a imagem respeitar as bordas */
-  height: 248px; /* Altura do card visual (ajuste se precisar) */
+  overflow: hidden; 
+  height: 248px; 
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -81,7 +81,7 @@
 .cardImage {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Garante que a imagem preencha o espaço */
+  object-fit: cover; 
 }
 
 .prodepeBg {
@@ -98,5 +98,5 @@
     color: #14145B;
   font-size: 16px;
   font-weight: 600;
-  line-height: 1.8; /* Melhorado para unidade relativa */
+  line-height: 1.8;
 }
