@@ -19,6 +19,10 @@ help:
 	@echo "  make postgres-restart - Restart PostgreSQL"
 	@echo "  make postgres-setup   - Configure database and user"
 	@echo "  make postgres-test    - Test connection"
+	@echo "  make dev-setup        - Full development setup (DB + migrations + admin)"
+	@echo "  make admin-create     - Create admin user"
+	@echo "  make admin-reset      - Reset admin user"
+	@echo "  make admin-info       - Show admin credentials"
 	@echo "  make help            - Show this help"
 
 # Start PostgreSQL
@@ -66,8 +70,24 @@ dev-setup: postgres-start postgres-setup
 	@echo "🗄️ Applying migrations..."
 	python manage.py makemigrations
 	python manage.py migrate
+	@echo "👤 Creating admin user..."
+	python manage.py seed_admin
 	@echo "✅ Development environment configured!"
 
 # Command to stop everything
 dev-stop: postgres-stop
 	@echo "✅ Development environment stopped!"
+
+# Admin user management
+admin-create:
+	@echo "👤 Creating admin user..."
+	python manage.py create_admin_user
+
+admin-reset:
+	@echo "🔄 Resetting admin user..."
+	python manage.py create_admin_user --email admin@gmail.com --password admin12345
+
+admin-info:
+	@echo "📋 Admin credentials:"
+	@echo "   Email: admin@gmail.com"
+	@echo "   Password: admin12345"
