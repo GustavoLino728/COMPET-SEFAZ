@@ -31,3 +31,19 @@ declare module 'react-icons/io' {
   export const IoIosInformationCircleOutline: ComponentType<SVGProps<SVGSVGElement> & { size?: number | string }>;
   export const IoIosArrowBack: ComponentType<SVGProps<SVGSVGElement> & { size?: number | string }>;
 }
+
+// Media file declarations
+declare module '*.mp4' {
+  const src: string;
+  export default src;
+}
+
+declare module '*.webm' {
+  const src: string;
+  export default src;
+}
+
+declare module '*.ogg' {
+  const src: string;
+  export default src;
+}

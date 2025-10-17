@@ -1,0 +1,31 @@
+{
+  "files": {
+    "main.css": "/static/css/main.01d2ee51.css",
+    "main.js": "/static/js/main.16bed717.js",
+    "static/media/Video_Compet_Superior.mp4": "/static/media/Video_Compet_Superior.d77272fe09a550dcd47d.mp4",
+    "static/media/PROIND-card-programa.png": "/static/media/PROIND-card-programa.464402e07cd5ded21c05.png",
+    "static/media/PROIND-card-trilha02.png": "/static/media/PROIND-card-trilha02.fc941bcc0b42d0cfee90.png",
+    "static/media/PROIND-card-trilha04.png": "/static/media/PROIND-card-trilha04.134d8cf570abb3b8450d.png",
+    "static/media/calculator.png": "/static/media/calculator.264131a54bf47b99a7d7.png",
+    "static/media/PRODEPE-card-trilha02.png": "/static/media/PRODEPE-card-trilha02.7877b5641d11540000d4.png",
+    "static/media/PRODEAUTO-card-trilha01.png": "/static/media/PRODEAUTO-card-trilha01.cf1959c5eb9b8c1d6091.png",
+    "static/media/PROIND-card-trilha01.png": "/static/media/PROIND-card-trilha01.62e9633b55150345c9f2.png",
+    "static/media/PRODEAUTO-card-trilha02.png": "/static/media/PRODEAUTO-card-trilha02.5d0aeb7fe27fe8777c17.png",
+    "static/media/PRODEAUTO-card-trilha04.png": "/static/media/PRODEAUTO-card-trilha04.4724463d4d873f259405.png",
+    "static/media/PRODEPE-card-programa.png": "/static/media/PRODEPE-card-programa.947ac63be71e914ef559.png",
+    "static/media/PROIND-card-trilha03.png": "/static/media/PROIND-card-trilha03.61b62befe41c2fc21242.png",
+    "static/media/PRODEAUTO-card-trilha03.png": "/static/media/PRODEAUTO-card-trilha03.6ac93ac2060aed409a0a.png",
+    "static/media/PRODEPE-card-trilha04.png": "/static/media/PRODEPE-card-trilha04.d6435b62c9afdb2fca74.png",
+    "static/media/PRODEPE-card-trilha01.png": "/static/media/PRODEPE-card-trilha01.27d4c3a914910fe2509b.png",
+    "static/media/PRODEPE-card-trilha03.png": "/static/media/PRODEPE-card-trilha03.3d608fa3f4f9b42d6611.png",
+    "static/media/PRODEAUTO-card-programa.png": "/static/media/PRODEAUTO-card-programa.69e2c96328606bc4542e.png",
+    "static/media/Logo-colorida.png": "/static/media/Logo-colorida.08b25db3002fa813d81c.png",
+    "index.html": "/index.html",
+    "main.01d2ee51.css.map": "/static/css/main.01d2ee51.css.map",
+    "main.16bed717.js.map": "/static/js/main.16bed717.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.01d2ee51.css",
+    "static/js/main.16bed717.js"
+  ]
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useAuth } from '../contexts/AuthContext';
+import { Link, useLocation } from 'react-router-dom';
 
 const HeaderContainer = styled.header`
   background-color: #fff;
@@ -23,7 +24,7 @@ const Nav = styled.nav`
   gap: 2rem;
 `;
 
-const NavLink = styled.a`
+const NavLink = styled(Link)`
   text-decoration: none;
   color: #495057;
   font-weight: 500;
@@ -54,6 +55,7 @@ const ExitButton = styled.button`
 
 const Header: React.FC = () => {
   const { logout } = useAuth();
+  const location = useLocation();
 
   const handleLogout = () => {
     logout();
@@ -63,10 +65,10 @@ const Header: React.FC = () => {
     <HeaderContainer>
       <Logo>fiscolab</Logo>
       <Nav>
-        <NavLink>Início</NavLink>
-        <NavLink>Trilhas</NavLink>
-        <NavLink>Teste de perfil</NavLink>
-        <NavLink>Certificações</NavLink>
+        <NavLink to="/">Início</NavLink>
+        <NavLink to="/trilhas">Trilhas</NavLink>
+        <NavLink to="/teste-perfil">Teste de perfil</NavLink>
+        <NavLink to="/certificados">Certificações</NavLink>
         <ExitButton onClick={handleLogout}>Sair</ExitButton>
       </Nav>
     </HeaderContainer>
