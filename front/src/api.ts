@@ -548,6 +548,32 @@ export const getCompletedCertificates = async (): Promise<CompletedCertificatesR
   }
 };
 
+export const getPersistentCertificates = async (): Promise<any> => {
+  console.log('🔍 API: Chamando getPersistentCertificates...');
+  
+  // Verificar se há token no localStorage
+  const token = localStorage.getItem("accessToken");
+  console.log('🔍 API: Token presente?', !!token);
+  
+  // Verificar se o usuário está logado
+  if (!token) {
+    console.error('🔍 API: Nenhum token encontrado - usuário não está logado');
+    throw new Error('Usuário não está logado');
+  }
+  
+  try {
+    console.log('🔍 API: Fazendo requisição para /progress/certificates/persistent/');
+    const response = await progressApi.get('/progress/certificates/persistent/');
+    console.log('🔍 API: Resposta das certificações persistentes:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('🔍 API: Erro ao buscar certificações persistentes:', error);
+    console.error('🔍 API: Status do erro:', error.response?.status);
+    console.error('🔍 API: Dados do erro:', error.response?.data);
+    throw error;
+  }
+};
+
 // Transformar BackendChallenge para o formato atual do frontend
 export const transformChallengeForList = (backendChallenge: BackendChallenge): Challenge => {
   const totalQuestions = 

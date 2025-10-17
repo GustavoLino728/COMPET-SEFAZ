@@ -268,3 +268,74 @@ class CertificateTest(models.Model):
     def __str__(self):
         status = "Aprovado" if self.passed else "Reprovado"
         return f"{self.user.email} - {self.program} {self.track} ({status})"
+
+class UserCertificate(models.Model):
+    """Certificações conquistadas pelos usuários - persiste independentemente dos testes"""
+    PROGRAMS = [
+        ('PROIND', 'PROIND'),
+        ('PRODEPE', 'PRODEPE'), 
+        ('PRODEAUTO', 'PRODEAUTO'),
+    ]
+    
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_certificates')
+    program = models.CharField(max_length=10, choices=PROGRAMS)
+    track = models.CharField(max_length=100)  # Nome da trilha
+    
+    # Dados da certificação
+    certificate_id = models.CharField(max_length=50, unique=True)  # ID único da certificação
+    certificate_name = models.CharField(max_length=200)  # Nome da certificação
+    certificate_description = models.TextField(blank=True, null=True)
+    
+    # Resultados do teste que gerou a certificação
+    score = models.DecimalField(max_digits=5, decimal_places=2)  # 0-100
+    correct_answers = models.PositiveIntegerField()
+    total_questions = models.PositiveIntegerField()
+    
+    # Dados das respostas (para possível revalidação)
+    answers = models.JSONField(default=list, blank=True)
+    
+    # Timestamps
+    earned_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField(null=True, blank=True)  # Opcional: data de expiração
+    
+    # Status da certificação
+    is_active = models.BooleanField(default=True)
+    is_verified = models.BooleanField(default=True)  # Se foi verificada pelo sistema
+    
+    class Meta:
+        unique_together = ['user', 'program', 'track']  # Um usuário só pode ter uma cert por programa/trilha
+        indexes = [
+            models.Index(fields=['user', 'earned_at']),
+            models.Index(fields=['program', 'track']),
+            models.Index(fields=['certificate_id']),
+            models.Index(fields=['is_active', 'is_verified']),
+        ]
+        verbose_name = 'Certificação do Usuário'
+        verbose_name_plural = 'Certificações dos Usuários'
+        ordering = ['-earned_at']
+    
+    def __str__(self):
+        return f"{self.user.email} - {self.program} {self.track} ({self.score}%)"
+    
+    @property
+    def certificate_url(self):
+        """URL para download/visualização do certificado"""
+        return f"/certificates/{self.certificate_id}/download/"
+    
+    @property
+    def is_expired(self):
+        """Verifica se a certificação expirou"""
+        if not self.expires_at:
+            return False
+        return timezone.now() > self.expires_at
+    
+    @property
+    def status_display(self):
+        """Status legível da certificação"""
+        if not self.is_active:
+            return "Inativa"
+        if self.is_expired:
+            return "Expirada"
+        if not self.is_verified:
+            return "Pendente de Verificação"
+        return "Ativa"

@@ -185,14 +185,34 @@ const CertificateQuizPage: React.FC = () => {
     const score = (correctAnswers / totalQuestions) * 100;
     const passed = correctAnswers >= 4; // Precisa acertar pelo menos 4 de 5
 
+    console.log('🔍 Dados do teste:', {
+      program,
+      track,
+      correctAnswers,
+      totalQuestions,
+      score,
+      passed,
+      answers: answers.map(a => ({ 
+        question_id: a.question_id, 
+        user_answer: a.user_answer,
+        is_correct: a.is_correct 
+      }))
+    });
+
     try {
-      await submitCertificateTest({
+      const result = await submitCertificateTest({
         program: program!,
         track: track!,
-        answers: answers.map(a => ({ question_id: a.question_id, user_answer: a.user_answer })),
+        answers: answers.map(a => ({ 
+          question_id: a.question_id, 
+          user_answer: a.user_answer,
+          is_correct: a.is_correct 
+        })),
         score,
         passed
       });
+
+      console.log('✅ Teste enviado com sucesso:', result);
 
       // Navegar para página de resultado
       navigate(`/certificados/resultado/${program}/${track}`, {
@@ -205,9 +225,11 @@ const CertificateQuizPage: React.FC = () => {
           questions
         }
       });
-    } catch (err) {
-      console.error('Error submitting certificate test:', err);
-      setError('Erro ao enviar resultado do teste');
+    } catch (err: any) {
+      console.error('❌ Erro ao enviar teste:', err);
+      console.error('❌ Detalhes do erro:', err.response?.data);
+      console.error('❌ Status do erro:', err.response?.status);
+      setError(`Erro ao enviar resultado do teste: ${err.response?.data?.message || err.message}`);
     }
   };
 

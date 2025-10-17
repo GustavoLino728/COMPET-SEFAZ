@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { fetchApprovedChallenges, getCertificateQuestions, getCompletedCertificates } from '../api';
+import { fetchApprovedChallenges, getCertificateQuestions, getCompletedCertificates, getPersistentCertificates } from '../api';
 
 export interface Certificate {
   id: string;
@@ -25,38 +25,26 @@ export const useCertificates = () => {
       setError(null);
       console.log('🚀 Iniciando fetchCertificates...');
 
-      // Buscar certificações completadas pelo usuário
-      let completedCertificates: string[] = [];
+      // Buscar certificações persistentes do usuário
+      let persistentCertificates: any[] = [];
       try {
-        console.log('🔍 Buscando certificações completadas...');
-        console.log('🔍 Função getCompletedCertificates existe?', typeof getCompletedCertificates);
-        console.log('🔍 Chamando getCompletedCertificates...');
-        const completedData = await getCompletedCertificates() as any;
-        console.log('🔍 Resposta completa do backend:', completedData);
+        console.log('🔍 Buscando certificações persistentes...');
+        const persistentData = await getPersistentCertificates();
+        console.log('🔍 Resposta das certificações persistentes:', persistentData);
         
-        // Verificar se completedData tem a estrutura esperada
-        if (completedData && completedData.completed_certificates && Array.isArray(completedData.completed_certificates)) {
-          completedCertificates = completedData.completed_certificates.map((cert: any) => cert.certificate_id);
-          console.log('✅ Estrutura correta encontrada');
-        } else if (Array.isArray(completedData)) {
-          // Se completedData é um array vazio, significa que não há certificados completados
-          console.log('🔍 Backend retornou array vazio - nenhum certificado completado');
-          completedCertificates = [];
+        if (persistentData && persistentData.certificates && Array.isArray(persistentData.certificates)) {
+          persistentCertificates = persistentData.certificates;
+          console.log('✅ Certificações persistentes encontradas:', persistentCertificates.length);
         } else {
-          console.log('🔍 Estrutura inesperada, usando array vazio');
-          console.log('🔍 Tipo de completedData:', typeof completedData);
-          console.log('🔍 completedData é array?', Array.isArray(completedData));
-          console.log('🔍 completedData tem completed_certificates?', completedData && completedData.completed_certificates);
-          completedCertificates = [];
+          console.log('🔍 Nenhuma certificação persistente encontrada');
+          persistentCertificates = [];
         }
-        console.log('🔍 Certificações completadas encontradas:', completedCertificates);
       } catch (err) {
-        console.error('❌ Erro ao buscar certificados completados:', err);
-        console.error('❌ Detalhes do erro:', err.response?.data);
-        console.error('❌ Status do erro:', err.response?.status);
+        console.error('❌ Erro ao buscar certificações persistentes:', err);
+        persistentCertificates = [];
       }
 
-      // Buscar desafios aprovados da API
+      // Buscar desafios aprovados da API para certificados disponíveis
       const approvedChallenges = await fetchApprovedChallenges();
 
       // Filtrar apenas desafios com dificuldade HARD
@@ -67,6 +55,23 @@ export const useCertificates = () => {
       // Agrupar por Program + Track para criar apenas um certificado por par
       const programTrackMap = new Map<string, any>();
       
+      // Primeiro, adicionar certificações persistentes (já completadas)
+      persistentCertificates.forEach((cert: any) => {
+        const key = `${cert.program}-${cert.track}`;
+        programTrackMap.set(key, {
+          id: key,
+          title: cert.certificate_name || `${cert.program} - ${cert.track}`,
+          program: cert.program,
+          level: cert.track,
+          status: 'completed',
+          isCompleted: true,
+          difficulty: 'HARD',
+          score: cert.score,
+          earnedAt: cert.earned_at,
+          certificateId: cert.id
+        });
+      });
+      
       // Agrupar desafios por Program + Track
       const challengesByProgramTrack = new Map<string, any[]>();
       
@@ -75,10 +80,13 @@ export const useCertificates = () => {
         const track = challenge.track_name || 'T1';
         const key = `${program}-${track}`;
         
-        if (!challengesByProgramTrack.has(key)) {
-          challengesByProgramTrack.set(key, []);
+        // Só processar se não for uma certificação já persistente
+        if (!programTrackMap.has(key)) {
+          if (!challengesByProgramTrack.has(key)) {
+            challengesByProgramTrack.set(key, []);
+          }
+          challengesByProgramTrack.get(key)!.push(challenge);
         }
-        challengesByProgramTrack.get(key)!.push(challenge);
       });
       
       // Para cada grupo, verificar se tem questões suficientes fazendo uma chamada à API
@@ -89,18 +97,14 @@ export const useCertificates = () => {
           // Fazer uma chamada de teste para verificar se há questões suficientes
           await getCertificateQuestions(program, track);
           
-          // Verificar se o certificado já foi completado
-          const isCompleted = completedCertificates.includes(key);
-          console.log(`🔍 Certificado ${key}: isCompleted = ${isCompleted}`);
-          
           // Se chegou até aqui, significa que há pelo menos 5 questões
           return {
             id: key,
             title: `${program} - ${track}`,
             program: program,
             level: track,
-            status: isCompleted ? 'completed' : 'available',
-            isCompleted: isCompleted,
+            status: 'available',
+            isCompleted: false,
             difficulty: 'HARD'
           };
         } catch (error) {
@@ -122,6 +126,10 @@ export const useCertificates = () => {
 
       // Converter Map para array de certificados
       const certificates: Certificate[] = Array.from(programTrackMap.values());
+
+      console.log('🔍 Total de certificados encontrados:', certificates.length);
+      console.log('🔍 Certificados completados:', certificates.filter(c => c.isCompleted).length);
+      console.log('🔍 Certificados disponíveis:', certificates.filter(c => !c.isCompleted).length);
 
       setCertificates(certificates);
     } catch (err) {
