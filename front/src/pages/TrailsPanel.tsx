@@ -4,7 +4,7 @@ import { trilhas, type Trilha, type ItemDaListaAninhada } from '../data/trilhasD
 import { useProgress } from '../hooks/useProgress';
 import TrackDetailHeader from '../components/common/TrackDetailHeader';
 import VideoSection from '../components/common/VideoSection';
-import videoDaTrilha from '../assets/images/PROIND/Vídeo Compet Superior.mp4';
+import videoDaTrilha from '../assets/images/PROIND/Video_Compet_Superior.mp4';
 import DesafiosCard from '../components/common/DesafiosCard';
 import TesteCertificacaoCard from '../components/common/TesteCertificacaoCard';
 import styles from './TrailsPanel.module.css';

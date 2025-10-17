@@ -86,7 +86,9 @@ function App() {
             <Route path="/esqueci-senha" element={<ResetPassword/>}/>
             <Route path="/reset-password/:uid/:token" element={<ResetPasswordConfirm/>}/>
             <Route path="/perfil" element={<UserProfilePage/>}/>
-            <Route path="/trilhas/:trilhaId" element={<TrailsPanel />} />
+            <Route path="/trilhas" element={<ProgramaTrilhasPage />} />
+            <Route path="/trilhas/:programaId" element={<ProgramaTrilhasPage />} />
+            <Route path="/trilha/:trilhaId" element={<TrailsPanel />} />
             <Route path="/desafios/:trailId" element={<TrailChallengePage />} />
             <Route path="/certificados" element={<CertificatesPage />} />
             <Route path="/certificados/quiz/:program/:track" element={<CertificateQuizPage />} />

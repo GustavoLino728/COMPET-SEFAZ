@@ -120,3 +120,57 @@
 .backButton:hover {
   background-color: #e5e7eb;
 }
+
+/* Estilos para a página de seleção de programas */
+.subtitle {
+  font-size: 18px;
+  color: #6b7280;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.programsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.programCard {
+  border-radius: 12px;
+  padding: 24px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 120px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.programCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.programCardContent h3 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: #020F59;
+}
+
+.programCardContent p {
+  font-size: 16px;
+  margin: 0;
+  color: #374151;
+  max-width: 400px;
+}
+
+.programCardImage {
+  width: 120px;
+  height: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+}

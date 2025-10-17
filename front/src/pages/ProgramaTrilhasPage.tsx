@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { trilhas } from '../data/trilhasData';
 import TrailCard from '../components/cards/TrailCard';
 import styles from './ProgramaTrilhasPage.module.css';
@@ -57,6 +57,68 @@ const ProgramaTrilhasPage = () => {
     'prodeauto-controles-suplementares': prodeautoTrilha3Img,
     'prodeauto-concessao-incentivo': prodeautoTrilha4Img,
   };
+
+  // Se não há programaId, mostrar todos os programas
+  if (!programaId) {
+    const programas = [
+      {
+        id: 'proind',
+        nome: 'PROIND',
+        descricao: 'Programa de Incentivo à Indústria',
+        imagem: proindBannerImg,
+        cor: styles.proindBanner
+      },
+      {
+        id: 'prodepe',
+        nome: 'PRODEPE',
+        descricao: 'Programa de Desenvolvimento de Pernambuco',
+        imagem: prodepeBannerImg,
+        cor: styles.prodepeBanner
+      },
+      {
+        id: 'prodeauto',
+        nome: 'PRODEAUTO',
+        descricao: 'Programa de Desenvolvimento do Setor Automotivo',
+        imagem: prodeautoBannerImg,
+        cor: styles.prodeautoBanner
+      }
+    ];
+
+    return (
+      <div className={styles.pageContainer}>
+        <div className={styles.contentWrapper}>
+          <button className={styles.backButton} onClick={() => navigate(-1)}>
+            &larr;
+          </button>
+
+          <h1 className={styles.title}>Explore nossas Trilhas</h1>
+          <p className={styles.subtitle}>Escolha um programa para começar sua jornada de aprendizado</p>
+
+          <div className={styles.programsGrid}>
+            {programas.map(programa => (
+              <div 
+                key={programa.id} 
+                className={`${styles.programCard} ${programa.cor}`}
+                onClick={() => navigate(`/trilhas/${programa.id}`)}
+              >
+                <div className={styles.programCardContent}>
+                  <h3>{programa.nome}</h3>
+                  <p>{programa.descricao}</p>
+                </div>
+                {programa.imagem && (
+                  <img 
+                    src={programa.imagem} 
+                    alt={`Ilustração do ${programa.nome}`} 
+                    className={styles.programCardImage} 
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const trilhasDoPrograma = trilhas
     .filter(trilha => trilha.programa.toLowerCase() === programaId?.toLowerCase())
