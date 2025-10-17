@@ -18,4 +18,5 @@ urlpatterns = [
     path('certificates/submit/', views.submit_certificate_test, name='submit_certificate_test'),
     path('certificates/', views.get_user_certificates, name='get_user_certificates'),
     path('certificates/completed/', views.get_completed_certificates, name='get_completed_certificates'),
+    path('certificates/persistent/', views.get_user_certificates_persistent, name='get_user_certificates_persistent'),
 ]

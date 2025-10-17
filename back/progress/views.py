@@ -6,10 +6,23 @@ from django.utils import timezone
 from django.db import transaction
 from django.db import models
 
+# Importar modelos primeiro
 from .models import (
     TrailAccess, UserProgramProgress, UserOverallProgress,
-    ChallengeCompletion, UserBadge, BadgeDefinition
+    ChallengeCompletion, UserBadge, BadgeDefinition, UserCertificate, CertificateTest
 )
+
+# Verificar se os modelos foram importados corretamente
+print(f"🔍 CertificateTest importado: {CertificateTest is not None}")
+print(f"🔍 UserCertificate importado: {UserCertificate is not None}")
+
+# Importar utilitários
+try:
+    from .certificate_utils import create_user_certificate_from_test
+    print("✅ certificate_utils importado com sucesso")
+except ImportError as e:
+    print(f"❌ Erro ao importar certificate_utils: {e}")
+    create_user_certificate_from_test = None
 from .serializers import (
     TrackTrailAccessSerializer, 
     UserProgramProgressSerializer,
@@ -293,12 +306,25 @@ def submit_certificate_test(request):
     """
     Registra o resultado de um teste de certificado
     """
-    serializer = CertificateTestSubmissionSerializer(data=request.data)
-    if not serializer.is_valid():
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    print(f"🔍 Recebendo dados do teste: {request.data}")
+    print(f"🔍 Usuário: {request.user.email}")
+    
+    try:
+        serializer = CertificateTestSubmissionSerializer(data=request.data)
+        if not serializer.is_valid():
+            print(f"❌ Erro de validação: {serializer.errors}")
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    except Exception as e:
+        print(f"❌ Erro ao criar serializer: {e}")
+        return Response({
+            'error': 'Erro ao processar dados do teste',
+            'message': str(e)
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
     data = serializer.validated_data
     user = request.user
+    
+    print(f"✅ Dados validados: {data}")
     
     try:
         with transaction.atomic():
@@ -307,19 +333,45 @@ def submit_certificate_test(request):
             correct_answers = sum(1 for answer in answers if answer.get('is_correct', False))
             total_questions = len(answers)
             
-            # Criar registro do teste
-            certificate_test = CertificateTest.objects.create(
-                user=user,
-                program=data['program'],
-                track=data['track'],
-                score=data['score'],
-                correct_answers=correct_answers,
-                total_questions=total_questions,
-                passed=data['passed'],
-                answers=answers
-            )
+            print(f"🔍 Estatísticas: {correct_answers}/{total_questions} corretas")
             
-            return Response({
+            # Verificar se CertificateTest está disponível
+            print(f"🔍 CertificateTest disponível: {CertificateTest is not None}")
+            print(f"🔍 Tipo de CertificateTest: {type(CertificateTest)}")
+            
+            # Criar registro do teste
+            try:
+                certificate_test = CertificateTest.objects.create(
+                    user=user,
+                    program=data['program'],
+                    track=data['track'],
+                    score=data['score'],
+                    correct_answers=correct_answers,
+                    total_questions=total_questions,
+                    passed=data['passed'],
+                    answers=answers
+                )
+                print(f"✅ Teste criado com ID: {certificate_test.id}")
+            except Exception as create_error:
+                print(f"❌ Erro ao criar CertificateTest: {create_error}")
+                import traceback
+                traceback.print_exc()
+                raise create_error
+            
+            # Se o usuário passou no teste, criar certificação persistente
+            user_certificate = None
+            if certificate_test.passed and create_user_certificate_from_test:
+                try:
+                    print("🔍 Criando certificação persistente...")
+                    user_certificate = create_user_certificate_from_test(certificate_test)
+                    print(f"✅ Certificação persistente criada: {user_certificate.certificate_id}")
+                except Exception as e:
+                    # Log do erro mas não falha o processo
+                    print(f"❌ Erro ao criar certificação persistente: {e}")
+            elif certificate_test.passed and not create_user_certificate_from_test:
+                print("⚠️ Função create_user_certificate_from_test não disponível")
+            
+            response_data = {
                 'status': 'success',
                 'message': 'Teste de certificado registrado com sucesso',
                 'test_id': certificate_test.id,
@@ -327,9 +379,23 @@ def submit_certificate_test(request):
                 'correct_answers': certificate_test.correct_answers,
                 'total_questions': certificate_test.total_questions,
                 'passed': certificate_test.passed
-            }, status=status.HTTP_201_CREATED)
+            }
+            
+            # Adicionar informações da certificação se foi criada
+            if user_certificate:
+                response_data['certificate_created'] = True
+                response_data['certificate_id'] = user_certificate.certificate_id
+                response_data['certificate_name'] = user_certificate.certificate_name
+            else:
+                response_data['certificate_created'] = False
+            
+            print(f"✅ Resposta enviada: {response_data}")
+            return Response(response_data, status=status.HTTP_201_CREATED)
     
     except Exception as e:
+        print(f"❌ Erro interno: {e}")
+        import traceback
+        traceback.print_exc()
         return Response({
             'error': 'Erro interno do servidor',
             'message': str(e)
@@ -406,4 +472,58 @@ def get_completed_certificates(request):
     return Response({
         'completed_certificates': completed_data,
         'total_completed': len(completed_data)
+    })
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_user_certificates_persistent(request):
+    """
+    Retorna as certificações persistentes do usuário (independente da existência dos testes)
+    """
+    user = request.user
+    
+    # Buscar certificações persistentes
+    user_certificates = UserCertificate.objects.filter(
+        user=user,
+        is_active=True,
+        is_verified=True
+    ).order_by('-earned_at')
+    
+    certificates_data = []
+    for cert in user_certificates:
+        certificates_data.append({
+            'id': cert.certificate_id,
+            'program': cert.program,
+            'track': cert.track,
+            'certificate_name': cert.certificate_name,
+            'certificate_description': cert.certificate_description,
+            'score': float(cert.score),
+            'correct_answers': cert.correct_answers,
+            'total_questions': cert.total_questions,
+            'earned_at': cert.earned_at,
+            'expires_at': cert.expires_at,
+            'status': cert.status_display,
+            'certificate_url': cert.certificate_url,
+            'is_expired': cert.is_expired
+        })
+    
+    # Estatísticas
+    total_certificates = len(certificates_data)
+    active_certificates = len([c for c in certificates_data if not c['is_expired']])
+    expired_certificates = len([c for c in certificates_data if c['is_expired']])
+    
+    # Agrupar por programa
+    by_program = {}
+    for cert in certificates_data:
+        program = cert['program']
+        if program not in by_program:
+            by_program[program] = []
+        by_program[program].append(cert)
+    
+    return Response({
+        'certificates': certificates_data,
+        'total_certificates': total_certificates,
+        'active_certificates': active_certificates,
+        'expired_certificates': expired_certificates,
+        'by_program': by_program
     })
