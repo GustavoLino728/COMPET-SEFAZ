@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import styled from 'styled-components';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import AdminHeader from '../components/admin/AdminHeader';
 import { IoIosArrowBack } from 'react-icons/io';
 import { updateDiscursiveQuestion, updateMultipleChoiceQuestion, updateProblemQuestion } from '../api';
@@ -71,6 +71,7 @@ const ApproveButton = styled.button`...`; // Estilize como desejar
 
 const ChallengeGeneratedPage: React.FC = () => {
     const location = useLocation() as any;
+    const navigate = useNavigate();
     const challenge = location?.state?.challenge;
 
     const [editing, setEditing] = useState<any>({});
@@ -148,6 +149,7 @@ const ChallengeGeneratedPage: React.FC = () => {
 
       await Promise.all(updates);
       alert('Alterações salvas com sucesso.');
+      navigate('/admin');
     };
 
     return (
@@ -159,7 +161,6 @@ const ChallengeGeneratedPage: React.FC = () => {
                         <PageTitle>Desafio {challenge?.id || 'N/A'}</PageTitle>
                     </div>
                     <ActionButtons>
-                        <Button>Excluir Desafio</Button>
                         <Button primary onClick={handleSave}>Salvar Alterações</Button>
                     </ActionButtons>
                 </HeaderActions>
