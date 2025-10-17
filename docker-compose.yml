@@ -44,6 +44,7 @@ services:
         condition: service_healthy
     command: >
       sh -c "python manage.py migrate &&
+               python manage.py seed_admin &&
                python manage.py runserver 0.0.0.0:8000"
 
   # Chatbot Service (optional, for separate processing)

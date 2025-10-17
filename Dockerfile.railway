@@ -1,8 +1,10 @@
+# Dockerfile otimizado para Railway
 FROM python:3.11-slim
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
+ENV PORT=8000
 
 # Set work directory
 WORKDIR /app
@@ -19,7 +21,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
-COPY requirements.txt .
+COPY back/requirements.txt .
 RUN pip install --upgrade pip setuptools wheel \
     && pip install --no-cache-dir -r requirements.txt --timeout 120 --retries 5
 
@@ -27,19 +29,16 @@ RUN pip install --upgrade pip setuptools wheel \
 RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('neuralmind/bert-base-portuguese-cased')"
 
 # Copy project
-COPY . .
+COPY back/ .
+COPY chatbot/ ./chatbot/
 
-# Create a script to wait for postgres
+# Create a script to wait for postgres (Railway handles this automatically)
 RUN echo '#!/bin/bash\n\
-until pg_isready -h postgres -p 5432 -U $POSTGRES_USER; do\n\
-  echo "Waiting for postgres..."\n\
-  sleep 2\n\
-done\n\
-echo "PostgreSQL started"\n\
-exec "$@"' > /wait-for-postgres.sh && chmod +x /wait-for-postgres.sh
+echo "Starting application..."\n\
+exec "$@"' > /start.sh && chmod +x /start.sh
 
 # Expose port
-EXPOSE 8000
+EXPOSE $PORT
 
 # Run the application
-CMD ["/wait-for-postgres.sh", "sh", "-c", "python manage.py migrate && python manage.py seed_admin && python manage.py runserver 0.0.0.0:8000"]
+CMD ["/start.sh", "python", "manage.py", "runserver", "0.0.0.0:$PORT"]
