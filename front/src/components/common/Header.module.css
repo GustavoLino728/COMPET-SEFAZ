@@ -58,7 +58,7 @@
 }
 
 .profileButton:hover {
-  background-color: #3d3d8a; /* Um tom mais claro para o efeito hover */
+  background-color: #3d3d8a; 
 }
 .rightGroup {
   display: flex;

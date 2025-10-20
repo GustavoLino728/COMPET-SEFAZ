@@ -1124,7 +1124,69 @@ export const trilhas: Trilha[] = [
       tipo: 'paragrafo',
       conteudo: 'A correta aplicação da metodologia de cálculo do PRODEPE exige não apenas a compreensão dos percentuais, mas também um controle fiscal e contábil rigoroso, com a segregação adequada de operações e o monitoramento constante das condições de manutenção do benefício.'
     }
-    ]
+    ],
+    materiaisComplementares: [
+    {
+      texto: "A Portaria SF nº 239, de 14 de dezembro de 2001",
+      url: "https://drive.google.com/file/d/1nIZfrE3sdX48BOmDD4Q2mt3WaFhtIrR_/view?usp=sharing"
+    },
+    {
+      texto: "Portaria SF N° 194, de 27.09.2017",
+      url: "https://drive.google.com/file/d/166JrHDX8HwX9fmaUsswgRFgJQicDRZca/view?usp=sharing"
+    },
+    {
+      texto: "Portaria SF nº 126, de 30.08.2018",
+      url: "https://drive.google.com/file/d/1IplqgKLAeJFMkTMCCw-V90DNDouTBxBX/view?usp=sharing"
+    },
+    {
+      texto: "Portaria SF nº 025, de 30 de janeiro de 2006",
+      url: "https://drive.google.com/file/d/1D6J0YYqH-WFjSAf7MFWqDR-Vxf30y01O/view?usp=sharing"
+    },
+    {
+      texto: "Tabelas de referência com códigos do SPED FISCAL para Pernambuco",
+      url: "https://drive.google.com/file/d/1Pw_zXboUSNjkwuxz_7sq-I5qMhNO-mO8/view?usp=sharing"
+    },
+    {
+      texto: "Lei nº 15.865, de 30 de junho de 2016",
+      url: "https://drive.google.com/file/d/1MlV8hZGkUBtyjeUa-dp4ce_H3d-BM7eZ/view?usp=sharing"
+    },
+    {
+      texto: "A Lei Nº 15.063, de 4 de setembro de 2013",
+      url: "https://drive.google.com/file/d/1yjw3Xw5fVoHC-XFjCdi5QW4XYUmWb_OA/view?usp=sharing"
+    },
+    {
+      texto: "Lei nº 11.675, de 11 de outubro de 1999",
+      url: "https://drive.google.com/file/d/1_l9HOnI6Hh0nsY7geH2uFvVJ_4nuvUt-/view?usp=sharing"
+    },
+    {
+      texto: "Lei Complementar nº 060, de 14 de julho de 2004",
+      url: "https://drive.google.com/file/d/1jC2TleC0w5pxts6wseBul3d9QuN_usMa/view?usp=sharing"
+    },
+    {
+      texto: "Decreto nº 43.346, de 29 de julho de 2016",
+      url: "https://drive.google.com/file/d/1-rk5qWeG-SIUufmhs5Fd3Qx_wbVU9_47/view?usp=sharing"
+    },
+    {
+      texto: "Decreto nº 40.218, de 20 de dezembro de 2013",
+      url: "https://drive.google.com/file/d/1CkEWBx1OFbjbM4BoOcAVc-rhPZ4ioPM8/view?usp=sharing"
+    },
+    {
+      texto: "Decreto nº 34.492, de 30 de dezembro de 2009",
+      url: "https://drive.google.com/file/d/1s0OtVgpyXJW3mjKlyd1yg3lIE5i5s8A6/view?usp=sharing"
+    },
+    {
+      texto: "Decreto nº 28.800, de 4 de janeiro de 2006",
+      url: "https://drive.google.com/file/d/13f4chp2r782UOFMylTNSwOVsD_1-aZDM/view?usp=sharing"
+    },
+    {
+      texto: "Decreto nº 22.217, de 25 de abril de 2000",
+      url: "https://drive.google.com/file/d/1uz9Bt0_Y2Ol4B-djKSSaHTBFxnPBJe-_/view?usp=sharing"
+    },
+    {
+      texto: "Decreto nº 21.959, de 27 de dezembro de 1999",
+      url: "https://drive.google.com/file/d/1Ugcr1UHPSH4l6a8qeUh2yXLHkZ0Uhe78/view?usp=sharing"
+    }
+  ]
   },
 
   {
@@ -1392,6 +1454,68 @@ export const trilhas: Trilha[] = [
       tipo: 'paragrafo',
       conteudo: 'As informações desta trilha são fundamentadas nos seguintes documentos, conforme o "PRODEPE NORMAS E DECRETOS ATUAL":'
     },
+  ],
+  materiaisComplementares: [
+    {
+      texto: "A Portaria SF nº 239, de 14 de dezembro de 2001",
+      url: "https://drive.google.com/file/d/1nIZfrE3sdX48BOmDD4Q2mt3WaFhtIrR_/view?usp=sharing"
+    },
+    {
+      texto: "Portaria SF N° 194, de 27.09.2017",
+      url: "https://drive.google.com/file/d/166JrHDX8HwX9fmaUsswgRFgJQicDRZca/view?usp=sharing"
+    },
+    {
+      texto: "Portaria SF nº 126, de 30.08.2018",
+      url: "https://drive.google.com/file/d/1IplqgKLAeJFMkTMCCw-V90DNDouTBxBX/view?usp=sharing"
+    },
+    {
+      texto: "Portaria SF nº 025, de 30 de janeiro de 2006",
+      url: "https://drive.google.com/file/d/1D6J0YYqH-WFjSAf7MFWqDR-Vxf30y01O/view?usp=sharing"
+    },
+    {
+      texto: "Tabelas de referência com códigos do SPED FISCAL para Pernambuco",
+      url: "https://drive.google.com/file/d/1Pw_zXboUSNjkwuxz_7sq-I5qMhNO-mO8/view?usp=sharing"
+    },
+    {
+      texto: "Lei nº 15.865, de 30 de junho de 2016",
+      url: "https://drive.google.com/file/d/1MlV8hZGkUBtyjeUa-dp4ce_H3d-BM7eZ/view?usp=sharing"
+    },
+    {
+      texto: "A Lei Nº 15.063, de 4 de setembro de 2013",
+      url: "https://drive.google.com/file/d/1yjw3Xw5fVoHC-XFjCdi5QW4XYUmWb_OA/view?usp=sharing"
+    },
+    {
+      texto: "Lei nº 11.675, de 11 de outubro de 1999",
+      url: "https://drive.google.com/file/d/1_l9HOnI6Hh0nsY7geH2uFvVJ_4nuvUt-/view?usp=sharing"
+    },
+    {
+      texto: "Lei Complementar nº 060, de 14 de julho de 2004",
+      url: "https://drive.google.com/file/d/1jC2TleC0w5pxts6wseBul3d9QuN_usMa/view?usp=sharing"
+    },
+    {
+      texto: "Decreto nº 43.346, de 29 de julho de 2016",
+      url: "https://drive.google.com/file/d/1-rk5qWeG-SIUufmhs5Fd3Qx_wbVU9_47/view?usp=sharing"
+    },
+    {
+      texto: "Decreto nº 40.218, de 20 de dezembro de 2013",
+      url: "https://drive.google.com/file/d/1CkEWBx1OFbjbM4BoOcAVc-rhPZ4ioPM8/view?usp=sharing"
+    },
+    {
+      texto: "Decreto nº 34.492, de 30 de dezembro de 2009",
+      url: "https://drive.google.com/file/d/1s0OtVgpyXJW3mjKlyd1yg3lIE5i5s8A6/view?usp=sharing"
+    },
+    {
+      texto: "Decreto nº 28.800, de 4 de janeiro de 2006",
+      url: "https://drive.google.com/file/d/13f4chp2r782UOFMylTNSwOVsD_1-aZDM/view?usp=sharing"
+    },
+    {
+      texto: "Decreto nº 22.217, de 25 de abril de 2000",
+      url: "https://drive.google.com/file/d/1uz9Bt0_Y2Ol4B-djKSSaHTBFxnPBJe-_/view?usp=sharing"
+    },
+    {
+      texto: "Decreto nº 21.959, de 27 de dezembro de 1999",
+      url: "https://drive.google.com/file/d/1Ugcr1UHPSH4l6a8qeUh2yXLHkZ0Uhe78/view?usp=sharing"
+    }
   ]
 },
 
@@ -1558,6 +1682,68 @@ export const trilhas: Trilha[] = [
       tipo: 'paragrafo',
       conteudo: 'As informações desta trilha são fundamentadas nos seguintes documentos, conforme o "PRODEPE NORMAS E DECRETOS ATUAL":'
     },
+  ],
+  materiaisComplementares: [
+    {
+      texto: "A Portaria SF nº 239, de 14 de dezembro de 2001",
+      url: "https://drive.google.com/file/d/1nIZfrE3sdX48BOmDD4Q2mt3WaFhtIrR_/view?usp=sharing"
+    },
+    {
+      texto: "Portaria SF N° 194, de 27.09.2017",
+      url: "https://drive.google.com/file/d/166JrHDX8HwX9fmaUsswgRFgJQicDRZca/view?usp=sharing"
+    },
+    {
+      texto: "Portaria SF nº 126, de 30.08.2018",
+      url: "https://drive.google.com/file/d/1IplqgKLAeJFMkTMCCw-V90DNDouTBxBX/view?usp=sharing"
+    },
+    {
+      texto: "Portaria SF nº 025, de 30 de janeiro de 2006",
+      url: "https://drive.google.com/file/d/1D6J0YYqH-WFjSAf7MFWqDR-Vxf30y01O/view?usp=sharing"
+    },
+    {
+      texto: "Tabelas de referência com códigos do SPED FISCAL para Pernambuco",
+      url: "https://drive.google.com/file/d/1Pw_zXboUSNjkwuxz_7sq-I5qMhNO-mO8/view?usp=sharing"
+    },
+    {
+      texto: "Lei nº 15.865, de 30 de junho de 2016",
+      url: "https://drive.google.com/file/d/1MlV8hZGkUBtyjeUa-dp4ce_H3d-BM7eZ/view?usp=sharing"
+    },
+    {
+      texto: "A Lei Nº 15.063, de 4 de setembro de 2013",
+      url: "https://drive.google.com/file/d/1yjw3Xw5fVoHC-XFjCdi5QW4XYUmWb_OA/view?usp=sharing"
+    },
+    {
+      texto: "Lei nº 11.675, de 11 de outubro de 1999",
+      url: "https://drive.google.com/file/d/1_l9HOnI6Hh0nsY7geH2uFvVJ_4nuvUt-/view?usp=sharing"
+    },
+    {
+      texto: "Lei Complementar nº 060, de 14 de julho de 2004",
+      url: "https://drive.google.com/file/d/1jC2TleC0w5pxts6wseBul3d9QuN_usMa/view?usp=sharing"
+    },
+    {
+      texto: "Decreto nº 43.346, de 29 de julho de 2016",
+      url: "https://drive.google.com/file/d/1-rk5qWeG-SIUufmhs5Fd3Qx_wbVU9_47/view?usp=sharing"
+    },
+    {
+      texto: "Decreto nº 40.218, de 20 de dezembro de 2013",
+      url: "https://drive.google.com/file/d/1CkEWBx1OFbjbM4BoOcAVc-rhPZ4ioPM8/view?usp=sharing"
+    },
+    {
+      texto: "Decreto nº 34.492, de 30 de dezembro de 2009",
+      url: "https://drive.google.com/file/d/1s0OtVgpyXJW3mjKlyd1yg3lIE5i5s8A6/view?usp=sharing"
+    },
+    {
+      texto: "Decreto nº 28.800, de 4 de janeiro de 2006",
+      url: "https://drive.google.com/file/d/13f4chp2r782UOFMylTNSwOVsD_1-aZDM/view?usp=sharing"
+    },
+    {
+      texto: "Decreto nº 22.217, de 25 de abril de 2000",
+      url: "https://drive.google.com/file/d/1uz9Bt0_Y2Ol4B-djKSSaHTBFxnPBJe-_/view?usp=sharing"
+    },
+    {
+      texto: "Decreto nº 21.959, de 27 de dezembro de 1999",
+      url: "https://drive.google.com/file/d/1Ugcr1UHPSH4l6a8qeUh2yXLHkZ0Uhe78/view?usp=sharing"
+    }
   ]
 },
 
@@ -1857,6 +2043,68 @@ export const trilhas: Trilha[] = [
         'D - Ajustes de Política: O Comitê Diretor pode decidir pela redução do incentivo em relação ao benefício original em face de mudanças na política econômica e fiscal do Estado (Lei nº 11.675/1999, Art. 5º, §16, III).'
       ]
     }
+  ],
+  materiaisComplementares: [
+    {
+      texto: "A Portaria SF nº 239, de 14 de dezembro de 2001",
+      url: "https://drive.google.com/file/d/1nIZfrE3sdX48BOmDD4Q2mt3WaFhtIrR_/view?usp=sharing"
+    },
+    {
+      texto: "Portaria SF N° 194, de 27.09.2017",
+      url: "https://drive.google.com/file/d/166JrHDX8HwX9fmaUsswgRFgJQicDRZca/view?usp=sharing"
+    },
+    {
+      texto: "Portaria SF nº 126, de 30.08.2018",
+      url: "https://drive.google.com/file/d/1IplqgKLAeJFMkTMCCw-V90DNDouTBxBX/view?usp=sharing"
+    },
+    {
+      texto: "Portaria SF nº 025, de 30 de janeiro de 2006",
+      url: "https://drive.google.com/file/d/1D6J0YYqH-WFjSAf7MFWqDR-Vxf30y01O/view?usp=sharing"
+    },
+    {
+      texto: "Tabelas de referência com códigos do SPED FISCAL para Pernambuco",
+      url: "https://drive.google.com/file/d/1Pw_zXboUSNjkwuxz_7sq-I5qMhNO-mO8/view?usp=sharing"
+    },
+    {
+      texto: "Lei nº 15.865, de 30 de junho de 2016",
+      url: "https://drive.google.com/file/d/1MlV8hZGkUBtyjeUa-dp4ce_H3d-BM7eZ/view?usp=sharing"
+    },
+    {
+      texto: "A Lei Nº 15.063, de 4 de setembro de 2013",
+      url: "https://drive.google.com/file/d/1yjw3Xw5fVoHC-XFjCdi5QW4XYUmWb_OA/view?usp=sharing"
+    },
+    {
+      texto: "Lei nº 11.675, de 11 de outubro de 1999",
+      url: "https://drive.google.com/file/d/1_l9HOnI6Hh0nsY7geH2uFvVJ_4nuvUt-/view?usp=sharing"
+    },
+    {
+      texto: "Lei Complementar nº 060, de 14 de julho de 2004",
+      url: "https://drive.google.com/file/d/1jC2TleC0w5pxts6wseBul3d9QuN_usMa/view?usp=sharing"
+    },
+    {
+      texto: "Decreto nº 43.346, de 29 de julho de 2016",
+      url: "https://drive.google.com/file/d/1-rk5qWeG-SIUufmhs5Fd3Qx_wbVU9_47/view?usp=sharing"
+    },
+    {
+      texto: "Decreto nº 40.218, de 20 de dezembro de 2013",
+      url: "https://drive.google.com/file/d/1CkEWBx1OFbjbM4BoOcAVc-rhPZ4ioPM8/view?usp=sharing"
+    },
+    {
+      texto: "Decreto nº 34.492, de 30 de dezembro de 2009",
+      url: "https://drive.google.com/file/d/1s0OtVgpyXJW3mjKlyd1yg3lIE5i5s8A6/view?usp=sharing"
+    },
+    {
+      texto: "Decreto nº 28.800, de 4 de janeiro de 2006",
+      url: "https://drive.google.com/file/d/13f4chp2r782UOFMylTNSwOVsD_1-aZDM/view?usp=sharing"
+    },
+    {
+      texto: "Decreto nº 22.217, de 25 de abril de 2000",
+      url: "https://drive.google.com/file/d/1uz9Bt0_Y2Ol4B-djKSSaHTBFxnPBJe-_/view?usp=sharing"
+    },
+    {
+      texto: "Decreto nº 21.959, de 27 de dezembro de 1999",
+      url: "https://drive.google.com/file/d/1Ugcr1UHPSH4l6a8qeUh2yXLHkZ0Uhe78/view?usp=sharing"
+    }
   ]
 },
 
@@ -2093,6 +2341,20 @@ export const trilhas: Trilha[] = [
         'DECRETO Nº 44.650, DE 30 DE JUNHO DE 2017 – ANEXO 36 (DO PROGRAMA DE DESENVOLVIMENTO DO SETOR AUTOMOTIVO DO ESTADO DE PERNAMBUCO - PRODEAUTO)'
       ]
     }
+  ],
+   materiaisComplementares: [
+    {
+      texto: "Lei Nº 13.484, de 29 de junho de 2008",
+      url: "https://drive.google.com/file/d/1ebSLEUTFd906jnrZpXluBeEe38WkVRnC/view?usp=sharing"
+    },
+    {
+      texto: "Informativo Sefaz veículos",
+      url: "https://drive.google.com/file/d/1M12b4UBb-kC-_QtyVouVvGFyjxuX7KC-/view?usp=sharing"
+    },
+    {
+      texto: "Programa de Desenvolvimento do Setor Automotivo do Estado de Pernambuco (Prodeauto)",
+      url: "https://drive.google.com/file/d/17HE090l3SZgdRUMU1DoLowMvqYN-s7K9/view?usp=sharing"
+    },
   ]
 },
 
@@ -2402,8 +2664,23 @@ export const trilhas: Trilha[] = [
         'DECRETO Nº 53.565, DE 9 DE SETEMBRO DE 2022 (Modifica o Decreto nº 44.650, de 2017).'
       ]
     }
+  ],
+   materiaisComplementares: [
+    {
+      texto: "Lei Nº 13.484, de 29 de junho de 2008",
+      url: "https://drive.google.com/file/d/1ebSLEUTFd906jnrZpXluBeEe38WkVRnC/view?usp=sharing"
+    },
+    {
+      texto: "Informativo Sefaz veículos",
+      url: "https://drive.google.com/file/d/1M12b4UBb-kC-_QtyVouVvGFyjxuX7KC-/view?usp=sharing"
+    },
+    {
+      texto: "Programa de Desenvolvimento do Setor Automotivo do Estado de Pernambuco (Prodeauto)",
+      url: "https://drive.google.com/file/d/17HE090l3SZgdRUMU1DoLowMvqYN-s7K9/view?usp=sharing"
+    },
   ]
 },
+
   {
     id: 'prodeauto-controles-suplementares', 
     programa: 'PRODEAUTO',
@@ -2645,6 +2922,20 @@ export const trilhas: Trilha[] = [
       tipo: 'paragrafo',
       conteudo: 'A gestão diligente dos controles suplementares do PRODEAUTO não é apenas uma obrigação legal, mas uma estratégia essencial para maximizar o valor do benefício fiscal e assegurar a longevidade e a previsibilidade das operações incentivadas.'
     },
+  ],
+   materiaisComplementares: [
+    {
+      texto: "Lei Nº 13.484, de 29 de junho de 2008",
+      url: "https://drive.google.com/file/d/1ebSLEUTFd906jnrZpXluBeEe38WkVRnC/view?usp=sharing"
+    },
+    {
+      texto: "Informativo Sefaz veículos",
+      url: "https://drive.google.com/file/d/1M12b4UBb-kC-_QtyVouVvGFyjxuX7KC-/view?usp=sharing"
+    },
+    {
+      texto: "Programa de Desenvolvimento do Setor Automotivo do Estado de Pernambuco (Prodeauto)",
+      url: "https://drive.google.com/file/d/17HE090l3SZgdRUMU1DoLowMvqYN-s7K9/view?usp=sharing"
+    },
   ]
 },
 
@@ -2837,14 +3128,24 @@ export const trilhas: Trilha[] = [
       tipo: 'paragrafo',
       conteudo: 'Este processo de concessão do credenciamento é a porta de entrada para a fruição dos incentivos do PRODEAUTO e requer atenção rigorosa aos detalhes e requisitos legais para garantir a segurança jurídica do benefício.'
     }
+  ],
+   materiaisComplementares: [
+    {
+      texto: "Lei Nº 13.484, de 29 de junho de 2008",
+      url: "https://drive.google.com/file/d/1ebSLEUTFd906jnrZpXluBeEe38WkVRnC/view?usp=sharing"
+    },
+    {
+      texto: "Informativo Sefaz veículos",
+      url: "https://drive.google.com/file/d/1M12b4UBb-kC-_QtyVouVvGFyjxuX7KC-/view?usp=sharing"
+    },
+    {
+      texto: "Programa de Desenvolvimento do Setor Automotivo do Estado de Pernambuco (Prodeauto)",
+      url: "https://drive.google.com/file/d/17HE090l3SZgdRUMU1DoLowMvqYN-s7K9/view?usp=sharing"
+    },
   ]
 }
 
 
-
-
-
-
-  // ...aqui viria a sua próxima trilha, também com um 'blocosDeConteudo'
+  // ...aqui viria a próxima trilha, também com um 'blocosDeConteudo'
 ];
 
