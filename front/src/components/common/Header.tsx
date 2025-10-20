@@ -45,7 +45,7 @@ const Header = () => {
           <nav className={styles.navLinks}>
             <Link to="/">Início</Link>
             <Link to="/trilhas">Trilhas</Link>
-            <Link to="/teste-perfil">Teste de perfil</Link>
+            <Link to="/desafios">Desafios</Link>
             <Link to="/certificados">Certificações</Link>
           </nav>
 

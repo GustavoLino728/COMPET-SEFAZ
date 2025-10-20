@@ -67,7 +67,7 @@ const Header: React.FC = () => {
       <Nav>
         <NavLink to="/">Início</NavLink>
         <NavLink to="/trilhas">Trilhas</NavLink>
-        <NavLink to="/teste-perfil">Teste de perfil</NavLink>
+        <NavLink to="/desafios">Desafios</NavLink>
         <NavLink to="/certificados">Certificações</NavLink>
         <ExitButton onClick={handleLogout}>Sair</ExitButton>
       </Nav>
