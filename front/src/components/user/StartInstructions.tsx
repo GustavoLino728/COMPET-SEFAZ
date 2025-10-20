@@ -72,7 +72,7 @@ const StartInstructions: React.FC<InstructionsProps> = ({ description, questionC
       
       {/* Link para o quiz usando o ID capturado da URL */}
       <Link to={`/quiz/${id}`}>
-        <StartButton>Iniciar quiz</StartButton>
+        <StartButton>Iniciar Desafios</StartButton>
       </Link>
     </InstructionsContainer>
   );

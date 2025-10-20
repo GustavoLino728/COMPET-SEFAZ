@@ -393,7 +393,7 @@ const QuizPage: React.FC = () => {
             Pergunta anterior
           </NavButton>
           <PrimaryNavButton onClick={() => handleNavigation('next')}>
-            {currentQuestionIndex === quizData.length - 1 ? 'Finalizar Quiz' : 'Próxima pergunta'}
+            {currentQuestionIndex === quizData.length - 1 ? 'Finalizar Desafio' : 'Próxima pergunta'}
           </PrimaryNavButton>
         </NavigationContainer>
       )}

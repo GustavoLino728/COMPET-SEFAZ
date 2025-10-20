@@ -418,7 +418,7 @@ const QuizCompletionPage: React.FC = () => {
         console.error('❌ Erro ao processar conclusão:', err);
         setError('Erro ao processar resultado do desafio. O desafio foi salvo, mas pode não ter gerado badge.');
       } finally {
-        setLoading(false);
+        setLoading(false); 
       }
     };
 
