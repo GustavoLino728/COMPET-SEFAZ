@@ -78,7 +78,7 @@ const UserHeader: React.FC = () => {
       <Nav>
         <NavLink>Início</NavLink>
         <NavLink>Trilhas</NavLink>
-        <NavLink>Teste de perfil</NavLink>
+        <NavLink>Desafios</NavLink>
         <NavLink>Certificações</NavLink>
         <Link to="/perfil">
             <ProfileButton>Acessar perfil</ProfileButton>
